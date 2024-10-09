@@ -1,0 +1,32 @@
+---
+title: "Seminário LoggingLab"
+author: "Sylvain Schmitt"
+date: today
+date-format: medium
+format: 
+  revealjs:
+    theme: dark
+bibliography: references.bib
+---
+
+## Pacote R
+
+`tidyverse`, `devtools`, ... para descrever
+
+```{r setup}
+#| eval: false
+#| echo: true
+install.packages(c("devtools", "tidyverse"))
+```
+
+## Instalação do pacote
+
+Usaremos o pacote LoggingLab para R [@Badouard2024] para simular a extração de madeira de impacto reduzido em uma floresta tropical. O pacote deve ser instalado a partir de seu repositório no Github, pois ainda não está no CRAN.
+
+```{r install}
+#| eval: false
+#| echo: true
+devtools::install_github("VincyaneBadouard/LoggingLab")
+```
+
+## Referências

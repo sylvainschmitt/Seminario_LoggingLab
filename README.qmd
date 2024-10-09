@@ -1,0 +1,11 @@
+---
+title: "Seminario Logging Lab"
+date: today
+date-format: medium
+format: 
+  gfm:
+    toc: true
+    toc-depth: 1
+---
+
+Seminário LoggingLab apresentado em Brasília, Santarém e Manaus para o projeto FEFACCION.
