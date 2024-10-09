@@ -9,16 +9,6 @@ format:
 bibliography: references.bib
 ---
 
-## Pacote R
-
-`tidyverse`, `devtools`, ... para descrever
-
-```{r setup}
-#| eval: false
-#| echo: true
-install.packages(c("devtools", "tidyverse"))
-```
-
 ## Instalação do pacote
 
 Usaremos o pacote LoggingLab para R [@Badouard2024] para simular a extração de madeira de impacto reduzido em uma floresta tropical. O pacote deve ser instalado a partir de seu repositório no Github, pois ainda não está no CRAN.
@@ -26,7 +16,126 @@ Usaremos o pacote LoggingLab para R [@Badouard2024] para simular a extração de
 ```{r install}
 #| eval: false
 #| echo: true
+install.packages("devtools")
 devtools::install_github("VincyaneBadouard/LoggingLab")
 ```
+
+## Pacote R
+
+Para descrever...
+
+```{r}
+#| echo: true
+library(tidyverse)
+library(LoggingLab)
+```
+
+## Entradas
+
+-   **Inventário**: inventários de árvores da parcela registrada
+-   **Máscara do lote**: os limites da área a ser explorada
+-   **Dados da espécie**: dados específicos para cada espécie
+-   **Alometria volumétrica**: os parâmetros de alometria a serem calculados
+-   **Cenários**: os principais parâmetros de gerenciamento
+
+## Inventário
+
+O inventário do lote 6 de Paracou está disponível.
+
+```{r p6}
+#| echo: true
+Paracou6_2016 %>% 
+  head()
+```
+
+## Inventário
+
+As colunas exigidas pelo pacote são:
+
+-   `Forest`: o nome da floresta para aplicar a fórmula de volume correspondente.
+-   `idTree`: um identificador exclusivo para cada árvore.
+-   `Xutm` e `Yutm`: as coordenadas de cada árvore.
+-   `CodeAlive`: árvore viva ou morta.
+-   `Family`, `Genus`, `Species`: dados botânicos.
+-   `CircCorr`: circunferência de cada árvore.
+
+## Máscara do lote
+
+A máscara do lote define os limites da área a ser registrada.
+
+```{r mask}
+#| echo: true
+sp::plot(PlotMask)
+```
+
+## Dados de espécies
+
+`SpeciesCriteria` contém dados específicos de cada espécie:
+
+```{r species}
+#| echo: true
+SpeciesCriteria %>% 
+  head()
+```
+
+## Dados de espécies {.smaller}
+
+As colunas são:
+
+-   `CommercialLevel`: Nível de interesse econômico. 1: principal espécie econômica, 2 ou mais: espécies registradas com o objetivo de diversificação, 0: espécies cujo gênero é coberto por um nome comercial, mas que não são registradas.
+
+-   `MinFD`: Diâmetro mínimo de corte, em centímetros.
+
+-   `UpMinFD`: Diâmetro mínimo de corte aprimorado (caso de povoamento excessivamente rico), em centímetros.
+
+-   `MaxFD`: Diâmetro máximo de corte, em centímetros.
+
+-   `Aggregative`: Caráter agregador da espécie. Se for `TRUE`, as árvores isoladas não serão cortadas.
+
+## Alometria volumétrica
+
+`ForestZoneVolumeParametersTable` contém os parâmetros de alometria a serem calculados.
+
+$$Volume = aCoef + bCoef \times DBH^2$$
+
+```{r allometry}
+#| echo: true
+ForestZoneVolumeParametersTable %>% 
+  head()
+```
+
+## Cenários
+
+Os cenários reúnem os principais parâmetros de gerenciamento.
+
+Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.
+
+```{r scenarios}
+#| echo: true
+ScenariosTable
+```
+
+## Cenários
+
+Os cenários reúnem os principais parâmetros de gerenciamento.
+
+Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.
+
+```{r}
+ScenariosTable %>% knitr::kable()
+```
+
+## Cenários {.smaller}
+
+As colunas são:
+
+-   `Type`: O nome do cenário.
+-   `SpatialDataType`: o tipo de dados espaciais (Lidar ou SRTM).
+-   `Objective`: Volume objetivo por hectare.
+-   `Diversification`: Permitir o corte de outras espécies além das principais espécies comerciais.
+-   `Winching`: Método de guincho. Sem cabo ou garra = “0”, somente cabo = “1”, garra + cabo = “2”.
+-   `DirectionalFelling`: “0” = não utilizado, ‘1’ = apenas para evitar danos a árvores futuras e de reserva, ‘2’ = evitar danos a árvores futuras e de reserva + orientação da trilha.
+
+Todas as funções permitem `scenario = “manual”`: nesse caso, todos os argumentos devem ser adicionados manualmente. Seu nome é o mesmo das colunas.
 
 ## Referências

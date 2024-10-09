@@ -421,19 +421,248 @@ Sylvain Schmitt
 
   <p class="date">Oct 9, 2024</p>
 </section>
-<section id="pacote-r" class="slide level2">
-<h2>Pacote R</h2>
-<p><code>tidyverse</code>, <code>devtools</code>, … para descrever</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"devtools"</span>, <span class="st">"tidyverse"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
 <section id="instalação-do-pacote" class="slide level2">
 <h2>Instalação do pacote</h2>
 <p>Usaremos o pacote LoggingLab para R <span class="citation" data-cites="Badouard2024">(<a href="#/referências" role="doc-biblioref" onclick="">Badouard et al. 2024</a>)</span> para simular a extração de madeira de impacto reduzido em uma floresta tropical. O pacote deve ser instalado a partir de seu repositório no Github, pois ainda não está no CRAN.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"VincyaneBadouard/LoggingLab"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"VincyaneBadouard/LoggingLab"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="pacote-r" class="slide level2">
+<h2>Pacote R</h2>
+<p>Para descrever…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(LoggingLab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="entradas" class="slide level2">
+<h2>Entradas</h2>
+<ul>
+<li><strong>Inventário</strong>: inventários de árvores da parcela registrada</li>
+<li><strong>Máscara do lote</strong>: os limites da área a ser explorada</li>
+<li><strong>Dados da espécie</strong>: dados específicos para cada espécie</li>
+<li><strong>Alometria volumétrica</strong>: os parâmetros de alometria a serem calculados</li>
+<li><strong>Cenários</strong>: os principais parâmetros de gerenciamento</li>
+</ul>
+</section>
+<section id="inventário" class="slide level2">
+<h2>Inventário</h2>
+<p>O inventário do lote 6 de Paracou está disponível.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>Paracou6_2016 <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Forest Plot PlotArea SubPlot idTree Protocole Xfield Yfield     Xutm
+1 Paracou    6     6.25       1 100726   Guyafor   13.5  201.0 286420.1
+2 Paracou    6     6.25       1 100729   Guyafor   19.0  196.5 286426.4
+3 Paracou    6     6.25       1 100739   Guyafor   13.5  182.0 286424.8
+4 Paracou    6     6.25       1 100741   Guyafor    9.5  179.5 286421.6
+5 Paracou    6     6.25       1 100747   Guyafor   14.5  167.5 286429.3
+6 Paracou    6     6.25       1 100750   Guyafor   18.0  169.0 286432.3
+      Yutm UTMZone      Lat       Lon           Family    Genus     Species
+1 583135.4      22 5.272669 -52.92713       Annonaceae  Oxandra    asbeckii
+2 583132.2      22 5.272642 -52.92707         Fabaceae   Eperua grandiflora
+3 583116.8      22 5.272502 -52.92709         Fabaceae    Bocoa prouacensis
+4 583113.4      22 5.272471 -52.92712     Celastraceae Maytenus    sp.1-CAY
+5 583102.9      22 5.272376 -52.92705 Chrysobalanaceae  Licania membranacea
+6 583105.2      22 5.272397 -52.92702 Chrysobalanaceae  Licania   canescens
+  BotaSource BotaCertainty           VernName CensusYear CensusDateCertainty
+1       Bota             4             muamba       2016                TRUE
+2       Bota             4 Eperua grandiflora       2016                TRUE
+3       Bota             4               boco       2016                TRUE
+4       Bota             3         lebi tongo       2016                TRUE
+5       Bota             4         santi koko       2016                TRUE
+6       Bota             4         santi koko       2016                TRUE
+  CodeAlive MeasCode  Circ CircCorr CorrCode
+1      TRUE        0  39.5     39.5        0
+2      TRUE        0 114.0    114.0        0
+3      TRUE        0  48.0     48.0        0
+4      TRUE        0 123.0    123.0        0
+5      TRUE        0  54.0     54.0        0
+6      TRUE        0  88.0     88.0        0</code></pre>
+</div>
+</div>
+</section>
+<section id="inventário-1" class="slide level2">
+<h2>Inventário</h2>
+<p>As colunas exigidas pelo pacote são:</p>
+<ul>
+<li><code>Forest</code>: o nome da floresta para aplicar a fórmula de volume correspondente.</li>
+<li><code>idTree</code>: um identificador exclusivo para cada árvore.</li>
+<li><code>Xutm</code> e <code>Yutm</code>: as coordenadas de cada árvore.</li>
+<li><code>CodeAlive</code>: árvore viva ou morta.</li>
+<li><code>Family</code>, <code>Genus</code>, <code>Species</code>: dados botânicos.</li>
+<li><code>CircCorr</code>: circunferência de cada árvore.</li>
+</ul>
+</section>
+<section id="máscara-do-lote" class="slide level2">
+<h2>Máscara do lote</h2>
+<p>A máscara do lote define os limites da área a ser registrada.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>sp<span class="sc">::</span><span class="fu">plot</span>(PlotMask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/mask-1.png" width="960" class="r-stretch"></section>
+<section id="dados-de-espécies" class="slide level2">
+<h2>Dados de espécies</h2>
+<p><code>SpeciesCriteria</code> contém dados específicos de cada espécie:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>SpeciesCriteria <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  CommercialName  Genus  Species CommercialLevel MinFD UpMinFD MaxFD Aggregative
+  &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;      
+1 st martin rouge Andira spp                   2    55      60   120 FALSE      
+2 bamba apici     Aniba  spp                   2    55      60   120 FALSE      
+3 bagasse         Bagas… guiane…               2    55      60   120 FALSE      
+4 assao           Baliz… pedice…               2    55      60   120 FALSE      
+5 dokali          Brosi… parina…               2    55      60   120 FALSE      
+6 satiné rubané   Brosi… rubesc…               2    55      60   120 FALSE      </code></pre>
+</div>
+</div>
+</section>
+<section id="dados-de-espécies-1" class="slide level2 smaller">
+<h2>Dados de espécies</h2>
+<p>As colunas são:</p>
+<ul>
+<li><p><code>CommercialLevel</code>: Nível de interesse econômico. 1: principal espécie econômica, 2 ou mais: espécies registradas com o objetivo de diversificação, 0: espécies cujo gênero é coberto por um nome comercial, mas que não são registradas.</p></li>
+<li><p><code>MinFD</code>: Diâmetro mínimo de corte, em centímetros.</p></li>
+<li><p><code>UpMinFD</code>: Diâmetro mínimo de corte aprimorado (caso de povoamento excessivamente rico), em centímetros.</p></li>
+<li><p><code>MaxFD</code>: Diâmetro máximo de corte, em centímetros.</p></li>
+<li><p><code>Aggregative</code>: Caráter agregador da espécie. Se for <code>TRUE</code>, as árvores isoladas não serão cortadas.</p></li>
+</ul>
+</section>
+<section id="alometria-volumétrica" class="slide level2">
+<h2>Alometria volumétrica</h2>
+<p><code>ForestZoneVolumeParametersTable</code> contém os parâmetros de alometria a serem calculados.</p>
+<p><span class="math display">\[Volume = aCoef + bCoef \times DBH^2\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>ForestZoneVolumeParametersTable <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Forest    Zone     aCoef    bCoef
+1       Acarouany    West -0.061776  8.83580
+2           BAFOG    West -0.061776  8.83580
+3             Kaw    East -0.084516 10.46132
+4         Laussat    West -0.061776  8.83580
+5  Montagne_Plomb Central -0.035829  8.76340
+6 Montagne_Tortue    East -0.084516 10.46132</code></pre>
+</div>
+</div>
+</section>
+<section id="cenários" class="slide level2">
+<h2>Cenários</h2>
+<p>Os cenários reúnem os principais parâmetros de gerenciamento.</p>
+<p>Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>ScenariosTable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  Type     SpatialDataType Objective Diversification Winching DirectionalFelling
+  &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     &lt;lgl&gt;           &lt;fct&gt;    &lt;fct&gt;             
+1 RIL1     SRTM            20-25     FALSE           0        0                 
+2 RIL2bro… LIDAR           20-25     FALSE           0        0                 
+3 RIL2     LIDAR           20-25     FALSE           1        0                 
+4 RIL3     LIDAR           25-30     TRUE            2        2                 
+5 RIL3fuel LIDAR           25-30     TRUE            2        2                 
+6 RIL3fue… LIDAR           25-30     TRUE            2        2                 </code></pre>
+</div>
+</div>
+</section>
+<section id="cenários-1" class="slide level2">
+<h2>Cenários</h2>
+<p>Os cenários reúnem os principais parâmetros de gerenciamento.</p>
+<p>Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table>
+<colgroup>
+<col style="width: 17%">
+<col style="width: 18%">
+<col style="width: 11%">
+<col style="width: 18%">
+<col style="width: 10%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">SpatialDataType</th>
+<th style="text-align: left;">Objective</th>
+<th style="text-align: left;">Diversification</th>
+<th style="text-align: left;">Winching</th>
+<th style="text-align: left;">DirectionalFelling</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">RIL1</td>
+<td style="text-align: left;">SRTM</td>
+<td style="text-align: left;">20-25</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RIL2broken</td>
+<td style="text-align: left;">LIDAR</td>
+<td style="text-align: left;">20-25</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RIL2</td>
+<td style="text-align: left;">LIDAR</td>
+<td style="text-align: left;">20-25</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RIL3</td>
+<td style="text-align: left;">LIDAR</td>
+<td style="text-align: left;">25-30</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RIL3fuel</td>
+<td style="text-align: left;">LIDAR</td>
+<td style="text-align: left;">25-30</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RIL3fuelhollow</td>
+<td style="text-align: left;">LIDAR</td>
+<td style="text-align: left;">25-30</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="cenários-2" class="slide level2 smaller">
+<h2>Cenários</h2>
+<p>As colunas são:</p>
+<ul>
+<li><code>Type</code>: O nome do cenário.</li>
+<li><code>SpatialDataType</code>: o tipo de dados espaciais (Lidar ou SRTM).</li>
+<li><code>Objective</code>: Volume objetivo por hectare.</li>
+<li><code>Diversification</code>: Permitir o corte de outras espécies além das principais espécies comerciais.</li>
+<li><code>Winching</code>: Método de guincho. Sem cabo ou garra = “0”, somente cabo = “1”, garra + cabo = “2”.</li>
+<li><code>DirectionalFelling</code>: “0” = não utilizado, ‘1’ = apenas para evitar danos a árvores futuras e de reserva, ‘2’ = evitar danos a árvores futuras e de reserva + orientação da trilha.</li>
+</ul>
+<p>Todas as funções permitem <code>scenario = “manual”</code>: nesse caso, todos os argumentos devem ser adicionados manualmente. Seu nome é o mesmo das colunas.</p>
 </section>
 <section id="referências" class="slide level2 smaller scrollable">
 <h2>Referências</h2>
