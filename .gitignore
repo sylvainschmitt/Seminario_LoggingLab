@@ -1,10 +1,6 @@
-# History files
 .Rhistory
 .Rapp.history
-# Session Data files
 .RData
-# Package file
 .Rbuildignore
-# RStudio files
 .Rproj.user/
-
+index_cache
