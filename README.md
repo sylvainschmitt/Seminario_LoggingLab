@@ -1,9 +1,6 @@
 # Seminario Logging Lab
 Oct 9, 2024
 
-Practical for the Sustainable Forest Management course of the Global
-Forestry master’s program.
-
-Formats:
-
-- [HTML](https://ericmarcon.github.io/TP-LoggingLab/TP-LoggingLab.html)
+Seminário LoggingLab apresentado em Brasília, Santarém e Manaus para o
+projeto FEFACCION:
+https://sylvainschmitt.github.io/Seminario_LoggingLab/.
