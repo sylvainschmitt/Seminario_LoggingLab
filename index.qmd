@@ -11,6 +11,32 @@ bibliography: references.bib
 
 # Introdução
 
+## O que o pacote faz?
+
+Simulação de corte seletivo usando dados de inventário florestal
+[ADD a map of post-logging]{style="color:red;}
+
+## Flowchart do pacote {.scrollable}
+
+<!-- change layout to make it into 2 columns (didn't worked for me...-->
+
+:::: .columns
+
+::: {.column width="30%"}
+![](Fig_Flowchart.jpg)
+
+:::
+
+::: {.column width="70%"}
+[ADD list of steps here]{style="color:red;}
+
+:::
+
+::::
+
+
+
+
 ## Instalação do pacote
 
 Usaremos o pacote LoggingLab para R [@Badouard2024] para simular a extração de madeira de impacto reduzido em uma floresta tropical. O pacote deve ser instalado a partir de seu repositório no Github, pois ainda não está no CRAN.
@@ -181,7 +207,7 @@ Gere a trilha principal do terreno inventariado, como linhas na borda e fora do 
 #| cache: true
 MainTrails <- maintrailextract(DTMParacou)
 sp::plot(DTMParacou)
-sp::plot(MainTrails, add = TRUE)
+sp::plot(MainTrails, add = TRUE, lwd=4, col="red")
 ```
 
 ## Definição de área colhível
