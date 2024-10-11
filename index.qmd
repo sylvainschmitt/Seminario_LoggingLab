@@ -11,13 +11,19 @@ bibliography: references.bib
 
 # Introdução
 
+Texto breve
+
 ## O que o pacote faz?
 
 Simulação de corte seletivo usando dados de inventário florestal.
 
 ![](https://ars.els-cdn.com/content/image/1-s2.0-S0304380023002697-ga1_lrg.jpg)
 
-## Flowchart do pacote {.scrollable}
+::: notes
+Teste de nota do alto-falante.
+:::
+
+## O que o pacote faz?
 
 ::::: columns
 ::: {.column width="30%"}
@@ -47,18 +53,21 @@ install.packages("devtools")
 devtools::install_github("VincyaneBadouard/LoggingLab")
 ```
 
-## Pacote R
+## Outros pacotes R
 
-Para descrever...
+Usaremos o `tidyverse` para manipular tabelas e criar gráficos, e o `sf` para manipular objetos espaciais.
 
 ```{r libs}
 #| echo: true
 library(LoggingLab)
 library(tidyverse)
 library(sf)
+theme_set(theme_bw())
 ```
 
 # Entradas
+
+Bla.
 
 -   **Inventário**: inventários de árvores da parcela registrada
 -   **Máscara do lote**: os limites da área a ser explorada
@@ -68,17 +77,11 @@ library(sf)
 
 ## Inventário
 
-O inventário do lote 6 de Paracou está disponível.
-
-```{r p6}
-#| echo: true
-Paracou6_2016 %>% 
-  head()
-```
+> O que é isso?
 
 ## Inventário
 
-As colunas exigidas pelo pacote são:
+As colunas exigidas pelo `LoggingLab` são:
 
 -   `Forest`: o nome da floresta para aplicar a fórmula de volume correspondente.
 -   `idTree`: um identificador exclusivo para cada árvore.
@@ -87,28 +90,42 @@ As colunas exigidas pelo pacote são:
 -   `Family`, `Genus`, `Species`: dados botânicos.
 -   `CircCorr`: circunferência de cada árvore.
 
+## Inventário
+
+O inventário do lote 6 de Paracou está disponível dentro `LoggingLab`.
+
+```{r p6}
+#| echo: true
+head(Paracou6_2016)
+```
+
+## Inventário
+
+```{r p6plot}
+#| echo: true
+Paracou6_2016 %>% 
+  st_as_sf(coords = c("Xutm", "Yutm")) %>% 
+  ggplot() + geom_sf()
+```
+
 ## Máscara do lote
 
 A máscara do lote define os limites da área a ser registrada.
 
+> Por que?
+
+## Máscara do lote
+
+A máscara do lote 6 de Paracou está disponível dentro `LoggingLab`.
+
 ```{r mask}
 #| echo: true
-sp::plot(PlotMask)
-```
-
-## Dados de espécies
-
-`SpeciesCriteria` contém dados específicos de cada espécie:
-
-```{r species}
-#| echo: true
-SpeciesCriteria %>% 
-  head()
+ggplot(st_as_sf(PlotMask)) + geom_sf()
 ```
 
 ## Dados de espécies {.smaller}
 
-As colunas são:
+`SpeciesCriteria` contém dados específicos de cada espécie. As colunas são:
 
 -   `CommercialLevel`: Nível de interesse econômico. 1: principal espécie econômica, 2 ou mais: espécies registradas com o objetivo de diversificação, 0: espécies cujo gênero é coberto por um nome comercial, mas que não são registradas.
 
@@ -120,53 +137,35 @@ As colunas são:
 
 -   `Aggregative`: Caráter agregador da espécie. Se for `TRUE`, as árvores isoladas não serão cortadas.
 
+## Dados de espécies
+
+Dados de espécies de Guiana Francesa são disponível dentro `LoggingLab`.
+
+```{r species}
+#| echo: true
+head(SpeciesCriteria)
+```
+
 ## Alometria volumétrica
 
 `ForestZoneVolumeParametersTable` contém os parâmetros de alometria a serem calculados.
 
 $$Volume = aCoef + bCoef \times DBH^2$$
 
+> Por que?
+
+## Alometria volumétrica
+
+Alometria volumétrica de Guiana Francesa são disponível dentro `LoggingLab`.
+
 ```{r allometry}
 #| echo: true
-ForestZoneVolumeParametersTable %>% 
-  head()
+head(ForestZoneVolumeParametersTable)
 ```
-
-## Cenários
-
-Os cenários reúnem os principais parâmetros de gerenciamento.
-
-Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.
-
-```{r scenarios}
-#| echo: true
-ScenariosTable
-```
-
-## Cenários
-
-Os cenários reúnem os principais parâmetros de gerenciamento.
-
-Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.
-
-```{r scenariostab}
-ScenariosTable %>% knitr::kable()
-```
-
-## Cenários {.smaller}
-
-As colunas são:
-
--   `Type`: O nome do cenário.
--   `SpatialDataType`: o tipo de dados espaciais (Lidar ou SRTM).
--   `Objective`: Volume objetivo por hectare.
--   `Diversification`: Permitir o corte de outras espécies além das principais espécies comerciais.
--   `Winching`: Método de guincho. Sem cabo ou garra = “0”, somente cabo = “1”, garra + cabo = “2”.
--   `DirectionalFelling`: “0” = não utilizado, ‘1’ = apenas para evitar danos a árvores futuras e de reserva, ‘2’ = evitar danos a árvores futuras e de reserva + orientação da trilha.
-
-Todas as funções permitem `scenario = “manual”`: nesse caso, todos os argumentos devem ser adicionados manualmente. Seu nome é o mesmo das colunas.
 
 # Simulação de registro detalhado
+
+Texto breve
 
 ## Validar o inventário
 
@@ -174,13 +173,22 @@ As árvores que não estão na área registrada ou que são muito pequenas para 
 
 ```{r prep}
 #| echo: true
-Paracou6_2016 %>% 
-  inventorycheckformat() %>% 
-  cleaninventory(PlotMask, loggingparameters()) ->
-  inventory
+inventory <- inventorycheckformat(Paracou6_2016)
+inventory <- cleaninventory(inventory, PlotMask, loggingparameters())
 ```
 
 `loggingparameters()` define todos os parâmetros de registro. Consulte sua ajuda. Os valores padrão são os usados na Guiana Francesa.
+
+## Validar o inventário
+
+Como os dados já estavam limpos, não houve muitas alterações.
+
+```{r prepmap}
+#| echo: true
+inventory %>% 
+  st_as_sf(coords = c("Xutm", "Yutm")) %>% 
+  ggplot() + geom_sf()
+```
 
 ## Calcular as dimensões da árvore
 
@@ -188,25 +196,36 @@ Calcule as dimensões da árvore (altura da árvore, do tronco e da copa, diâme
 
 ```{r dims}
 #| echo: true
+inventory <- addtreedim(inventory, ForestZoneVolumeParametersTable)
+head(select(inventory, TreeHarvestableVolume, TrunkHeight, TreeHeight, CrownHeight,
+            CrownDiameter, WoodDensity, AGB))
+```
+
+## Calcular as dimensões da árvore
+
+```{r dimsplot}
+#| echo: true
 inventory %>% 
-  addtreedim(volumeparameters = ForestZoneVolumeParametersTable) ->
-  inventory
-inventory %>% 
-  select(TreeHarvestableVolume, TrunkHeight, TreeHeight, CrownHeight,
-         CrownDiameter, WoodDensity, AGB) %>% 
-  head()
+  st_as_sf(coords = c("Xutm", "Yutm")) %>% 
+  ggplot() + geom_sf(aes(col = TreeHarvestableVolume)) + 
+  scale_color_viridis_c(trans = "log")
 ```
 
 ## Principais trilhas de derrapagem
 
 Gere a trilha principal do terreno inventariado, como linhas na borda e fora do terreno.
 
+> Por que ?
+
+## Principais trilhas de derrapagem
+
 ```{r maintrail}
 #| echo: true
 #| cache: true
 MainTrails <- maintrailextract(DTMParacou)
-sp::plot(DTMParacou)
-sp::plot(MainTrails, add = TRUE, lwd=4, col="red")
+ggplot(MainTrails) +
+  tidyterra::geom_spatraster(data = terra::rast(DTMParacou)) + # add to pkg list
+  geom_sf()
 ```
 
 ## Definição de área colhível
@@ -218,6 +237,8 @@ Por padrão, uma unidade de prospecção é uma área conectada a uma trilha de 
 Usamos um cenário manual para poder alterar os argumentos facilmente. O guincho é definido como 2, ou seja, a garra é usada, se possível (6 m de extensão), e o cabo é usado até 40 m.
 
 ## Definição de área colhível
+
+Bla.
 
 ```{r harvareas}
 #| echo: true
@@ -232,25 +253,22 @@ HarvestableArea <- harvestableareadefinition(
   winching = "2",
   advancedloggingparameters = loggingparameters()
 )
-LoggingMap <- ggplot() +
-  geom_sf(
-    data = HarvestableArea$HarvestablePolygons,
-    fill = "olivedrab", alpha = 0.1
-  ) +
-  geom_sf(
-    data = HarvestableArea$MachinePolygons,
-    fill = "olivedrab", alpha = 0.5
-  )
 ```
 
 ## Definição de área colhível {.smaller}
 
+As áreas verdes claras podem ser colhidas. As verdes escuras podem ser colhidas por máquinas.
+
 ```{r harvareasplot}
 #| echo: true
-LoggingMap
+(base <- ggplot() +
+  geom_sf(data = HarvestableArea$HarvestablePolygons, fill = "olivedrab", alpha = 0.1) +
+  geom_sf(data = HarvestableArea$MachinePolygons, fill = "olivedrab", alpha = 0.5))
 ```
 
-As áreas verdes claras podem ser colhidas. As verdes escuras podem ser colhidas por máquinas.
+```{r}
+LoggingMap <- base # to avoid bug, to be further removed
+```
 
 ## Seleção de árvores {.smaller .scrollable}
 
@@ -538,7 +556,9 @@ TimberV$inventory %>%
   )
 ```
 
-# Simulação de registro rápido
+# Para saber mais
+
+Texto breve
 
 ## Uma única simulação
 
@@ -579,6 +599,42 @@ Retorna um resumo das saídas da função de simulação de registro.
 try(loggingsummary1(Rslt))
 ```
 
+## Cenários
+
+Os cenários reúnem os principais parâmetros de gerenciamento.
+
+Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.
+
+```{r scenarios}
+#| echo: true
+ScenariosTable
+```
+
+## Cenários
+
+Os cenários reúnem os principais parâmetros de gerenciamento.
+
+Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.
+
+```{r scenariostab}
+ScenariosTable %>% knitr::kable()
+```
+
+## Cenários {.smaller}
+
+As colunas são:
+
+-   `Type`: O nome do cenário.
+-   `SpatialDataType`: o tipo de dados espaciais (Lidar ou SRTM).
+-   `Objective`: Volume objetivo por hectare.
+-   `Diversification`: Permitir o corte de outras espécies além das principais espécies comerciais.
+-   `Winching`: Método de guincho. Sem cabo ou garra = “0”, somente cabo = “1”, garra + cabo = “2”.
+-   `DirectionalFelling`: “0” = não utilizado, ‘1’ = apenas para evitar danos a árvores futuras e de reserva, ‘2’ = evitar danos a árvores futuras e de reserva + orientação da trilha.
+
+Todas as funções permitem `scenario = “manual”`: nesse caso, todos os argumentos devem ser adicionados manualmente. Seu nome é o mesmo das colunas.
+
 # Conclusão
+
+Texto breve
 
 ## Referências

@@ -424,15 +424,28 @@ Sylvain Schmitt
 <section>
 <section id="introdução" class="title-slide slide level1 center">
 <h1>Introdução</h1>
-
+<p>Texto breve</p>
 </section>
 <section id="o-que-o-pacote-faz" class="slide level2">
 <h2>O que o pacote faz?</h2>
 <p>Simulação de corte seletivo usando dados de inventário florestal.</p>
 
-<img data-src="https://ars.els-cdn.com/content/image/1-s2.0-S0304380023002697-ga1_lrg.jpg" class="r-stretch"></section>
-<section id="flowchart-do-pacote" class="slide level2 scrollable">
-<h2>Flowchart do pacote</h2>
+<img data-src="https://ars.els-cdn.com/content/image/1-s2.0-S0304380023002697-ga1_lrg.jpg" class="r-stretch"><aside class="notes">
+<p>Teste de nota do alto-falante.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="o-que-o-pacote-faz-1" class="slide level2">
+<h2>O que o pacote faz?</h2>
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><img data-src="figs/Fig_Flowchart.jpg"></p>
@@ -458,18 +471,20 @@ Sylvain Schmitt
 <span id="cb1-2"><a href="#cb1-2"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"VincyaneBadouard/LoggingLab"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="pacote-r" class="slide level2">
-<h2>Pacote R</h2>
-<p>Para descrever…</p>
+<section id="outros-pacotes-r" class="slide level2">
+<h2>Outros pacotes R</h2>
+<p>Usaremos o <code>tidyverse</code> para manipular tabelas e criar gráficos, e o <code>sf</code> para manipular objetos espaciais.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(LoggingLab)</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">library</span>(sf)</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
 <section id="entradas" class="title-slide slide level1 center">
 <h1>Entradas</h1>
+<p>Bla.</p>
 <ul>
 <li><strong>Inventário</strong>: inventários de árvores da parcela registrada</li>
 <li><strong>Máscara do lote</strong>: os limites da área a ser explorada</li>
@@ -480,10 +495,27 @@ Sylvain Schmitt
 </section>
 <section id="inventário" class="slide level2">
 <h2>Inventário</h2>
-<p>O inventário do lote 6 de Paracou está disponível.</p>
+<blockquote>
+<p>O que é isso?</p>
+</blockquote>
+</section>
+<section id="inventário-1" class="slide level2">
+<h2>Inventário</h2>
+<p>As colunas exigidas pelo <code>LoggingLab</code> são:</p>
+<ul>
+<li><code>Forest</code>: o nome da floresta para aplicar a fórmula de volume correspondente.</li>
+<li><code>idTree</code>: um identificador exclusivo para cada árvore.</li>
+<li><code>Xutm</code> e <code>Yutm</code>: as coordenadas de cada árvore.</li>
+<li><code>CodeAlive</code>: árvore viva ou morta.</li>
+<li><code>Family</code>, <code>Genus</code>, <code>Species</code>: dados botânicos.</li>
+<li><code>CircCorr</code>: circunferência de cada árvore.</li>
+</ul>
+</section>
+<section id="inventário-2" class="slide level2">
+<h2>Inventário</h2>
+<p>O inventário do lote 6 de Paracou está disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>Paracou6_2016 <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">head</span>(Paracou6_2016)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Forest Plot PlotArea SubPlot idTree Protocole Xfield Yfield     Xutm
 1 Paracou    6     6.25       1 100726   Guyafor   13.5  201.0 286420.1
@@ -516,32 +548,46 @@ Sylvain Schmitt
 </div>
 </div>
 </section>
-<section id="inventário-1" class="slide level2">
+<section id="inventário-3" class="slide level2">
 <h2>Inventário</h2>
-<p>As colunas exigidas pelo pacote são:</p>
-<ul>
-<li><code>Forest</code>: o nome da floresta para aplicar a fórmula de volume correspondente.</li>
-<li><code>idTree</code>: um identificador exclusivo para cada árvore.</li>
-<li><code>Xutm</code> e <code>Yutm</code>: as coordenadas de cada árvore.</li>
-<li><code>CodeAlive</code>: árvore viva ou morta.</li>
-<li><code>Family</code>, <code>Genus</code>, <code>Species</code>: dados botânicos.</li>
-<li><code>CircCorr</code>: circunferência de cada árvore.</li>
-</ul>
-</section>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>Paracou6_2016 <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/p6plot-1.png" width="960" class="r-stretch"></section>
 <section id="máscara-do-lote" class="slide level2">
 <h2>Máscara do lote</h2>
 <p>A máscara do lote define os limites da área a ser registrada.</p>
+<blockquote>
+<p>Por que?</p>
+</blockquote>
+</section>
+<section id="máscara-do-lote-1" class="slide level2">
+<h2>Máscara do lote</h2>
+<p>A máscara do lote 6 de Paracou está disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>sp<span class="sc">::</span><span class="fu">plot</span>(PlotMask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ggplot</span>(<span class="fu">st_as_sf</span>(PlotMask)) <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="index_files/figure-revealjs/mask-1.png" width="960" class="r-stretch"></section>
-<section id="dados-de-espécies" class="slide level2">
+<section id="dados-de-espécies" class="slide level2 smaller">
 <h2>Dados de espécies</h2>
-<p><code>SpeciesCriteria</code> contém dados específicos de cada espécie:</p>
+<p><code>SpeciesCriteria</code> contém dados específicos de cada espécie. As colunas são:</p>
+<ul>
+<li><p><code>CommercialLevel</code>: Nível de interesse econômico. 1: principal espécie econômica, 2 ou mais: espécies registradas com o objetivo de diversificação, 0: espécies cujo gênero é coberto por um nome comercial, mas que não são registradas.</p></li>
+<li><p><code>MinFD</code>: Diâmetro mínimo de corte, em centímetros.</p></li>
+<li><p><code>UpMinFD</code>: Diâmetro mínimo de corte aprimorado (caso de povoamento excessivamente rico), em centímetros.</p></li>
+<li><p><code>MaxFD</code>: Diâmetro máximo de corte, em centímetros.</p></li>
+<li><p><code>Aggregative</code>: Caráter agregador da espécie. Se for <code>TRUE</code>, as árvores isoladas não serão cortadas.</p></li>
+</ul>
+</section>
+<section id="dados-de-espécies-1" class="slide level2">
+<h2>Dados de espécies</h2>
+<p>Dados de espécies de Guiana Francesa são disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>SpeciesCriteria <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">head</span>(SpeciesCriteria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 8
   CommercialName  Genus  Species CommercialLevel MinFD UpMinFD MaxFD Aggregative
@@ -555,24 +601,19 @@ Sylvain Schmitt
 </div>
 </div>
 </section>
-<section id="dados-de-espécies-1" class="slide level2 smaller">
-<h2>Dados de espécies</h2>
-<p>As colunas são:</p>
-<ul>
-<li><p><code>CommercialLevel</code>: Nível de interesse econômico. 1: principal espécie econômica, 2 ou mais: espécies registradas com o objetivo de diversificação, 0: espécies cujo gênero é coberto por um nome comercial, mas que não são registradas.</p></li>
-<li><p><code>MinFD</code>: Diâmetro mínimo de corte, em centímetros.</p></li>
-<li><p><code>UpMinFD</code>: Diâmetro mínimo de corte aprimorado (caso de povoamento excessivamente rico), em centímetros.</p></li>
-<li><p><code>MaxFD</code>: Diâmetro máximo de corte, em centímetros.</p></li>
-<li><p><code>Aggregative</code>: Caráter agregador da espécie. Se for <code>TRUE</code>, as árvores isoladas não serão cortadas.</p></li>
-</ul>
-</section>
 <section id="alometria-volumétrica" class="slide level2">
 <h2>Alometria volumétrica</h2>
 <p><code>ForestZoneVolumeParametersTable</code> contém os parâmetros de alometria a serem calculados.</p>
 <p><span class="math display">\[Volume = aCoef + bCoef \times DBH^2\]</span></p>
+<blockquote>
+<p>Por que?</p>
+</blockquote>
+</section>
+<section id="alometria-volumétrica-1" class="slide level2">
+<h2>Alometria volumétrica</h2>
+<p>Alometria volumétrica de Guiana Francesa são disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>ForestZoneVolumeParametersTable <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">head</span>(ForestZoneVolumeParametersTable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Forest    Zone     aCoef    bCoef
 1       Acarouany    West -0.061776  8.83580
@@ -583,13 +624,467 @@ Sylvain Schmitt
 6 Montagne_Tortue    East -0.084516 10.46132</code></pre>
 </div>
 </div>
+</section></section>
+<section>
+<section id="simulação-de-registro-detalhado" class="title-slide slide level1 center">
+<h1>Simulação de registro detalhado</h1>
+<p>Texto breve</p>
+</section>
+<section id="validar-o-inventário" class="slide level2">
+<h2>Validar o inventário</h2>
+<p>As árvores que não estão na área registrada ou que são muito pequenas para serem consideradas são excluídas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">inventorycheckformat</span>(Paracou6_2016)</span>
+<span id="cb11-2"><a href="#cb11-2"></a>inventory <span class="ot">&lt;-</span> <span class="fu">cleaninventory</span>(inventory, PlotMask, <span class="fu">loggingparameters</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>loggingparameters()</code> define todos os parâmetros de registro. Consulte sua ajuda. Os valores padrão são os usados na Guiana Francesa.</p>
+</section>
+<section id="validar-o-inventário-1" class="slide level2">
+<h2>Validar o inventário</h2>
+<p>Como os dados já estavam limpos, não houve muitas alterações.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/prepmap-1.png" width="960" class="r-stretch"></section>
+<section id="calcular-as-dimensões-da-árvore" class="slide level2">
+<h2>Calcular as dimensões da árvore</h2>
+<p>Calcule as dimensões da árvore (altura da árvore, do tronco e da copa, diâmetro da copa, volume colhível, densidade da madeira e biomassa).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">addtreedim</span>(inventory, ForestZoneVolumeParametersTable)</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">head</span>(<span class="fu">select</span>(inventory, TreeHarvestableVolume, TrunkHeight, TreeHeight, CrownHeight,</span>
+<span id="cb13-3"><a href="#cb13-3"></a>            CrownDiameter, WoodDensity, AGB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  TreeHarvestableVolume TrunkHeight TreeHeight CrownHeight CrownDiameter
+1             0.1027084    8.272213   14.65595    6.383735      2.294504
+2             1.1181093   10.811462   27.40065   16.589191      8.846387
+3             0.1687473    9.203739   16.78716    7.583417      3.383477
+4             1.3075022   10.860306   28.35561   17.495301      9.055571
+5             0.2230879    9.613873   18.14034    8.526472      3.589296
+6             0.6517747   10.576502   24.12416   13.547658      6.521511
+  WoodDensity       AGB
+1   0.7700000 0.1003184
+2   0.7040000 1.3401159
+3   1.0536667 0.2275608
+4   0.7131944 1.6277207
+5   0.8800000 0.2590981
+6   0.8800000 0.8877632</code></pre>
+</div>
+</div>
+</section>
+<section id="calcular-as-dimensões-da-árvore-1" class="slide level2">
+<h2>Calcular as dimensões da árvore</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> TreeHarvestableVolume)) <span class="sc">+</span> </span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">trans =</span> <span class="st">"log"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/dimsplot-1.png" width="960" class="r-stretch"></section>
+<section id="principais-trilhas-de-derrapagem" class="slide level2">
+<h2>Principais trilhas de derrapagem</h2>
+<p>Gere a trilha principal do terreno inventariado, como linhas na borda e fora do terreno.</p>
+<blockquote>
+<p>Por que ?</p>
+</blockquote>
+</section>
+<section id="principais-trilhas-de-derrapagem-1" class="slide level2">
+<h2>Principais trilhas de derrapagem</h2>
+<div class="cell" data-hash="index_cache/revealjs/maintrail_8d088906b6df48bf36ec14d53db39cc3">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>MainTrails <span class="ot">&lt;-</span> <span class="fu">maintrailextract</span>(DTMParacou)</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">ggplot</span>(MainTrails) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  tidyterra<span class="sc">::</span><span class="fu">geom_spatraster</span>(<span class="at">data =</span> terra<span class="sc">::</span><span class="fu">rast</span>(DTMParacou)) <span class="sc">+</span> <span class="co"># add to pkg list</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/maintrail-1.png" width="960" class="r-stretch"></section>
+<section id="definição-de-área-colhível" class="slide level2">
+<h2>Definição de área colhível</h2>
+<p>Defina as zonas de colheita e as zonas acessíveis por máquinas dentro da parcela.</p>
+<p>Por padrão, uma unidade de prospecção é uma área conectada a uma trilha de caminhão ou a uma trilha principal de skid, com uma inclinação de menos de 27%, evitando planícies e o sistema de água (buffer de 30 m).</p>
+<p>Usamos um cenário manual para poder alterar os argumentos facilmente. O guincho é definido como 2, ou seja, a garra é usada, se possível (6 m de extensão), e o cabo é usado até 40 m.</p>
+</section>
+<section id="definição-de-área-colhível-1" class="slide level2">
+<h2>Definição de área colhível</h2>
+<p>Bla.</p>
+<div class="cell" data-hash="index_cache/revealjs/harvareas_6432f3b0a041019c8a95fa5f1fb6e452">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>HarvestableArea <span class="ot">&lt;-</span> <span class="fu">harvestableareadefinition</span>(</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="at">topography =</span> DTMParacou,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="at">maintrails =</span> MainTrails,</span>
+<span id="cb17-6"><a href="#cb17-6"></a>  <span class="at">plotmask =</span> PlotMask,</span>
+<span id="cb17-7"><a href="#cb17-7"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8"></a>  <span class="at">winching =</span> <span class="st">"2"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb17-10"><a href="#cb17-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="definição-de-área-colhível-2" class="slide level2 smaller">
+<h2>Definição de área colhível</h2>
+<p>As áreas verdes claras podem ser colhidas. As verdes escuras podem ser colhidas por máquinas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>(base <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons, <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> HarvestableArea<span class="sc">$</span>MachinePolygons, <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/harvareasplot-1.png" width="960" class="r-stretch"></section>
+<section id="seleção-de-árvores" class="slide level2 smaller scrollable">
+<h2>Seleção de árvores</h2>
+<p>Selecionar árvores para colheita e árvores futuras e de reserva.</p>
+<p>As árvores podem ser colhidas se:</p>
+<ul>
+<li>Pertencem a espécies de primeira categoria econômica ou mais, se houver diversificação.</li>
+<li>O DBH estiver entre o MinFD e o MaxFD.</li>
+<li>Não estiverem isoladas (&gt;100 m por padrão) de outros indivíduos da mesma espécie no caso de espécies agregadas.</li>
+<li>Estão localizadas em declives &lt; 22%.</li>
+<li>Estão fora das trilhas principais.</li>
+</ul>
+<p>Se o volume colhível for maior que o volume objetivo e a diversificação não tiver sido escolhida, o MinFD apenas da primeira espécie de classificação econômica será aumentado. Se a diversificação for permitida, o MinFD das espécies de primeiro e segundo níveis econômicos será aumentado. Em seguida, as árvores a serem colhidas são escolhidas em ordem decrescente de volume, até que o volume objetivo seja atingido.</p>
+<p>Se o volume extraível for muito baixo, a diversificação pode ser aplicada (<code>specieslax = TRUE</code>): as árvores de todas as classificações comerciais são selecionadas em ordem decrescente de volume até que o volume objetivo seja atingido, ou a extração pode continuar apesar de um volume objetivo não atingido ou ser abandonada (<code>objectivelax = FALSE</code>).</p>
+</section>
+<section id="seleção-de-árvores-1" class="slide level2">
+<h2>Seleção de árvores</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">commercialcriteriajoin</span>(SpeciesCriteria) <span class="ot">-&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>  inventory</span>
+<span id="cb19-4"><a href="#cb19-4"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">treeselection</span>(</span>
+<span id="cb19-6"><a href="#cb19-6"></a>    <span class="at">topography =</span> DTMParacou,</span>
+<span id="cb19-7"><a href="#cb19-7"></a>    <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
+<span id="cb19-8"><a href="#cb19-8"></a>    <span class="at">scenario =</span><span class="st">"manual"</span>, </span>
+<span id="cb19-9"><a href="#cb19-9"></a>    <span class="at">objective =</span> <span class="dv">30</span>,</span>
+<span id="cb19-10"><a href="#cb19-10"></a>    <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
+<span id="cb19-11"><a href="#cb19-11"></a>    <span class="at">winching =</span> <span class="st">"2"</span>,</span>
+<span id="cb19-12"><a href="#cb19-12"></a>    <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb19-13"><a href="#cb19-13"></a>    <span class="at">specieslax =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-14"><a href="#cb19-14"></a>    <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-15"><a href="#cb19-15"></a>    <span class="at">harvestablearea =</span> HarvestableArea<span class="sc">$</span>HarvestableArea,</span>
+<span id="cb19-16"><a href="#cb19-16"></a>    <span class="at">plotslope =</span> HarvestableArea<span class="sc">$</span>PlotSlope,</span>
+<span id="cb19-17"><a href="#cb19-17"></a>    <span class="at">maintrails =</span> MainTrails,</span>
+<span id="cb19-18"><a href="#cb19-18"></a>    <span class="at">harvestablepolygons =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
+<span id="cb19-19"><a href="#cb19-19"></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb19-20"><a href="#cb19-20"></a>  ) <span class="ot">-&gt;</span></span>
+<span id="cb19-21"><a href="#cb19-21"></a>  TreeSelection</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>As the harvestable volume (= 187.4m^3)
+                was higher (by 75m^3)
+                than the objective volume, the Minimum Falling Diameter (MinFD) of the 1st and 2nd economic ranks species
+                  were increased to UpMinFD. The objective volume has now been reached.</code></pre>
+</div>
+</div>
+</section>
+<section id="layout-das-trilhas-secundárias-de-derrapagem" class="slide level2 smaller scrollable">
+<h2>Layout das trilhas secundárias de derrapagem</h2>
+<p>A partir das trilhas de arraste principais, desenhe trilhas de arraste secundárias nas zonas acessíveis às máquinas, permitindo coletar as árvores selecionadas com as máquinas escolhidas (argumento <code>winching</code>). O layout é otimizado para reduzir a distância percorrida, respeitando as restrições topográficas e evitando árvores a serem protegidas.</p>
+<p>As trilhas de arraste (principal e secundária) permitem que a madeira seja transportada do talhão para as estradas de caminhões.</p>
+<p>As trilhas de arraste secundárias:</p>
+<ul>
+<li>têm 4 m de largura (<code>ScndTrailWidth</code>),</li>
+<li>têm 22% de inclinação máxima em seu comprimento (<code>MaxTrailCenterlineSlope</code>),</li>
+<li>têm 4% de inclinação lateral máxima, levada em conta se houver dados Lidar disponíveis (<code>MaxTrailCrossSlope</code>).</li>
+</ul>
+<p>Elas evitam:</p>
+<ul>
+<li>as árvores a serem cortadas</li>
+<li>as árvores com um DBH de mais de 50 cm (<code>BigTrees</code>)</li>
+<li>as árvores reservadas.</li>
+</ul>
+<p>Eles se juntam, em ordem decrescente de prioridade:</p>
+<ol type="1">
+<li>grupos em ordem decrescente de abundância de árvores,</li>
+<li>aqueles com a menor distância até a trilha mais próxima.</li>
+</ol>
+<p>O argumento <code>cenário</code> pode ser:</p>
+<ul>
+<li>RIL1/RIL2broken: as trilhas vão até a base das árvores.</li>
+<li>RIL2: somente cabo, ou seja, as trilhas vão até um máximo de 40 m (<code>CableLength</code>) das árvores.</li>
+<li>RIL3/RIL3 incluindo combustível: a garra é usada em trilhas com inclinação longitudinal &lt;20% (<code>GrappleMaxslope</code>). As trilhas ficam a até 6 m (<code>GrappleLength</code>) das árvores. O cabo é usado somente quando a inclinação longitudinal é maior que 20% ou quando a árvore a ser derrapada está isolada de outras árvores a serem exploradas, de 6 a 40 m. As trilhas devem estar a menos de 40 m (<code>CableLength</code>) das árvores.</li>
+</ul>
+</section>
+<section id="layout-das-trilhas-secundárias-de-derrapagem-1" class="slide level2">
+<h2>Layout das trilhas secundárias de derrapagem</h2>
+<div class="cell" data-hash="index_cache/revealjs/2trail_beea1ef288d01057ca65dd87b124026b">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>ScndTrailOutputs <span class="ot">&lt;-</span> <span class="fu">secondtrailsopening</span>(</span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="at">topography =</span> DTMParacou,</span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="at">plotmask =</span> PlotMask,</span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="at">maintrails =</span> MainTrails,</span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="at">plotslope =</span> HarvestableArea<span class="sc">$</span>PlotSlope,</span>
+<span id="cb21-6"><a href="#cb21-6"></a>  <span class="at">harvestablepolygons =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
+<span id="cb21-7"><a href="#cb21-7"></a>  <span class="at">machinepolygons =</span> HarvestableArea<span class="sc">$</span>MachinePolygons,</span>
+<span id="cb21-8"><a href="#cb21-8"></a>  <span class="at">treeselectionoutputs =</span> TreeSelection,</span>
+<span id="cb21-9"><a href="#cb21-9"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
+<span id="cb21-10"><a href="#cb21-10"></a>  <span class="at">winching =</span> <span class="st">"2"</span>,</span>
+<span id="cb21-11"><a href="#cb21-11"></a>  <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
+<span id="cb21-12"><a href="#cb21-12"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb21-13"><a href="#cb21-13"></a>)</span>
+<span id="cb21-14"><a href="#cb21-14"></a>inventory <span class="ot">&lt;-</span> ScndTrailOutputs<span class="sc">$</span>inventory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Essa etapa pode levar algum tempo.</p>
+</section>
+<section id="mapas---preparação" class="slide level2 smaller">
+<h2>Mapas - preparação</h2>
+<p>As funções de mapeamento fáceis de usar ainda não estão no pacote. Usamos objetos <code>sf</code> e <code>ggplot()</code>.</p>
+<p>Primeiro, prepare um <code>sf</code> para todos os tipos de árvores.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">filter</span>(LoggingStatus <span class="sc">==</span> <span class="st">"non-harvestable"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>  NonHarvestable</span>
+<span id="cb22-6"><a href="#cb22-6"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb22-7"><a href="#cb22-7"></a>  <span class="fu">filter</span>(LoggingStatus <span class="sc">==</span> <span class="st">"harvestable"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-8"><a href="#cb22-8"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a>  Harvestable</span>
+<span id="cb22-11"><a href="#cb22-11"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb22-12"><a href="#cb22-12"></a>  <span class="fu">filter</span>(LoggingStatus <span class="sc">==</span> <span class="st">"reserve"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-13"><a href="#cb22-13"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-14"><a href="#cb22-14"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
+<span id="cb22-15"><a href="#cb22-15"></a>  Reserve</span>
+<span id="cb22-16"><a href="#cb22-16"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb22-17"><a href="#cb22-17"></a>  <span class="fu">filter</span>(LoggingStatus <span class="sc">==</span> <span class="st">"future"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-18"><a href="#cb22-18"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-19"><a href="#cb22-19"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
+<span id="cb22-20"><a href="#cb22-20"></a>  Future</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="mapas---árvores-não-colhíveis" class="slide level2 smaller">
+<h2>Mapas - árvores não colhíveis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>LoggingMap <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> NonHarvestable, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"NonHarvestable"</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Trees"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/nonharvest-1.png" width="960" class="r-stretch"></section>
+<section id="mapas---árvores-colhíveis" class="slide level2 smaller">
+<h2>Mapas - árvores colhíveis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>LoggingMap <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Harvestable, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Harvestable"</span>), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Trees"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/harvest-1.png" width="960" class="r-stretch"></section>
+<section id="mapas---todas-as-árvores-designadas" class="slide level2 smaller">
+<h2>Mapas - todas as árvores designadas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>(LoggingMap <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Harvestable, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Harvestable"</span>), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Reserve, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Reserve"</span>), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Future, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Future"</span>), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Trees"</span>) <span class="ot">-&gt;</span> LoggingMap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/allmap-1.png" width="960" class="r-stretch"></section>
+<section id="mapas---com-trilhas" class="slide level2 smaller">
+<h2>Mapas - com trilhas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>LoggingMap <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>SmoothedTrails), <span class="at">col =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess), <span class="at">col =</span> <span class="st">"black"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/2trailmap-1.png" width="960" class="r-stretch"></section>
+<section id="corte-de-árvores" class="slide level2 smaller scrollable">
+<h2>Corte de árvores</h2>
+<p>Simular a derrubada da árvore, com o sucesso ou fracasso da direção da queda da árvore, pé para a trilha, com um ângulo para a trilha e evitando as árvores a serem protegidas, conforme desejado. Se a madeira combustível for explorada, a árvore será direcionada com a copa para a trilha (se a orientação for bem-sucedida) para que possa ser recuperada com uma garra.</p>
+<p>A derrubada da árvore cria uma árvore (incluindo a copa) no solo, com dimensões calculadas por alometrias específicas (<code>advancedloggingparameters</code>). O processo depende do cenário. Por exemplo, cenários sem madeira para combustível implicam:</p>
+<ul>
+<li>com 60% (<code>TreefallSuccessProportion</code>) de probabilidade: base da árvore em direção à trilha mais próxima.</li>
+<li>com 40% de probabilidade: queda aleatória.</li>
+</ul>
+<p>Escolhemos <code>fuel = “2”</code>: exploração de árvores ocas, danos e parte não utilizada das toras. As árvores serão recuperadas da copa com uma garra, se possível. Caso contrário, a recuperação será feita a partir da base do poste com um cabo em ângulo com a trilha.</p>
+<div class="cell" data-hash="index_cache/revealjs/treefelling_5f34eb0aca5eeafc7cbf02b626ede854">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">treefelling</span>(</span>
+<span id="cb27-3"><a href="#cb27-3"></a>    <span class="at">scenario =</span> <span class="st">"manual"</span>, </span>
+<span id="cb27-4"><a href="#cb27-4"></a>    <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5"></a>    <span class="at">winching =</span> <span class="st">"2"</span>, </span>
+<span id="cb27-6"><a href="#cb27-6"></a>    <span class="at">directionalfelling =</span> <span class="st">"2"</span>,</span>
+<span id="cb27-7"><a href="#cb27-7"></a>    <span class="at">maintrailsaccess =</span> ScndTrailOutputs<span class="sc">$</span>MainTrailsAccess,</span>
+<span id="cb27-8"><a href="#cb27-8"></a>    <span class="at">scndtrail =</span> ScndTrailOutputs<span class="sc">$</span>SmoothedTrails,</span>
+<span id="cb27-9"><a href="#cb27-9"></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb27-10"><a href="#cb27-10"></a>  ) <span class="ot">-&gt;</span> </span>
+<span id="cb27-11"><a href="#cb27-11"></a>  inventory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="mapa-pós-registro" class="slide level2 smaller scrollable">
+<h2>Mapa pós-registro</h2>
+<p>Fazemos um mapa com todas as árvores, inclusive as derrubadas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">filter</span>(Selected <span class="sc">==</span> <span class="st">"1"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a>  Selected</span>
+<span id="cb28-6"><a href="#cb28-6"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb28-7"><a href="#cb28-7"></a>  <span class="fu">filter</span>(ProbedHollow <span class="sc">==</span> <span class="st">"1"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-8"><a href="#cb28-8"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a>  Hollow</span>
+<span id="cb28-11"><a href="#cb28-11"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb28-12"><a href="#cb28-12"></a>  <span class="fu">filter</span>(Treefall2ndDeath <span class="sc">==</span> <span class="st">"1"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-13"><a href="#cb28-13"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
+<span id="cb28-15"><a href="#cb28-15"></a>  Treefall</span>
+<span id="cb28-16"><a href="#cb28-16"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb28-17"><a href="#cb28-17"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-18"><a href="#cb28-18"></a>  sf<span class="sc">::</span><span class="fu">st_set_crs</span>(sf<span class="sc">::</span><span class="fu">st_crs</span>(MainTrails)) <span class="ot">-&gt;</span></span>
+<span id="cb28-19"><a href="#cb28-19"></a>  Inventory_crs</span>
+<span id="cb28-20"><a href="#cb28-20"></a>inventory <span class="sc">%&gt;%</span></span>
+<span id="cb28-21"><a href="#cb28-21"></a>  <span class="fu">getgeometry</span>(TreePolygon) <span class="sc">%&gt;%</span></span>
+<span id="cb28-22"><a href="#cb28-22"></a>  sf<span class="sc">::</span><span class="fu">st_set_crs</span>(sf<span class="sc">::</span><span class="fu">st_crs</span>(MainTrails)) <span class="ot">-&gt;</span> </span>
+<span id="cb28-23"><a href="#cb28-23"></a>  TreePolygon</span>
+<span id="cb28-24"><a href="#cb28-24"></a>mapa <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb28-25"><a href="#cb28-25"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Inventory_crs) <span class="sc">+</span></span>
+<span id="cb28-26"><a href="#cb28-26"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> NonHarvestable, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Non-harvestable"</span>), <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb28-27"><a href="#cb28-27"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Future, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Future"</span>), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb28-28"><a href="#cb28-28"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Reserve, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Reserve"</span>), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb28-29"><a href="#cb28-29"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Harvestable, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Harvestable"</span>), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb28-30"><a href="#cb28-30"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreePolygon, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb28-31"><a href="#cb28-31"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Selected, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Selected"</span>), <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb28-32"><a href="#cb28-32"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Hollow, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Hollow"</span>), <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb28-33"><a href="#cb28-33"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Treefall, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Treefall"</span>), <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb28-34"><a href="#cb28-34"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> SecondaryTrails<span class="sc">$</span>maintrailsaccess, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb28-35"><a href="#cb28-35"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> SecondaryTrails<span class="sc">$</span>SmoothedTrails, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb28-36"><a href="#cb28-36"></a>  <span class="fu">scale_colour_manual</span>(</span>
+<span id="cb28-37"><a href="#cb28-37"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb28-38"><a href="#cb28-38"></a>      <span class="st">"Non-harvestable"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
+<span id="cb28-39"><a href="#cb28-39"></a>      <span class="st">"Visible defect"</span> <span class="ot">=</span> <span class="st">"pink"</span>, </span>
+<span id="cb28-40"><a href="#cb28-40"></a>      <span class="st">"Harvestable"</span> <span class="ot">=</span> <span class="st">"skyblue"</span>,</span>
+<span id="cb28-41"><a href="#cb28-41"></a>      <span class="st">"HarvestableUp"</span> <span class="ot">=</span> <span class="st">"blue"</span>, </span>
+<span id="cb28-42"><a href="#cb28-42"></a>      <span class="st">"Selected"</span> <span class="ot">=</span> <span class="st">"red"</span>,</span>
+<span id="cb28-43"><a href="#cb28-43"></a>      <span class="st">"Future"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
+<span id="cb28-44"><a href="#cb28-44"></a>      <span class="st">"Reserve"</span> <span class="ot">=</span> <span class="st">"purple"</span>,</span>
+<span id="cb28-45"><a href="#cb28-45"></a>      <span class="st">"Hollow"</span> <span class="ot">=</span> <span class="st">"forestgreen"</span>,</span>
+<span id="cb28-46"><a href="#cb28-46"></a>      <span class="st">"Treefall"</span> <span class="ot">=</span> <span class="st">"chocolate4"</span></span>
+<span id="cb28-47"><a href="#cb28-47"></a>    )</span>
+<span id="cb28-48"><a href="#cb28-48"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-49"><a href="#cb28-49"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">"Logging status"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="mapa-pós-registro-1" class="slide level2">
+<h2>Mapa pós-registro</h2>
+
+<img data-src="index_files/figure-revealjs/postmapfig-1.png" width="960" class="r-stretch"></section>
+<section id="quantificar-os-volumes-registrados" class="slide level2">
+<h2>Quantificar os volumes registrados</h2>
+<p>Calcule o volume de madeira colhida em árvores saudáveis exploradas para madeira e nas árvores ocas, se elas também forem colhidas para lenha.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>TimberV <span class="ot">&lt;-</span> <span class="fu">timberharvestedvolume</span>(</span>
+<span id="cb29-2"><a href="#cb29-2"></a>  inventory, </span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>, </span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
+<span id="cb29-5"><a href="#cb29-5"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb29-6"><a href="#cb29-6"></a>)</span>
+<span id="cb29-7"><a href="#cb29-7"></a>inventory <span class="ot">&lt;-</span> TimberV<span class="sc">$</span>inventory</span>
+<span id="cb29-8"><a href="#cb29-8"></a>TimberV[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$TimberLoggedVolume
+[1] 110.1624
+
+$NoHollowTimberLoggedVolume
+[1] 100.1948</code></pre>
+</div>
+</div>
+</section>
+<section id="quantificar-os-volumes-registrados-1" class="slide level2">
+<h2>Quantificar os volumes registrados</h2>
+<p>Os detalhes da produção por espécie estão no inventário.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>TimberV<span class="sc">$</span>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">filter</span>(DeathCause <span class="sc">==</span> <span class="st">"cut"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">group_by</span>(CommercialName) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-4"><a href="#cb31-4"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb31-5"><a href="#cb31-5"></a>    <span class="at">trees_n =</span> <span class="fu">n</span>(), </span>
+<span id="cb31-6"><a href="#cb31-6"></a>    <span class="at">volume =</span> <span class="fu">sum</span>(TimberLoggedVolume), </span>
+<span id="cb31-7"><a href="#cb31-7"></a>    <span class="at">CommercialLevel =</span> <span class="fu">unique</span>(CommercialLevel)</span>
+<span id="cb31-8"><a href="#cb31-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 4
+  CommercialName trees_n volume CommercialLevel
+  &lt;chr&gt;            &lt;int&gt;  &lt;dbl&gt;           &lt;dbl&gt;
+1 angélique            1   8.89               1
+2 chawari              2   7.62               2
+3 gonfolo gris         1   3.56               1
+4 grignon franc        4  21.6                1
+5 maho noir            3  12.3                2
+6 wacapou              1   3.61               1
+7 wapa                10  37.7                2
+8 wapa courbaril       1   5.04               2</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="para-saber-mais" class="title-slide slide level1 center">
+<h1>Para saber mais</h1>
+<p>Texto breve</p>
+</section>
+<section id="uma-única-simulação" class="slide level2">
+<h2>Uma única simulação</h2>
+<p>Todas as etapas de simulação podem ser incluídas em uma única função para economizar tempo.</p>
+<div class="cell" data-hash="index_cache/revealjs/single_0cf934efefe181af05159a6ae989a5f6">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>Rslt <span class="ot">&lt;-</span> <span class="fu">loggingsimulation1</span>(</span>
+<span id="cb33-2"><a href="#cb33-2"></a>  Paracou6_2016,</span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="at">plotmask =</span> PlotMask, </span>
+<span id="cb33-4"><a href="#cb33-4"></a>  <span class="at">topography =</span> DTMParacou,</span>
+<span id="cb33-5"><a href="#cb33-5"></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
+<span id="cb33-6"><a href="#cb33-6"></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
+<span id="cb33-7"><a href="#cb33-7"></a>  <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
+<span id="cb33-8"><a href="#cb33-8"></a>  <span class="at">volumeparameters =</span> ForestZoneVolumeParametersTable,</span>
+<span id="cb33-9"><a href="#cb33-9"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
+<span id="cb33-10"><a href="#cb33-10"></a>  <span class="at">objective =</span> <span class="dv">30</span>,</span>
+<span id="cb33-11"><a href="#cb33-11"></a>  <span class="at">fuel =</span> <span class="st">"0"</span>, </span>
+<span id="cb33-12"><a href="#cb33-12"></a>  <span class="at">winching =</span> <span class="st">"2"</span>, </span>
+<span id="cb33-13"><a href="#cb33-13"></a>  <span class="at">directionalfelling =</span> <span class="st">"2"</span>, </span>
+<span id="cb33-14"><a href="#cb33-14"></a>  <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb33-15"><a href="#cb33-15"></a>  <span class="at">specieslax =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb33-16"><a href="#cb33-16"></a>  <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb33-17"><a href="#cb33-17"></a>  <span class="at">crowndiameterparameters =</span> ParamCrownDiameterAllometry,</span>
+<span id="cb33-18"><a href="#cb33-18"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb33-19"><a href="#cb33-19"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Várias simulações podem ser executadas pela função <code>loggingsimulation()</code> para levar em conta a estocasticidade com o argumento <code>iter</code> (número de simulações) e <code>cores</code> (número de núcleos de computador usados para paralelizar o cálculo).</p>
+</section>
+<section id="resultados" class="slide level2">
+<h2>Resultados</h2>
+<p>Retorna um resumo das saídas da função de simulação de registro.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>inventory : Paracou6_2016 
+scenario : manual 
+objective : 30 m3/harvestable ha
+fuel : 0 
+diversification : TRUE 
+winching : 2 
+directionalfelling : 2 
+specieslax : FALSE 
+objectivelax : TRUE 
+Harvestable area : 3.75 ha
+Objective volume : 112.4 m3
+Initial harvestable volume : 179.4 m3,  47.9 m3/harvestable ha
+Timber logged volume : 112.2 m3,  29.9 m3/harvestable ha
+No hollow timber logged volume : 112.2 m3,  29.9 m3/harvestable ha
+Timber extracted volume (timber volume after purge : 96.5 m3,  25.8 m3/harvestable ha
+Error in round(x$FuelWoodBiomass, digits = 1) : 
+  argument non numérique pour une fonction mathématique</code></pre>
+</div>
+</div>
 </section>
 <section id="cenários" class="slide level2">
 <h2>Cenários</h2>
 <p>Os cenários reúnem os principais parâmetros de gerenciamento.</p>
 <p>Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>ScenariosTable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>ScenariosTable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 6
   Type     SpatialDataType Objective Diversification Winching DirectionalFelling
@@ -696,448 +1191,9 @@ Sylvain Schmitt
 <p>Todas as funções permitem <code>scenario = “manual”</code>: nesse caso, todos os argumentos devem ser adicionados manualmente. Seu nome é o mesmo das colunas.</p>
 </section></section>
 <section>
-<section id="simulação-de-registro-detalhado" class="title-slide slide level1 center">
-<h1>Simulação de registro detalhado</h1>
-
-</section>
-<section id="validar-o-inventário" class="slide level2">
-<h2>Validar o inventário</h2>
-<p>As árvores que não estão na área registrada ou que são muito pequenas para serem consideradas são excluídas.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>Paracou6_2016 <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">inventorycheckformat</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">cleaninventory</span>(PlotMask, <span class="fu">loggingparameters</span>()) <span class="ot">-&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a>  inventory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><code>loggingparameters()</code> define todos os parâmetros de registro. Consulte sua ajuda. Os valores padrão são os usados na Guiana Francesa.</p>
-</section>
-<section id="calcular-as-dimensões-da-árvore" class="slide level2">
-<h2>Calcular as dimensões da árvore</h2>
-<p>Calcule as dimensões da árvore (altura da árvore, do tronco e da copa, diâmetro da copa, volume colhível, densidade da madeira e biomassa).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">addtreedim</span>(<span class="at">volumeparameters =</span> ForestZoneVolumeParametersTable) <span class="ot">-&gt;</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>  inventory</span>
-<span id="cb13-4"><a href="#cb13-4"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb13-5"><a href="#cb13-5"></a>  <span class="fu">select</span>(TreeHarvestableVolume, TrunkHeight, TreeHeight, CrownHeight,</span>
-<span id="cb13-6"><a href="#cb13-6"></a>         CrownDiameter, WoodDensity, AGB) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-7"><a href="#cb13-7"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  TreeHarvestableVolume TrunkHeight TreeHeight CrownHeight CrownDiameter
-1             0.1027084    8.272213   14.65595    6.383735      2.370375
-2             1.1181093   10.811462   27.40065   16.589191      8.215510
-3             0.1687473    9.203739   16.78716    7.583417      3.107794
-4             1.3075022   10.860306   28.35561   17.495301      8.413374
-5             0.2230879    9.613873   18.14034    8.526472      3.524954
-6             0.6517747   10.576502   24.12416   13.547658      6.441284
-  WoodDensity       AGB
-1   0.7700000 0.1003184
-2   0.7040000 1.3401159
-3   1.0536667 0.2275608
-4   0.7131944 1.6277207
-5   0.8800000 0.2590981
-6   0.8800000 0.8877632</code></pre>
-</div>
-</div>
-</section>
-<section id="principais-trilhas-de-derrapagem" class="slide level2">
-<h2>Principais trilhas de derrapagem</h2>
-<p>Gere a trilha principal do terreno inventariado, como linhas na borda e fora do terreno.</p>
-<div class="cell" data-hash="index_cache/revealjs/maintrail_d21d726deae4b0989b9261117928e48c">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>MainTrails <span class="ot">&lt;-</span> <span class="fu">maintrailextract</span>(DTMParacou)</span>
-<span id="cb15-2"><a href="#cb15-2"></a>sp<span class="sc">::</span><span class="fu">plot</span>(DTMParacou)</span>
-<span id="cb15-3"><a href="#cb15-3"></a>sp<span class="sc">::</span><span class="fu">plot</span>(MainTrails, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lwd=</span><span class="dv">4</span>, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/maintrail-1.png" width="960" class="r-stretch"></section>
-<section id="definição-de-área-colhível" class="slide level2">
-<h2>Definição de área colhível</h2>
-<p>Defina as zonas de colheita e as zonas acessíveis por máquinas dentro da parcela.</p>
-<p>Por padrão, uma unidade de prospecção é uma área conectada a uma trilha de caminhão ou a uma trilha principal de skid, com uma inclinação de menos de 27%, evitando planícies e o sistema de água (buffer de 30 m).</p>
-<p>Usamos um cenário manual para poder alterar os argumentos facilmente. O guincho é definido como 2, ou seja, a garra é usada, se possível (6 m de extensão), e o cabo é usado até 40 m.</p>
-</section>
-<section id="definição-de-área-colhível-1" class="slide level2">
-<h2>Definição de área colhível</h2>
-<div class="cell" data-hash="index_cache/revealjs/harvareas_7b55413b06a8537ff4b1a3b812c81bfc">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>HarvestableArea <span class="ot">&lt;-</span> <span class="fu">harvestableareadefinition</span>(</span>
-<span id="cb16-2"><a href="#cb16-2"></a>  <span class="at">topography =</span> DTMParacou,</span>
-<span id="cb16-3"><a href="#cb16-3"></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
-<span id="cb16-4"><a href="#cb16-4"></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
-<span id="cb16-5"><a href="#cb16-5"></a>  <span class="at">maintrails =</span> MainTrails,</span>
-<span id="cb16-6"><a href="#cb16-6"></a>  <span class="at">plotmask =</span> PlotMask,</span>
-<span id="cb16-7"><a href="#cb16-7"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
-<span id="cb16-8"><a href="#cb16-8"></a>  <span class="at">winching =</span> <span class="st">"2"</span>,</span>
-<span id="cb16-9"><a href="#cb16-9"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb16-10"><a href="#cb16-10"></a>)</span>
-<span id="cb16-11"><a href="#cb16-11"></a>LoggingMap <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb16-12"><a href="#cb16-12"></a>  <span class="fu">geom_sf</span>(</span>
-<span id="cb16-13"><a href="#cb16-13"></a>    <span class="at">data =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
-<span id="cb16-14"><a href="#cb16-14"></a>    <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span></span>
-<span id="cb16-15"><a href="#cb16-15"></a>  ) <span class="sc">+</span></span>
-<span id="cb16-16"><a href="#cb16-16"></a>  <span class="fu">geom_sf</span>(</span>
-<span id="cb16-17"><a href="#cb16-17"></a>    <span class="at">data =</span> HarvestableArea<span class="sc">$</span>MachinePolygons,</span>
-<span id="cb16-18"><a href="#cb16-18"></a>    <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span></span>
-<span id="cb16-19"><a href="#cb16-19"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="definição-de-área-colhível-2" class="slide level2 smaller">
-<h2>Definição de área colhível</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>LoggingMap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/harvareasplot-1.png" width="960" class="r-stretch"><p>As áreas verdes claras podem ser colhidas. As verdes escuras podem ser colhidas por máquinas.</p>
-</section>
-<section id="seleção-de-árvores" class="slide level2 smaller scrollable">
-<h2>Seleção de árvores</h2>
-<p>Selecionar árvores para colheita e árvores futuras e de reserva.</p>
-<p>As árvores podem ser colhidas se:</p>
-<ul>
-<li>Pertencem a espécies de primeira categoria econômica ou mais, se houver diversificação.</li>
-<li>O DBH estiver entre o MinFD e o MaxFD.</li>
-<li>Não estiverem isoladas (&gt;100 m por padrão) de outros indivíduos da mesma espécie no caso de espécies agregadas.</li>
-<li>Estão localizadas em declives &lt; 22%.</li>
-<li>Estão fora das trilhas principais.</li>
-</ul>
-<p>Se o volume colhível for maior que o volume objetivo e a diversificação não tiver sido escolhida, o MinFD apenas da primeira espécie de classificação econômica será aumentado. Se a diversificação for permitida, o MinFD das espécies de primeiro e segundo níveis econômicos será aumentado. Em seguida, as árvores a serem colhidas são escolhidas em ordem decrescente de volume, até que o volume objetivo seja atingido.</p>
-<p>Se o volume extraível for muito baixo, a diversificação pode ser aplicada (<code>specieslax = TRUE</code>): as árvores de todas as classificações comerciais são selecionadas em ordem decrescente de volume até que o volume objetivo seja atingido, ou a extração pode continuar apesar de um volume objetivo não atingido ou ser abandonada (<code>objectivelax = FALSE</code>).</p>
-</section>
-<section id="seleção-de-árvores-1" class="slide level2">
-<h2>Seleção de árvores</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">commercialcriteriajoin</span>(SpeciesCriteria) <span class="ot">-&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a>  inventory</span>
-<span id="cb18-4"><a href="#cb18-4"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb18-5"><a href="#cb18-5"></a>  <span class="fu">treeselection</span>(</span>
-<span id="cb18-6"><a href="#cb18-6"></a>    <span class="at">topography =</span> DTMParacou,</span>
-<span id="cb18-7"><a href="#cb18-7"></a>    <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
-<span id="cb18-8"><a href="#cb18-8"></a>    <span class="at">scenario =</span><span class="st">"manual"</span>, </span>
-<span id="cb18-9"><a href="#cb18-9"></a>    <span class="at">objective =</span> <span class="dv">30</span>,</span>
-<span id="cb18-10"><a href="#cb18-10"></a>    <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
-<span id="cb18-11"><a href="#cb18-11"></a>    <span class="at">winching =</span> <span class="st">"2"</span>,</span>
-<span id="cb18-12"><a href="#cb18-12"></a>    <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb18-13"><a href="#cb18-13"></a>    <span class="at">specieslax =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb18-14"><a href="#cb18-14"></a>    <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb18-15"><a href="#cb18-15"></a>    <span class="at">harvestablearea =</span> HarvestableArea<span class="sc">$</span>HarvestableArea,</span>
-<span id="cb18-16"><a href="#cb18-16"></a>    <span class="at">plotslope =</span> HarvestableArea<span class="sc">$</span>PlotSlope,</span>
-<span id="cb18-17"><a href="#cb18-17"></a>    <span class="at">maintrails =</span> MainTrails,</span>
-<span id="cb18-18"><a href="#cb18-18"></a>    <span class="at">harvestablepolygons =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
-<span id="cb18-19"><a href="#cb18-19"></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb18-20"><a href="#cb18-20"></a>  ) <span class="ot">-&gt;</span></span>
-<span id="cb18-21"><a href="#cb18-21"></a>  TreeSelection</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>As the harvestable volume (= 171.3m^3)
-                was higher (by 58.9m^3)
-                than the objective volume, the Minimum Falling Diameter (MinFD) of the 1st and 2nd economic ranks species
-                  were increased to UpMinFD. The objective volume has now been reached.</code></pre>
-</div>
-</div>
-</section>
-<section id="layout-das-trilhas-secundárias-de-derrapagem" class="slide level2 smaller scrollable">
-<h2>Layout das trilhas secundárias de derrapagem</h2>
-<p>A partir das trilhas de arraste principais, desenhe trilhas de arraste secundárias nas zonas acessíveis às máquinas, permitindo coletar as árvores selecionadas com as máquinas escolhidas (argumento <code>winching</code>). O layout é otimizado para reduzir a distância percorrida, respeitando as restrições topográficas e evitando árvores a serem protegidas.</p>
-<p>As trilhas de arraste (principal e secundária) permitem que a madeira seja transportada do talhão para as estradas de caminhões.</p>
-<p>As trilhas de arraste secundárias:</p>
-<ul>
-<li>têm 4 m de largura (<code>ScndTrailWidth</code>),</li>
-<li>têm 22% de inclinação máxima em seu comprimento (<code>MaxTrailCenterlineSlope</code>),</li>
-<li>têm 4% de inclinação lateral máxima, levada em conta se houver dados Lidar disponíveis (<code>MaxTrailCrossSlope</code>).</li>
-</ul>
-<p>Elas evitam:</p>
-<ul>
-<li>as árvores a serem cortadas</li>
-<li>as árvores com um DBH de mais de 50 cm (<code>BigTrees</code>)</li>
-<li>as árvores reservadas.</li>
-</ul>
-<p>Eles se juntam, em ordem decrescente de prioridade:</p>
-<ol type="1">
-<li>grupos em ordem decrescente de abundância de árvores,</li>
-<li>aqueles com a menor distância até a trilha mais próxima.</li>
-</ol>
-<p>O argumento <code>cenário</code> pode ser:</p>
-<ul>
-<li>RIL1/RIL2broken: as trilhas vão até a base das árvores.</li>
-<li>RIL2: somente cabo, ou seja, as trilhas vão até um máximo de 40 m (<code>CableLength</code>) das árvores.</li>
-<li>RIL3/RIL3 incluindo combustível: a garra é usada em trilhas com inclinação longitudinal &lt;20% (<code>GrappleMaxslope</code>). As trilhas ficam a até 6 m (<code>GrappleLength</code>) das árvores. O cabo é usado somente quando a inclinação longitudinal é maior que 20% ou quando a árvore a ser derrapada está isolada de outras árvores a serem exploradas, de 6 a 40 m. As trilhas devem estar a menos de 40 m (<code>CableLength</code>) das árvores.</li>
-</ul>
-</section>
-<section id="layout-das-trilhas-secundárias-de-derrapagem-1" class="slide level2">
-<h2>Layout das trilhas secundárias de derrapagem</h2>
-<div class="cell" data-hash="index_cache/revealjs/2trail_beea1ef288d01057ca65dd87b124026b">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>ScndTrailOutputs <span class="ot">&lt;-</span> <span class="fu">secondtrailsopening</span>(</span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="at">topography =</span> DTMParacou,</span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="at">plotmask =</span> PlotMask,</span>
-<span id="cb20-4"><a href="#cb20-4"></a>  <span class="at">maintrails =</span> MainTrails,</span>
-<span id="cb20-5"><a href="#cb20-5"></a>  <span class="at">plotslope =</span> HarvestableArea<span class="sc">$</span>PlotSlope,</span>
-<span id="cb20-6"><a href="#cb20-6"></a>  <span class="at">harvestablepolygons =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
-<span id="cb20-7"><a href="#cb20-7"></a>  <span class="at">machinepolygons =</span> HarvestableArea<span class="sc">$</span>MachinePolygons,</span>
-<span id="cb20-8"><a href="#cb20-8"></a>  <span class="at">treeselectionoutputs =</span> TreeSelection,</span>
-<span id="cb20-9"><a href="#cb20-9"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
-<span id="cb20-10"><a href="#cb20-10"></a>  <span class="at">winching =</span> <span class="st">"2"</span>,</span>
-<span id="cb20-11"><a href="#cb20-11"></a>  <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
-<span id="cb20-12"><a href="#cb20-12"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb20-13"><a href="#cb20-13"></a>)</span>
-<span id="cb20-14"><a href="#cb20-14"></a>inventory <span class="ot">&lt;-</span> ScndTrailOutputs<span class="sc">$</span>inventory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Essa etapa pode levar algum tempo.</p>
-</section>
-<section id="mapas---preparação" class="slide level2 smaller">
-<h2>Mapas - preparação</h2>
-<p>As funções de mapeamento fáceis de usar ainda não estão no pacote. Usamos objetos <code>sf</code> e <code>ggplot()</code>.</p>
-<p>Primeiro, prepare um <code>sf</code> para todos os tipos de árvores.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">filter</span>(LoggingStatus <span class="sc">==</span> <span class="st">"non-harvestable"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a>  NonHarvestable</span>
-<span id="cb21-6"><a href="#cb21-6"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb21-7"><a href="#cb21-7"></a>  <span class="fu">filter</span>(LoggingStatus <span class="sc">==</span> <span class="st">"harvestable"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-8"><a href="#cb21-8"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb21-9"><a href="#cb21-9"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
-<span id="cb21-10"><a href="#cb21-10"></a>  Harvestable</span>
-<span id="cb21-11"><a href="#cb21-11"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb21-12"><a href="#cb21-12"></a>  <span class="fu">filter</span>(LoggingStatus <span class="sc">==</span> <span class="st">"reserve"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-13"><a href="#cb21-13"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb21-14"><a href="#cb21-14"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
-<span id="cb21-15"><a href="#cb21-15"></a>  Reserve</span>
-<span id="cb21-16"><a href="#cb21-16"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb21-17"><a href="#cb21-17"></a>  <span class="fu">filter</span>(LoggingStatus <span class="sc">==</span> <span class="st">"future"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-18"><a href="#cb21-18"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb21-19"><a href="#cb21-19"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
-<span id="cb21-20"><a href="#cb21-20"></a>  Future</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="mapas---árvores-não-colhíveis" class="slide level2 smaller">
-<h2>Mapas - árvores não colhíveis</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>LoggingMap <span class="sc">+</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> NonHarvestable, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"NonHarvestable"</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Trees"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/nonharvest-1.png" width="960" class="r-stretch"></section>
-<section id="mapas---árvores-colhíveis" class="slide level2 smaller">
-<h2>Mapas - árvores colhíveis</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>LoggingMap <span class="sc">+</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Harvestable, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Harvestable"</span>), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Trees"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/harvest-1.png" width="960" class="r-stretch"></section>
-<section id="mapas---todas-as-árvores-designadas" class="slide level2 smaller">
-<h2>Mapas - todas as árvores designadas</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>(LoggingMap <span class="sc">+</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Harvestable, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Harvestable"</span>), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Reserve, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Reserve"</span>), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Future, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Future"</span>), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb24-5"><a href="#cb24-5"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Trees"</span>) <span class="ot">-&gt;</span> LoggingMap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/allmap-1.png" width="960" class="r-stretch"></section>
-<section id="mapas---com-trilhas" class="slide level2 smaller">
-<h2>Mapas - com trilhas</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>LoggingMap <span class="sc">+</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>SmoothedTrails), <span class="at">col =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
-<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess), <span class="at">col =</span> <span class="st">"black"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/2trailmap-1.png" width="960" class="r-stretch"></section>
-<section id="corte-de-árvores" class="slide level2 smaller scrollable">
-<h2>Corte de árvores</h2>
-<p>Simular a derrubada da árvore, com o sucesso ou fracasso da direção da queda da árvore, pé para a trilha, com um ângulo para a trilha e evitando as árvores a serem protegidas, conforme desejado. Se a madeira combustível for explorada, a árvore será direcionada com a copa para a trilha (se a orientação for bem-sucedida) para que possa ser recuperada com uma garra.</p>
-<p>A derrubada da árvore cria uma árvore (incluindo a copa) no solo, com dimensões calculadas por alometrias específicas (<code>advancedloggingparameters</code>). O processo depende do cenário. Por exemplo, cenários sem madeira para combustível implicam:</p>
-<ul>
-<li>com 60% (<code>TreefallSuccessProportion</code>) de probabilidade: base da árvore em direção à trilha mais próxima.</li>
-<li>com 40% de probabilidade: queda aleatória.</li>
-</ul>
-<p>Escolhemos <code>fuel = “2”</code>: exploração de árvores ocas, danos e parte não utilizada das toras. As árvores serão recuperadas da copa com uma garra, se possível. Caso contrário, a recuperação será feita a partir da base do poste com um cabo em ângulo com a trilha.</p>
-<div class="cell" data-hash="index_cache/revealjs/treefelling_5f34eb0aca5eeafc7cbf02b626ede854">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">treefelling</span>(</span>
-<span id="cb26-3"><a href="#cb26-3"></a>    <span class="at">scenario =</span> <span class="st">"manual"</span>, </span>
-<span id="cb26-4"><a href="#cb26-4"></a>    <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
-<span id="cb26-5"><a href="#cb26-5"></a>    <span class="at">winching =</span> <span class="st">"2"</span>, </span>
-<span id="cb26-6"><a href="#cb26-6"></a>    <span class="at">directionalfelling =</span> <span class="st">"2"</span>,</span>
-<span id="cb26-7"><a href="#cb26-7"></a>    <span class="at">maintrailsaccess =</span> ScndTrailOutputs<span class="sc">$</span>MainTrailsAccess,</span>
-<span id="cb26-8"><a href="#cb26-8"></a>    <span class="at">scndtrail =</span> ScndTrailOutputs<span class="sc">$</span>SmoothedTrails,</span>
-<span id="cb26-9"><a href="#cb26-9"></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb26-10"><a href="#cb26-10"></a>  ) <span class="ot">-&gt;</span> </span>
-<span id="cb26-11"><a href="#cb26-11"></a>  inventory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="mapa-pós-registro" class="slide level2 smaller scrollable">
-<h2>Mapa pós-registro</h2>
-<p>Fazemos um mapa com todas as árvores, inclusive as derrubadas.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">filter</span>(Selected <span class="sc">==</span> <span class="st">"1"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb27-4"><a href="#cb27-4"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a>  Selected</span>
-<span id="cb27-6"><a href="#cb27-6"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb27-7"><a href="#cb27-7"></a>  <span class="fu">filter</span>(ProbedHollow <span class="sc">==</span> <span class="st">"1"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-8"><a href="#cb27-8"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb27-9"><a href="#cb27-9"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
-<span id="cb27-10"><a href="#cb27-10"></a>  Hollow</span>
-<span id="cb27-11"><a href="#cb27-11"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb27-12"><a href="#cb27-12"></a>  <span class="fu">filter</span>(Treefall2ndDeath <span class="sc">==</span> <span class="st">"1"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-13"><a href="#cb27-13"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb27-14"><a href="#cb27-14"></a>  <span class="fu">st_set_crs</span>(<span class="fu">st_crs</span>(SecondaryTrails<span class="sc">$</span>MainTrailsAccess)) <span class="ot">-&gt;</span></span>
-<span id="cb27-15"><a href="#cb27-15"></a>  Treefall</span>
-<span id="cb27-16"><a href="#cb27-16"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb27-17"><a href="#cb27-17"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-18"><a href="#cb27-18"></a>  sf<span class="sc">::</span><span class="fu">st_set_crs</span>(sf<span class="sc">::</span><span class="fu">st_crs</span>(MainTrails)) <span class="ot">-&gt;</span></span>
-<span id="cb27-19"><a href="#cb27-19"></a>  Inventory_crs</span>
-<span id="cb27-20"><a href="#cb27-20"></a>inventory <span class="sc">%&gt;%</span></span>
-<span id="cb27-21"><a href="#cb27-21"></a>  <span class="fu">getgeometry</span>(TreePolygon) <span class="sc">%&gt;%</span></span>
-<span id="cb27-22"><a href="#cb27-22"></a>  sf<span class="sc">::</span><span class="fu">st_set_crs</span>(sf<span class="sc">::</span><span class="fu">st_crs</span>(MainTrails)) <span class="ot">-&gt;</span> </span>
-<span id="cb27-23"><a href="#cb27-23"></a>  TreePolygon</span>
-<span id="cb27-24"><a href="#cb27-24"></a>mapa <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb27-25"><a href="#cb27-25"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Inventory_crs) <span class="sc">+</span></span>
-<span id="cb27-26"><a href="#cb27-26"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> NonHarvestable, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Non-harvestable"</span>), <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
-<span id="cb27-27"><a href="#cb27-27"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Future, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Future"</span>), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
-<span id="cb27-28"><a href="#cb27-28"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Reserve, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Reserve"</span>), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
-<span id="cb27-29"><a href="#cb27-29"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Harvestable, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Harvestable"</span>), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
-<span id="cb27-30"><a href="#cb27-30"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreePolygon, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb27-31"><a href="#cb27-31"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Selected, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Selected"</span>), <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
-<span id="cb27-32"><a href="#cb27-32"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Hollow, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Hollow"</span>), <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
-<span id="cb27-33"><a href="#cb27-33"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Treefall, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Treefall"</span>), <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
-<span id="cb27-34"><a href="#cb27-34"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> SecondaryTrails<span class="sc">$</span>maintrailsaccess, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb27-35"><a href="#cb27-35"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> SecondaryTrails<span class="sc">$</span>SmoothedTrails, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb27-36"><a href="#cb27-36"></a>  <span class="fu">scale_colour_manual</span>(</span>
-<span id="cb27-37"><a href="#cb27-37"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb27-38"><a href="#cb27-38"></a>      <span class="st">"Non-harvestable"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
-<span id="cb27-39"><a href="#cb27-39"></a>      <span class="st">"Visible defect"</span> <span class="ot">=</span> <span class="st">"pink"</span>, </span>
-<span id="cb27-40"><a href="#cb27-40"></a>      <span class="st">"Harvestable"</span> <span class="ot">=</span> <span class="st">"skyblue"</span>,</span>
-<span id="cb27-41"><a href="#cb27-41"></a>      <span class="st">"HarvestableUp"</span> <span class="ot">=</span> <span class="st">"blue"</span>, </span>
-<span id="cb27-42"><a href="#cb27-42"></a>      <span class="st">"Selected"</span> <span class="ot">=</span> <span class="st">"red"</span>,</span>
-<span id="cb27-43"><a href="#cb27-43"></a>      <span class="st">"Future"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
-<span id="cb27-44"><a href="#cb27-44"></a>      <span class="st">"Reserve"</span> <span class="ot">=</span> <span class="st">"purple"</span>,</span>
-<span id="cb27-45"><a href="#cb27-45"></a>      <span class="st">"Hollow"</span> <span class="ot">=</span> <span class="st">"forestgreen"</span>,</span>
-<span id="cb27-46"><a href="#cb27-46"></a>      <span class="st">"Treefall"</span> <span class="ot">=</span> <span class="st">"chocolate4"</span></span>
-<span id="cb27-47"><a href="#cb27-47"></a>    )</span>
-<span id="cb27-48"><a href="#cb27-48"></a>  ) <span class="sc">+</span></span>
-<span id="cb27-49"><a href="#cb27-49"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">"Logging status"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="mapa-pós-registro-1" class="slide level2">
-<h2>Mapa pós-registro</h2>
-
-<img data-src="index_files/figure-revealjs/postmapfig-1.png" width="960" class="r-stretch"></section>
-<section id="quantificar-os-volumes-registrados" class="slide level2">
-<h2>Quantificar os volumes registrados</h2>
-<p>Calcule o volume de madeira colhida em árvores saudáveis exploradas para madeira e nas árvores ocas, se elas também forem colhidas para lenha.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>TimberV <span class="ot">&lt;-</span> <span class="fu">timberharvestedvolume</span>(</span>
-<span id="cb28-2"><a href="#cb28-2"></a>  inventory, </span>
-<span id="cb28-3"><a href="#cb28-3"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>, </span>
-<span id="cb28-4"><a href="#cb28-4"></a>  <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
-<span id="cb28-5"><a href="#cb28-5"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb28-6"><a href="#cb28-6"></a>)</span>
-<span id="cb28-7"><a href="#cb28-7"></a>inventory <span class="ot">&lt;-</span> TimberV<span class="sc">$</span>inventory</span>
-<span id="cb28-8"><a href="#cb28-8"></a>TimberV[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$TimberLoggedVolume
-[1] 110.1624
-
-$NoHollowTimberLoggedVolume
-[1] 100.1948</code></pre>
-</div>
-</div>
-</section>
-<section id="quantificar-os-volumes-registrados-1" class="slide level2">
-<h2>Quantificar os volumes registrados</h2>
-<p>Os detalhes da produção por espécie estão no inventário.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>TimberV<span class="sc">$</span>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">filter</span>(DeathCause <span class="sc">==</span> <span class="st">"cut"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">group_by</span>(CommercialName) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-4"><a href="#cb30-4"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb30-5"><a href="#cb30-5"></a>    <span class="at">trees_n =</span> <span class="fu">n</span>(), </span>
-<span id="cb30-6"><a href="#cb30-6"></a>    <span class="at">volume =</span> <span class="fu">sum</span>(TimberLoggedVolume), </span>
-<span id="cb30-7"><a href="#cb30-7"></a>    <span class="at">CommercialLevel =</span> <span class="fu">unique</span>(CommercialLevel)</span>
-<span id="cb30-8"><a href="#cb30-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 × 4
-  CommercialName trees_n volume CommercialLevel
-  &lt;chr&gt;            &lt;int&gt;  &lt;dbl&gt;           &lt;dbl&gt;
-1 angélique            1   8.89               1
-2 chawari              2   7.62               2
-3 gonfolo gris         1   3.56               1
-4 grignon franc        4  21.6                1
-5 maho noir            3  12.3                2
-6 wacapou              1   3.61               1
-7 wapa                10  37.7                2
-8 wapa courbaril       1   5.04               2</code></pre>
-</div>
-</div>
-</section></section>
-<section>
-<section id="simulação-de-registro-rápido" class="title-slide slide level1 center">
-<h1>Simulação de registro rápido</h1>
-
-</section>
-<section id="uma-única-simulação" class="slide level2">
-<h2>Uma única simulação</h2>
-<p>Todas as etapas de simulação podem ser incluídas em uma única função para economizar tempo.</p>
-<div class="cell" data-hash="index_cache/revealjs/single_0cf934efefe181af05159a6ae989a5f6">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>Rslt <span class="ot">&lt;-</span> <span class="fu">loggingsimulation1</span>(</span>
-<span id="cb32-2"><a href="#cb32-2"></a>  Paracou6_2016,</span>
-<span id="cb32-3"><a href="#cb32-3"></a>  <span class="at">plotmask =</span> PlotMask, </span>
-<span id="cb32-4"><a href="#cb32-4"></a>  <span class="at">topography =</span> DTMParacou,</span>
-<span id="cb32-5"><a href="#cb32-5"></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
-<span id="cb32-6"><a href="#cb32-6"></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
-<span id="cb32-7"><a href="#cb32-7"></a>  <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
-<span id="cb32-8"><a href="#cb32-8"></a>  <span class="at">volumeparameters =</span> ForestZoneVolumeParametersTable,</span>
-<span id="cb32-9"><a href="#cb32-9"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
-<span id="cb32-10"><a href="#cb32-10"></a>  <span class="at">objective =</span> <span class="dv">30</span>,</span>
-<span id="cb32-11"><a href="#cb32-11"></a>  <span class="at">fuel =</span> <span class="st">"0"</span>, </span>
-<span id="cb32-12"><a href="#cb32-12"></a>  <span class="at">winching =</span> <span class="st">"2"</span>, </span>
-<span id="cb32-13"><a href="#cb32-13"></a>  <span class="at">directionalfelling =</span> <span class="st">"2"</span>, </span>
-<span id="cb32-14"><a href="#cb32-14"></a>  <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb32-15"><a href="#cb32-15"></a>  <span class="at">specieslax =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb32-16"><a href="#cb32-16"></a>  <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb32-17"><a href="#cb32-17"></a>  <span class="at">crowndiameterparameters =</span> ParamCrownDiameterAllometry,</span>
-<span id="cb32-18"><a href="#cb32-18"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb32-19"><a href="#cb32-19"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Várias simulações podem ser executadas pela função <code>loggingsimulation()</code> para levar em conta a estocasticidade com o argumento <code>iter</code> (número de simulações) e <code>cores</code> (número de núcleos de computador usados para paralelizar o cálculo).</p>
-</section>
-<section id="resultados" class="slide level2">
-<h2>Resultados</h2>
-<p>Retorna um resumo das saídas da função de simulação de registro.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>inventory : Paracou6_2016 
-scenario : manual 
-objective : 30 m3/harvestable ha
-fuel : 0 
-diversification : TRUE 
-winching : 2 
-directionalfelling : 2 
-specieslax : FALSE 
-objectivelax : TRUE 
-Harvestable area : 3.75 ha
-Objective volume : 112.4 m3
-Initial harvestable volume : 179.4 m3,  47.9 m3/harvestable ha
-Timber logged volume : 112.2 m3,  29.9 m3/harvestable ha
-No hollow timber logged volume : 112.2 m3,  29.9 m3/harvestable ha
-Timber extracted volume (timber volume after purge : 96.5 m3,  25.8 m3/harvestable ha
-Error in round(x$FuelWoodBiomass, digits = 1) : 
-  argument non numérique pour une fonction mathématique</code></pre>
-</div>
-</div>
-</section></section>
-<section>
 <section id="conclusão" class="title-slide slide level1 center">
 <h1>Conclusão</h1>
-
+<p>Texto breve</p>
 </section>
 <section id="referências" class="slide level2 smaller scrollable">
 <h2>Referências</h2>
