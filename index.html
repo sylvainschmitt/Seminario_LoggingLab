@@ -419,12 +419,36 @@ Sylvain Schmitt
 </div>
 </div>
 
-  <p class="date">Oct 9, 2024</p>
+  <p class="date">Oct 11, 2024</p>
 </section>
 <section>
 <section id="introdução" class="title-slide slide level1 center">
 <h1>Introdução</h1>
 
+</section>
+<section id="o-que-o-pacote-faz" class="slide level2">
+<h2>O que o pacote faz?</h2>
+<p>Simulação de corte seletivo usando dados de inventário florestal.</p>
+
+<img data-src="https://ars.els-cdn.com/content/image/1-s2.0-S0304380023002697-ga1_lrg.jpg" class="r-stretch"></section>
+<section id="flowchart-do-pacote" class="slide level2 scrollable">
+<h2>Flowchart do pacote</h2>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><img data-src="figs/Fig_Flowchart.jpg"></p>
+</div><div class="column" style="width:70%;">
+<ul>
+<li>preparação de dados</li>
+<li>trilhas principais</li>
+<li>áreas colhíveis</li>
+<li>seleção de árvores</li>
+<li>trilhas secundárias</li>
+<li>corte de árvores</li>
+<li>adjacência da trilha secundária</li>
+<li>quantificação de volume</li>
+</ul>
+</div>
+</div>
 </section>
 <section id="instalação-do-pacote" class="slide level2">
 <h2>Instalação do pacote</h2>
@@ -700,12 +724,12 @@ Sylvain Schmitt
 <span id="cb13-7"><a href="#cb13-7"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  TreeHarvestableVolume TrunkHeight TreeHeight CrownHeight CrownDiameter
-1             0.1027084    8.272213   14.65595    6.383735      2.310573
-2             1.1181093   10.811462   27.40065   16.589191      8.541983
-3             0.1687473    9.203739   16.78716    7.583417      3.206215
-4             1.3075022   10.860306   28.35561   17.495301      8.196255
-5             0.2230879    9.613873   18.14034    8.526472      3.840410
-6             0.6517747   10.576502   24.12416   13.547658      6.033762
+1             0.1027084    8.272213   14.65595    6.383735      2.370375
+2             1.1181093   10.811462   27.40065   16.589191      8.215510
+3             0.1687473    9.203739   16.78716    7.583417      3.107794
+4             1.3075022   10.860306   28.35561   17.495301      8.413374
+5             0.2230879    9.613873   18.14034    8.526472      3.524954
+6             0.6517747   10.576502   24.12416   13.547658      6.441284
   WoodDensity       AGB
 1   0.7700000 0.1003184
 2   0.7040000 1.3401159
@@ -719,10 +743,10 @@ Sylvain Schmitt
 <section id="principais-trilhas-de-derrapagem" class="slide level2">
 <h2>Principais trilhas de derrapagem</h2>
 <p>Gere a trilha principal do terreno inventariado, como linhas na borda e fora do terreno.</p>
-<div class="cell" data-hash="index_cache/revealjs/maintrail_b105c0b38d859b30fb1aa12612dfe9a1">
+<div class="cell" data-hash="index_cache/revealjs/maintrail_d21d726deae4b0989b9261117928e48c">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>MainTrails <span class="ot">&lt;-</span> <span class="fu">maintrailextract</span>(DTMParacou)</span>
 <span id="cb15-2"><a href="#cb15-2"></a>sp<span class="sc">::</span><span class="fu">plot</span>(DTMParacou)</span>
-<span id="cb15-3"><a href="#cb15-3"></a>sp<span class="sc">::</span><span class="fu">plot</span>(MainTrails, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a href="#cb15-3"></a>sp<span class="sc">::</span><span class="fu">plot</span>(MainTrails, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lwd=</span><span class="dv">4</span>, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="index_files/figure-revealjs/maintrail-1.png" width="960" class="r-stretch"></section>

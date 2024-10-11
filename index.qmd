@@ -13,29 +13,28 @@ bibliography: references.bib
 
 ## O que o pacote faz?
 
-Simulação de corte seletivo usando dados de inventário florestal
-[ADD a map of post-logging]{style="color:red;}
+Simulação de corte seletivo usando dados de inventário florestal.
+
+![](https://ars.els-cdn.com/content/image/1-s2.0-S0304380023002697-ga1_lrg.jpg)
 
 ## Flowchart do pacote {.scrollable}
 
-<!-- change layout to make it into 2 columns (didn't worked for me...-->
-
-:::: .columns
-
+::::: columns
 ::: {.column width="30%"}
-![](Fig_Flowchart.jpg)
-
+![](figs/Fig_Flowchart.jpg)
 :::
 
 ::: {.column width="70%"}
-[ADD list of steps here]{style="color:red;}
-
+-   preparação de dados
+-   trilhas principais
+-   áreas colhíveis
+-   seleção de árvores
+-   trilhas secundárias
+-   corte de árvores
+-   adjacência da trilha secundária
+-   quantificação de volume
 :::
-
-::::
-
-
-
+:::::
 
 ## Instalação do pacote
 
