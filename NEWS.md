@@ -1,3 +1,4 @@
+-   Seminario_LoggingLab 0.1.0.9006: full skeleton to be reviewed
 -   Seminario_LoggingLab 0.1.0.9005: Géraldine's intro adds
 -   Seminario_LoggingLab 0.1.0.9004: todas v0, bug in secondtrailsadjusted and loggingsummary1 without fuelwood
 -   Seminario_LoggingLab 0.1.0.9003: entradas v0

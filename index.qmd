@@ -11,7 +11,11 @@ bibliography: references.bib
 
 # Introdução
 
-Texto breve
+*Texto breve.*
+
+::: notes
+Notas.
+:::
 
 ## O que o pacote faz?
 
@@ -20,7 +24,7 @@ Simulação de corte seletivo usando dados de inventário florestal.
 ![](https://ars.els-cdn.com/content/image/1-s2.0-S0304380023002697-ga1_lrg.jpg)
 
 ::: notes
-Teste de nota do alto-falante.
+Notas.
 :::
 
 ## O que o pacote faz?
@@ -42,6 +46,10 @@ Teste de nota do alto-falante.
 :::
 :::::
 
+::: notes
+Notas.
+:::
+
 ## Instalação do pacote
 
 Usaremos o pacote LoggingLab para R [@Badouard2024] para simular a extração de madeira de impacto reduzido em uma floresta tropical. O pacote deve ser instalado a partir de seu repositório no Github, pois ainda não está no CRAN.
@@ -52,6 +60,10 @@ Usaremos o pacote LoggingLab para R [@Badouard2024] para simular a extração de
 install.packages("devtools")
 devtools::install_github("VincyaneBadouard/LoggingLab")
 ```
+
+::: notes
+Notas.
+:::
 
 ## Outros pacotes R
 
@@ -65,6 +77,10 @@ library(sf)
 theme_set(theme_bw())
 ```
 
+::: notes
+Notas.
+:::
+
 # Entradas
 
 Bla.
@@ -73,11 +89,18 @@ Bla.
 -   **Máscara do lote**: os limites da área a ser explorada
 -   **Dados da espécie**: dados específicos para cada espécie
 -   **Alometria volumétrica**: os parâmetros de alometria a serem calculados
--   **Cenários**: os principais parâmetros de gerenciamento
+
+::: notes
+Notas.
+:::
 
 ## Inventário
 
-> O que é isso?
+*O que é isso?*
+
+::: notes
+Notas.
+:::
 
 ## Inventário
 
@@ -90,6 +113,10 @@ As colunas exigidas pelo `LoggingLab` são:
 -   `Family`, `Genus`, `Species`: dados botânicos.
 -   `CircCorr`: circunferência de cada árvore.
 
+::: notes
+Notas.
+:::
+
 ## Inventário
 
 O inventário do lote 6 de Paracou está disponível dentro `LoggingLab`.
@@ -98,6 +125,10 @@ O inventário do lote 6 de Paracou está disponível dentro `LoggingLab`.
 #| echo: true
 head(Paracou6_2016)
 ```
+
+::: notes
+Notas.
+:::
 
 ## Inventário
 
@@ -108,11 +139,19 @@ Paracou6_2016 %>%
   ggplot() + geom_sf()
 ```
 
+::: notes
+Notas.
+:::
+
 ## Máscara do lote
 
 A máscara do lote define os limites da área a ser registrada.
 
-> Por que?
+*Por que?*
+
+::: notes
+Notas.
+:::
 
 ## Máscara do lote
 
@@ -122,6 +161,10 @@ A máscara do lote 6 de Paracou está disponível dentro `LoggingLab`.
 #| echo: true
 ggplot(st_as_sf(PlotMask)) + geom_sf()
 ```
+
+::: notes
+Notas.
+:::
 
 ## Dados de espécies {.smaller}
 
@@ -137,6 +180,10 @@ ggplot(st_as_sf(PlotMask)) + geom_sf()
 
 -   `Aggregative`: Caráter agregador da espécie. Se for `TRUE`, as árvores isoladas não serão cortadas.
 
+::: notes
+Notas.
+:::
+
 ## Dados de espécies
 
 Dados de espécies de Guiana Francesa são disponível dentro `LoggingLab`.
@@ -146,13 +193,19 @@ Dados de espécies de Guiana Francesa são disponível dentro `LoggingLab`.
 head(SpeciesCriteria)
 ```
 
+::: notes
+Notas.
+:::
+
 ## Alometria volumétrica
 
 `ForestZoneVolumeParametersTable` contém os parâmetros de alometria a serem calculados.
 
-$$Volume = aCoef + bCoef \times DBH^2$$
+$$Volume = aCoef + bCoef \times DBH^2$$*Por que?*
 
-> Por que?
+::: notes
+Notas.
+:::
 
 ## Alometria volumétrica
 
@@ -163,9 +216,17 @@ Alometria volumétrica de Guiana Francesa são disponível dentro `LoggingLab`.
 head(ForestZoneVolumeParametersTable)
 ```
 
+::: notes
+Notas.
+:::
+
 # Simulação de registro detalhado
 
-Texto breve
+*Texto breve.*
+
+::: notes
+Notas.
+:::
 
 ## Validar o inventário
 
@@ -177,7 +238,11 @@ inventory <- inventorycheckformat(Paracou6_2016)
 inventory <- cleaninventory(inventory, PlotMask, loggingparameters())
 ```
 
-`loggingparameters()` define todos os parâmetros de registro. Consulte sua ajuda. Os valores padrão são os usados na Guiana Francesa.
+`loggingparameters()` define todos os parâmetros de registro. Consulte sua ajuda (`?loggingparameters`). Os valores padrão são os usados na Guiana Francesa.
+
+::: notes
+Notas.
+:::
 
 ## Validar o inventário
 
@@ -190,6 +255,10 @@ inventory %>%
   ggplot() + geom_sf()
 ```
 
+::: notes
+Notas.
+:::
+
 ## Calcular as dimensões da árvore
 
 Calcule as dimensões da árvore (altura da árvore, do tronco e da copa, diâmetro da copa, volume colhível, densidade da madeira e biomassa).
@@ -201,6 +270,10 @@ head(select(inventory, TreeHarvestableVolume, TrunkHeight, TreeHeight, CrownHeig
             CrownDiameter, WoodDensity, AGB))
 ```
 
+::: notes
+Notas.
+:::
+
 ## Calcular as dimensões da árvore
 
 ```{r dimsplot}
@@ -211,11 +284,19 @@ inventory %>%
   scale_color_viridis_c(trans = "log")
 ```
 
+::: notes
+Notas.
+:::
+
 ## Principais trilhas de derrapagem
 
 Gere a trilha principal do terreno inventariado, como linhas na borda e fora do terreno.
 
-> Por que ?
+*Por que ?*
+
+::: notes
+Notas.
+:::
 
 ## Principais trilhas de derrapagem
 
@@ -228,17 +309,23 @@ ggplot(MainTrails) +
   geom_sf()
 ```
 
+::: notes
+Notas.
+:::
+
 ## Definição de área colhível
 
 Defina as zonas de colheita e as zonas acessíveis por máquinas dentro da parcela.
 
 Por padrão, uma unidade de prospecção é uma área conectada a uma trilha de caminhão ou a uma trilha principal de skid, com uma inclinação de menos de 27%, evitando planícies e o sistema de água (buffer de 30 m).
 
-Usamos um cenário manual para poder alterar os argumentos facilmente. O guincho é definido como 2, ou seja, a garra é usada, se possível (6 m de extensão), e o cabo é usado até 40 m.
+::: notes
+Notas.
+:::
 
 ## Definição de área colhível
 
-Bla.
+Usamos um cenário manual para poder alterar os argumentos facilmente. O guincho é definido como 2, ou seja, a garra é usada, se possível (6 m de extensão), e o cabo é usado até 40 m.
 
 ```{r harvareas}
 #| echo: true
@@ -255,6 +342,10 @@ HarvestableArea <- harvestableareadefinition(
 )
 ```
 
+::: notes
+Notas.
+:::
+
 ## Definição de área colhível {.smaller}
 
 As áreas verdes claras podem ser colhidas. As verdes escuras podem ser colhidas por máquinas.
@@ -266,9 +357,9 @@ As áreas verdes claras podem ser colhidas. As verdes escuras podem ser colhidas
   geom_sf(data = HarvestableArea$MachinePolygons, fill = "olivedrab", alpha = 0.5))
 ```
 
-```{r}
-LoggingMap <- base # to avoid bug, to be further removed
-```
+::: notes
+Notas.
+:::
 
 ## Seleção de árvores {.smaller .scrollable}
 
@@ -284,17 +375,20 @@ As árvores podem ser colhidas se:
 
 Se o volume colhível for maior que o volume objetivo e a diversificação não tiver sido escolhida, o MinFD apenas da primeira espécie de classificação econômica será aumentado. Se a diversificação for permitida, o MinFD das espécies de primeiro e segundo níveis econômicos será aumentado. Em seguida, as árvores a serem colhidas são escolhidas em ordem decrescente de volume, até que o volume objetivo seja atingido.
 
-Se o volume extraível for muito baixo, a diversificação pode ser aplicada (`specieslax = TRUE`): as árvores de todas as classificações comerciais são selecionadas em ordem decrescente de volume até que o volume objetivo seja atingido, ou a extração pode continuar apesar de um volume objetivo não atingido ou ser abandonada (`objectivelax = FALSE`).
+::: notes
+Notas.
+:::
 
-## Seleção de árvores
+## Seleção de árvores {.smaller}
+
+Se o volume extraível for muito baixo, a diversificação pode ser aplicada (`specieslax = TRUE`): as árvores de todas as classificações comerciais são selecionadas em ordem decrescente de volume até que o volume objetivo seja atingido, ou a extração pode continuar apesar de um volume objetivo não atingido ou ser abandonada (`objectivelax = FALSE`).
 
 ```{r treesel}
 #| echo: true
 #| warning: true
-inventory %>% 
-  commercialcriteriajoin(SpeciesCriteria) ->
-  inventory
-inventory %>% 
+inventory <- inventory %>% 
+  commercialcriteriajoin(SpeciesCriteria)
+TreeSelection <- inventory %>% 
   treeselection(
     topography = DTMParacou,
     speciescriteria = SpeciesCriteria,
@@ -310,11 +404,31 @@ inventory %>%
     maintrails = MainTrails,
     harvestablepolygons = HarvestableArea$HarvestablePolygons,
     advancedloggingparameters = loggingparameters()
-  ) ->
-  TreeSelection
+  )
+crs <- st_crs(HarvestableArea$HarvestablePolygons)
 ```
 
-## Layout das trilhas secundárias de derrapagem {.smaller .scrollable}
+::: notes
+Notas.
+:::
+
+## Seleção de árvores {.smaller}
+
+*Bla.*
+
+```{r harvest}
+#| echo: true
+base + geom_sf(data = TreeSelection$HarvestableTreesPoints, aes(colour = "Harvestable")) +
+  geom_sf(data = TreeSelection$SelectedTreesPoints, aes(colour = "Selected")) +
+  geom_sf(data = TreeSelection$FutureTreesPoints, aes(colour = "Future")) +
+  geom_sf(data = TreeSelection$ReserveTreesPoints, aes(colour = "Reserve"))
+```
+
+::: notes
+Notas.
+:::
+
+## Trilhas secundárias {.smaller .scrollable}
 
 A partir das trilhas de arraste principais, desenhe trilhas de arraste secundárias nas zonas acessíveis às máquinas, permitindo coletar as árvores selecionadas com as máquinas escolhidas (argumento `winching`). O layout é otimizado para reduzir a distância percorrida, respeitando as restrições topográficas e evitando árvores a serem protegidas.
 
@@ -337,13 +451,11 @@ Eles se juntam, em ordem decrescente de prioridade:
 1.  grupos em ordem decrescente de abundância de árvores,
 2.  aqueles com a menor distância até a trilha mais próxima.
 
-O argumento `cenário` pode ser:
+::: notes
+Notas
+:::
 
--   RIL1/RIL2broken: as trilhas vão até a base das árvores.
--   RIL2: somente cabo, ou seja, as trilhas vão até um máximo de 40 m (`CableLength`) das árvores.
--   RIL3/RIL3 incluindo combustível: a garra é usada em trilhas com inclinação longitudinal \<20% (`GrappleMaxslope`). As trilhas ficam a até 6 m (`GrappleLength`) das árvores. O cabo é usado somente quando a inclinação longitudinal é maior que 20% ou quando a árvore a ser derrapada está isolada de outras árvores a serem exploradas, de 6 a 40 m. As trilhas devem estar a menos de 40 m (`CableLength`) das árvores.
-
-## Layout das trilhas secundárias de derrapagem
+## Trilhas secundárias {.smaller .scrollable}
 
 ```{r 2trail}
 #| echo: true
@@ -358,7 +470,7 @@ ScndTrailOutputs <- secondtrailsopening(
   treeselectionoutputs = TreeSelection,
   scenario = "manual",
   winching = "2",
-  fuel = "2",
+  fuel = "0",
   advancedloggingparameters = loggingparameters()
 )
 inventory <- ScndTrailOutputs$inventory
@@ -366,73 +478,23 @@ inventory <- ScndTrailOutputs$inventory
 
 Essa etapa pode levar algum tempo.
 
-## Mapas - preparação {.smaller}
+::: notes
+Notas.
+:::
 
-As funções de mapeamento fáceis de usar ainda não estão no pacote. Usamos objetos `sf` e `ggplot()`.
+## Trilhas secundárias {.smaller .scrollable}
 
-Primeiro, prepare um `sf` para todos os tipos de árvores.
+*Bla.*
 
-```{r maps_prep}
+```{r tracksplot}
 #| echo: true
-inventory %>% 
-  filter(LoggingStatus == "non-harvestable") %>% 
-  st_as_sf(coords = c("Xutm", "Yutm")) %>%
-  st_set_crs(st_crs(SecondaryTrails$MainTrailsAccess)) ->
-  NonHarvestable
-inventory %>% 
-  filter(LoggingStatus == "harvestable") %>% 
-  st_as_sf(coords = c("Xutm", "Yutm")) %>%
-  st_set_crs(st_crs(SecondaryTrails$MainTrailsAccess)) ->
-  Harvestable
-inventory %>% 
-  filter(LoggingStatus == "reserve") %>% 
-  st_as_sf(coords = c("Xutm", "Yutm")) %>%
-  st_set_crs(st_crs(SecondaryTrails$MainTrailsAccess)) ->
-  Reserve
-inventory %>% 
-  filter(LoggingStatus == "future") %>% 
-  st_as_sf(coords = c("Xutm", "Yutm")) %>%
-  st_set_crs(st_crs(SecondaryTrails$MainTrailsAccess)) ->
-  Future
+base + geom_sf(data = st_as_sf(SecondaryTrails$SmoothedTrails)) +
+  geom_sf(data = TreeSelection$SelectedTreesPoints, aes(colour = "Selected"))
 ```
 
-## Mapas - árvores não colhíveis {.smaller}
-
-```{r nonharvest}
-#| echo: true
-LoggingMap +
-  geom_sf(data = NonHarvestable, aes(colour = "NonHarvestable"), size = 1) +
-  labs(colour = "Trees")
-```
-
-## Mapas - árvores colhíveis {.smaller}
-
-```{r harvest}
-#| echo: true
-LoggingMap +
-  geom_sf(data = Harvestable, aes(colour = "Harvestable"), size = 4) +
-  labs(colour = "Trees")
-```
-
-## Mapas - todas as árvores designadas {.smaller}
-
-```{r allmap}
-#| echo: true
-(LoggingMap +
-  geom_sf(data = Harvestable, aes(colour = "Harvestable"), size = 4) +
-  geom_sf(data = Reserve, aes(colour = "Reserve"), size = 4) +
-  geom_sf(data = Future, aes(colour = "Future"), size = 4) +
-  labs(colour = "Trees") -> LoggingMap)
-```
-
-## Mapas - com trilhas {.smaller}
-
-```{r 2trailmap}
-#| echo: true
-LoggingMap +
-  geom_sf(data = st_as_sf(SecondaryTrails$SmoothedTrails), col = "darkgreen") +
-  geom_sf(data = st_as_sf(SecondaryTrails$MainTrailsAccess), col = "black") 
-```
+::: notes
+Notas
+:::
 
 ## Corte de árvores {.smaller .scrollable}
 
@@ -443,86 +505,38 @@ A derrubada da árvore cria uma árvore (incluindo a copa) no solo, com dimensõ
 -   com 60% (`TreefallSuccessProportion`) de probabilidade: base da árvore em direção à trilha mais próxima.
 -   com 40% de probabilidade: queda aleatória.
 
-Escolhemos `fuel = “2”`: exploração de árvores ocas, danos e parte não utilizada das toras. As árvores serão recuperadas da copa com uma garra, se possível. Caso contrário, a recuperação será feita a partir da base do poste com um cabo em ângulo com a trilha.
-
 ```{r treefelling}
 #| echo: true
 #| cache: true
-inventory %>% 
+inventory <- inventory %>% 
   treefelling(
     scenario = "manual", 
-    fuel = "2",
+    fuel = "0",
     winching = "2", 
     directionalfelling = "2",
     maintrailsaccess = ScndTrailOutputs$MainTrailsAccess,
     scndtrail = ScndTrailOutputs$SmoothedTrails,
     advancedloggingparameters = loggingparameters()
-  ) -> 
-  inventory
+  )
 ```
 
-## Mapa pós-registro {.smaller .scrollable}
+::: notes
+Notas.
+:::
 
-Fazemos um mapa com todas as árvores, inclusive as derrubadas.
+## Corte de árvores {.smaller .scrollable}
 
-```{r postmap}
+Bla.
+
+```{r mappost}
 #| echo: true
-inventory %>% 
-  filter(Selected == "1") %>% 
-  st_as_sf(coords = c("Xutm", "Yutm")) %>%
-  st_set_crs(st_crs(SecondaryTrails$MainTrailsAccess)) ->
-  Selected
-inventory %>% 
-  filter(ProbedHollow == "1") %>% 
-  st_as_sf(coords = c("Xutm", "Yutm")) %>%
-  st_set_crs(st_crs(SecondaryTrails$MainTrailsAccess)) ->
-  Hollow
-inventory %>% 
-  filter(Treefall2ndDeath == "1") %>% 
-  st_as_sf(coords = c("Xutm", "Yutm")) %>%
-  st_set_crs(st_crs(SecondaryTrails$MainTrailsAccess)) ->
-  Treefall
-inventory %>% 
-  sf::st_as_sf(coords = c("Xutm", "Yutm")) %>% 
-  sf::st_set_crs(sf::st_crs(MainTrails)) ->
-  Inventory_crs
-inventory %>%
-  getgeometry(TreePolygon) %>%
-  sf::st_set_crs(sf::st_crs(MainTrails)) -> 
-  TreePolygon
-mapa <- ggplot() +
-  geom_sf(data = Inventory_crs) +
-  geom_sf(data = NonHarvestable, aes(colour = "Non-harvestable"), show.legend = "point") +
-  geom_sf(data = Future, aes(colour = "Future"), size = 4, show.legend = "point") +
-  geom_sf(data = Reserve, aes(colour = "Reserve"), size = 4, show.legend = "point") +
-  geom_sf(data = Harvestable, aes(colour = "Harvestable"), size = 4, show.legend = "point") +
-  geom_sf(data = TreePolygon, alpha = 0.5, fill = "red") +
-  geom_sf(data = Selected, aes(colour = "Selected"), show.legend = "point") +
-  geom_sf(data = Hollow, aes(colour = "Hollow"), show.legend = "point") +
-  geom_sf(data = Treefall, aes(colour = "Treefall"), show.legend = "point") +
-  geom_sf(data = SecondaryTrails$maintrailsaccess, alpha = 0.5, fill = "black") +
-  geom_sf(data = SecondaryTrails$SmoothedTrails, alpha = 0.5, fill = "black") +
-  scale_colour_manual(
-    values = c(
-      "Non-harvestable" = "grey",
-      "Visible defect" = "pink", 
-      "Harvestable" = "skyblue",
-      "HarvestableUp" = "blue", 
-      "Selected" = "red",
-      "Future" = "orange",
-      "Reserve" = "purple",
-      "Hollow" = "forestgreen",
-      "Treefall" = "chocolate4"
-    )
-  ) +
-  labs(color = "Logging status")
+FelledTrees <- getgeometry(inventory, TreePolygon) %>% st_set_crs(crs)
+base + geom_sf(data = st_as_sf(SecondaryTrails$SmoothedTrails)) + geom_sf(data = FelledTrees)
 ```
 
-## Mapa pós-registro
-
-```{r postmapfig}
-mapa
-```
+::: notes
+Notas.
+:::
 
 ## Quantificar os volumes registrados
 
@@ -540,6 +554,10 @@ inventory <- TimberV$inventory
 TimberV[-1]
 ```
 
+::: notes
+Notas.
+:::
+
 ## Quantificar os volumes registrados
 
 Os detalhes da produção por espécie estão no inventário.
@@ -556,11 +574,19 @@ TimberV$inventory %>%
   )
 ```
 
+::: notes
+Notas.
+:::
+
 # Para saber mais
 
 Texto breve
 
-## Uma única simulação
+::: notes
+Notas.
+:::
+
+## Uma única simulação {.smaller}
 
 Todas as etapas de simulação podem ser incluídas em uma única função para economizar tempo.
 
@@ -590,6 +616,10 @@ Rslt <- loggingsimulation1(
 
 Várias simulações podem ser executadas pela função `loggingsimulation()` para levar em conta a estocasticidade com o argumento `iter` (número de simulações) e `cores` (número de núcleos de computador usados para paralelizar o cálculo).
 
+::: notes
+Notas.
+:::
+
 ## Resultados
 
 Retorna um resumo das saídas da função de simulação de registro.
@@ -599,16 +629,9 @@ Retorna um resumo das saídas da função de simulação de registro.
 try(loggingsummary1(Rslt))
 ```
 
-## Cenários
-
-Os cenários reúnem os principais parâmetros de gerenciamento.
-
-Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.
-
-```{r scenarios}
-#| echo: true
-ScenariosTable
-```
+::: notes
+Notas.
+:::
 
 ## Cenários
 
@@ -616,9 +639,11 @@ Os cenários reúnem os principais parâmetros de gerenciamento.
 
 Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.
 
-```{r scenariostab}
-ScenariosTable %>% knitr::kable()
-```
+*Mais.*
+
+::: notes
+Notas.
+:::
 
 ## Cenários {.smaller}
 
@@ -633,8 +658,25 @@ As colunas são:
 
 Todas as funções permitem `scenario = “manual”`: nesse caso, todos os argumentos devem ser adicionados manualmente. Seu nome é o mesmo das colunas.
 
+::: notes
+Notas.
+:::
+
+## Cenários
+
+`LogingLab` inclui cenários predefinidos que correspondem a diferentes versões de registro de impacto reduzido.
+
+```{r scenarios}
+#| echo: true
+ScenariosTable
+```
+
 # Conclusão
 
 Texto breve
+
+::: notes
+Notas.
+:::
 
 ## Referências
