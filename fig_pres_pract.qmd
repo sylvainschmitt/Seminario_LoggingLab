@@ -1,0 +1,23 @@
+---
+title: "Figure for presentation to practitionners"
+format: html
+editor: visual
+date: today
+---
+
+
+```{r libs}
+library(LoggingLab)
+library(tidyverse)
+library(sf)
+theme_set(theme_bw())
+```
+
+## Prelogging inventory
+
+```{r p6_pre_log}
+Paracou6_2016 %>% unite(col="GenSp", Genus, Species, sep="_") %>% 
+  st_as_sf(coords = c("Xutm", "Yutm")) %>% 
+  ggplot(aes(color=GenSp, size=CircCorr/25)) + geom_sf() + theme(legend.position="none")
+```
+
