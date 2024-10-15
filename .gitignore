@@ -4,3 +4,5 @@
 .Rbuildignore
 .Rproj.user/
 index_cache
+fig_pres_pract.md
+fig_pres_pract_files/*

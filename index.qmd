@@ -1,6 +1,6 @@
 ---
 title: "Seminário LoggingLab"
-author: "Sylvain Schmitt"
+author: "Sylvain Schmitt & Géraldine Derroire"
 date: today
 date-format: medium
 format: 
@@ -9,8 +9,6 @@ format:
     output-location: fragment
 bibliography: references.bib
 ---
-
-<!-- GD: Shall we put both our names if we present together ?-->
 
 # Introdução
 
@@ -44,7 +42,6 @@ Notas.
 -   seleção de árvores
 -   trilhas secundárias
 -   corte de árvores
--   adjacência da trilha secundária
 -   quantificação de volume
 :::
 :::::
@@ -52,8 +49,6 @@ Notas.
 ::: notes
 Notas.
 :::
-
-<!-- GD: as we don't want to present the case of fuel wood to keep it simple, we shoudn't talk about ajustment of secondary trails.-->
 
 ## Instalação do pacote
 
@@ -101,13 +96,7 @@ Notas.
 
 ## Inventário
 
-*O que é isso?*
-
-<!--GD: explain that we work will full inventories (all species, all DBH above a certain threshold) and on a small area-->
-
-<!-- maybe put a quick map of P6 with a color per species and a size of dot propostional to the DBH, just to illustrate?
-
-OK, I see that you do this later, fine for me-->
+*O que é isso? Explain that we work will full inventories (all species, all DBH above a certain threshold) and on a small area.*
 
 ::: notes
 Notas.
@@ -156,9 +145,7 @@ Notas.
 
 ## Máscara do lote
 
-A máscara do lote define os limites da área a ser registrada.
-
-<!-- or more explicitly of the limits of the plots?-->
+A máscara do lote define os limites da área a ser registrada ou seja, os limites do lote.
 
 *Por que?*
 
@@ -229,15 +216,13 @@ Alometria volumétrica de Guiana Francesa são disponível dentro `LoggingLab`.
 head(ForestZoneVolumeParametersTable)
 ```
 
-<!-- GD: maybe just mention here that other allometries can be modify, such as crown allometries (we can change it, right?)-->
+*Other allometries can be modify, such as crown allometries.*
 
 ::: notes
 Notas.
 :::
 
-# Simulação de registro detalhado
-
-<!-- GD: I don't understand this title...-->
+# Simulação de exploração
 
 *Texto breve.*
 
@@ -252,14 +237,8 @@ As árvores que não estão na área registrada ou que são muito pequenas para 
 ```{r prep}
 #| echo: true
 inventory <- inventorycheckformat(Paracou6_2016)
-inventory <- cleaninventory(inventory, PlotMask, loggingparameters())
+inventory <- cleaninventory(inventory, PlotMask)
 ```
-
-`loggingparameters()` define todos os parâmetros de registro. Consulte sua ajuda (`?loggingparameters`). Os valores padrão são os usados na Guiana Francesa.
-
-<!-- GD: I wouldn't put the loggingparameters here as they are not related to checking the inventory. I would either put them in the "Entradas" section, or in the "Para saber mais" section.
-
-I've actually realised that in the paper we call this function "advanceloggingparameters" and not "loggingparameters" if I'm not mistaken... oups...-->
 
 ::: notes
 Notas.
@@ -326,11 +305,8 @@ Notas.
 #| cache: true
 MainTrails <- maintrailextract(DTMParacou)
 ggplot(MainTrails) +
-  tidyterra::geom_spatraster(data = terra::rast(DTMParacou)) + # add to pkg list
   geom_sf()
 ```
-
-<!--GD : I wouldn't print the DTM here to avoid having to explain it at this stage. Actually, yes, keep it as it will be usefull to explain the logging area, or move it just before doing the logging area, or next to it on the same slide?-->
 
 ::: notes
 Notas.
@@ -376,8 +352,10 @@ As áreas verdes claras podem ser colhidas. As verdes escuras podem ser colhidas
 ```{r harvareasplot}
 #| echo: true
 (base <- ggplot() +
-  geom_sf(data = HarvestableArea$HarvestablePolygons, fill = "olivedrab", alpha = 0.1) +
-  geom_sf(data = HarvestableArea$MachinePolygons, fill = "olivedrab", alpha = 0.5))
+    tidyterra::geom_spatraster(data = terra::rast(DTMParacou), alpha = .5) +
+    scale_fill_continuous("Altura (m)", na.value = NA) +
+    geom_sf(data = HarvestableArea$HarvestablePolygons, fill = "olivedrab", alpha = 0.1) +
+    geom_sf(data = HarvestableArea$MachinePolygons, fill = "olivedrab", alpha = 0.7))
 ```
 
 ::: notes
@@ -396,10 +374,7 @@ As árvores podem ser colhidas se:
 -   Estão localizadas em declives \< 22%.
 -   Estão fora das trilhas principais.
 
-Se o volume colhível for maior que o volume objetivo e a diversificação não tiver sido escolhida, o MinFD apenas da primeira espécie de classificação econômica será aumentado. Se a diversificação for permitida, o MinFD das espécies de primeiro e segundo níveis econômicos será aumentado. Em seguida, as árvores a serem colhidas são escolhidas em ordem decrescente de volume, até que o volume objetivo seja atingido.
-
-<!-- I think the last paragraph is too complicated, and I wonder if the best wouldn't be to not mention it at all. 
-I'm actually unsured with the package does that: why increase MinFD when the trees are actually chosen in a decreasing order of volume untill the target volume is reached.... there must be a reason but I do'nt remember it...-->
+As árvores a serem colhidas são escolhidas em ordem decrescente de volume, até que o volume objetivo seja atingido.
 
 ::: notes
 Notas.
@@ -454,36 +429,15 @@ base + geom_sf(data = TreeSelection$HarvestableTreesPoints, aes(colour = "Harves
 Notas.
 :::
 
-## Trilhas secundárias {.smaller .scrollable}
+## Trilhas secundárias
 
-A partir das trilhas de arraste principais, desenhe trilhas de arraste secundárias nas zonas acessíveis às máquinas, permitindo coletar as árvores selecionadas com as máquinas escolhidas (argumento `winching`). O layout é otimizado para reduzir a distância percorrida, respeitando as restrições topográficas e evitando árvores a serem protegidas.
-
-As trilhas de arraste (principal e secundária) permitem que a madeira seja transportada do talhão para as estradas de caminhões.
-
-As trilhas de arraste secundárias:
-
--   têm 4 m de largura (`ScndTrailWidth`),
--   têm 22% de inclinação máxima em seu comprimento (`MaxTrailCenterlineSlope`),
--   têm 4% de inclinação lateral máxima, levada em conta se houver dados Lidar disponíveis (`MaxTrailCrossSlope`).
-
-Elas evitam:
-
--   as árvores a serem cortadas
--   as árvores com um DBH de mais de 50 cm (`BigTrees`)
--   as árvores reservadas.
-
-Eles se juntam, em ordem decrescente de prioridade:
-
-1.  grupos em ordem decrescente de abundância de árvores,
-2.  aqueles com a menor distância até a trilha mais próxima.
-
-<!-- here I wonder as well if there is not to much information, with the risk of loosing the audiance, and potentially ourselves...-->
+As trilhas secundárias de derrapagem permitem que as árvores selecionadas sejam colhidas pelas máquinas escolhidas. A rota é otimizada para reduzir a distância percorrida, respeitando as restrições topográficas e evitando as árvores a serem protegidas. Elas têm 4 metros de largura, com uma inclinação máxima de 22% e uma inclinação lateral máxima de 4%. Elas evitam árvores a serem cortadas, árvores grandes (\>50 cm) e árvores de reserva.
 
 ::: notes
 Notas
 :::
 
-## Trilhas secundárias {.smaller .scrollable}
+## Trilhas secundárias
 
 ```{r 2trail}
 #| echo: true
@@ -524,16 +478,13 @@ base + geom_sf(data = st_as_sf(SecondaryTrails$SmoothedTrails)) +
 Notas
 :::
 
-## Corte de árvores {.smaller .scrollable}
+## Corte de árvores
 
-Simular a derrubada da árvore, com o sucesso ou fracasso da direção da queda da árvore, pé para a trilha, com um ângulo para a trilha e evitando as árvores a serem protegidas, conforme desejado. Se a madeira combustível for explorada, a árvore será direcionada com a copa para a trilha (se a orientação for bem-sucedida) para que possa ser recuperada com uma garra.
+Simula o corte de árvores, com a direção bem-sucedida ou não da queda da árvore, ao pé do caminho, em um ângulo em relação ao caminho e evitando as árvores a serem protegidas, conforme desejado. A derrubada da árvore cria uma queda de vento no solo, cujas dimensões são calculadas usando alometrias específicas.
 
-A derrubada da árvore cria uma árvore (incluindo a copa) no solo, com dimensões calculadas por alometrias específicas (`advancedloggingparameters`). O processo depende do cenário. Por exemplo, cenários sem madeira para combustível implicam:
+## Corte de árvores
 
--   com 60% (`TreefallSuccessProportion`) de probabilidade: base da árvore em direção à trilha mais próxima.
--   com 40% de probabilidade: queda aleatória.
-
-<!-- GD: again too much detail, but I wonder if that's what you said I shouldn't pay attention too... oups... sorry-->
+*Bla.*
 
 ```{r treefelling}
 #| echo: true
@@ -549,8 +500,6 @@ inventory <- inventory %>%
     advancedloggingparameters = loggingparameters()
   )
 ```
-
-<!-- GD: I would put the code in a separated slide, as for the other steps-->
 
 ::: notes
 Notas.
@@ -570,7 +519,7 @@ base + geom_sf(data = st_as_sf(SecondaryTrails$SmoothedTrails)) + geom_sf(data =
 Notas.
 :::
 
-## Quantificar os volumes registrados
+## Quantificar os volumes
 
 Calcule o volume de madeira colhida em árvores saudáveis exploradas para madeira e nas árvores ocas, se elas também forem colhidas para lenha.
 
@@ -582,18 +531,14 @@ TimberV <- timberharvestedvolume(
   fuel = "2",
   advancedloggingparameters = loggingparameters()
 )
-inventory <- TimberV$inventory
-TimberV[-1]
+TimberV$TimberLoggedVolume
 ```
-
-<!-- GD: as discused, I don't think we should mention fuel wood and hollow trees at all, because it's complicated enough...
-It would mean here that the function would just return the Timber volume. I wonder why we didn't choose to return also the loss biomass, or the volume of damage, or any values related to damage, as it is very important as well... for a next version of the package ? -->
 
 ::: notes
 Notas.
 :::
 
-## Quantificar os volumes registrados
+## Quantificar os volumes
 
 Os detalhes da produção por espécie estão no inventário.
 
@@ -610,6 +555,21 @@ TimberV$inventory %>%
 ```
 
 <!-- GD: yes, good to show this as well, and maybe here we could also add a slide on getting the biomass per cause of death, as we do in ManagForRes and as I propose to do for the presentation to practicionners -->
+
+::: notes
+Notas.
+:::
+
+## Quantificar os volumes
+
+Bla.
+
+```{r degagb}
+TimberV$inventory %>% 
+  group_by(DeathCause) %>% 
+  summarise(AGB = sum(AGB)) %>% na.omit() %>% 
+  ggplot(aes(DeathCause, AGB)) + geom_col() + xlab("")
+```
 
 ::: notes
 Notas.
@@ -708,6 +668,10 @@ Notas.
 ScenariosTable
 ```
 
+## Parâmetros de exploração
+
+`loggingparameters()` define todos os parâmetros de registro. Consulte sua ajuda (`?loggingparameters`). Os valores padrão são os usados na Guiana Francesa.
+
 # Conclusão
 
 Texto breve
@@ -717,5 +681,3 @@ Notas.
 :::
 
 ## Referências
-
-<!-- give also the reference to the vignette ?-->

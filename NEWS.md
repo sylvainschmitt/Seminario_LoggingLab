@@ -1,3 +1,4 @@
+-   Seminario_LoggingLab 0.1.0.9008: Gerladine's 1st review integration #5
 -   Seminario_LoggingLab 0.1.0.9007: fig_pres_pract
 -   Seminario_LoggingLab 0.1.0.9006: full skeleton to be reviewed
 -   Seminario_LoggingLab 0.1.0.9005: Géraldine's intro adds
