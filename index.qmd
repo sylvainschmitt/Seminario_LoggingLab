@@ -565,6 +565,7 @@ Notas.
 Bla.
 
 ```{r degagb}
+#| echo: true
 TimberV$inventory %>% 
   group_by(DeathCause) %>% 
   summarise(AGB = sum(AGB)) %>% na.omit() %>% 
@@ -681,3 +682,4 @@ Notas.
 :::
 
 ## Referências
+

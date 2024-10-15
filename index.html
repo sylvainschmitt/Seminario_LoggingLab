@@ -912,12 +912,12 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>  TreeHarvestableVolume TrunkHeight TreeHeight CrownHeight CrownDiameter
-1             0.1027084    8.272213   14.65595    6.383735      2.345320
-2             1.1181093   10.811462   27.40065   16.589191      8.184047
-3             0.1687473    9.203739   16.78716    7.583417      3.378222
-4             1.3075022   10.860306   28.35561   17.495301      8.666149
-5             0.2230879    9.613873   18.14034    8.526472      3.827291
-6             0.6517747   10.576502   24.12416   13.547658      6.917392
+1             0.1027084    8.272213   14.65595    6.383735      2.598252
+2             1.1181093   10.811462   27.40065   16.589191      7.772994
+3             0.1687473    9.203739   16.78716    7.583417      3.407940
+4             1.3075022   10.860306   28.35561   17.495301      8.484720
+5             0.2230879    9.613873   18.14034    8.526472      3.361951
+6             0.6517747   10.576502   24.12416   13.547658      6.371736
   WoodDensity       AGB
 1   0.7700000 0.1003184
 2   0.7040000 1.3401159
@@ -1409,8 +1409,18 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <section id="quantificar-os-volumes-2" class="slide level2">
 <h2>Quantificar os volumes</h2>
 <p>Bla.</p>
-
-<img data-src="index_files/figure-revealjs/degagb-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>TimberV<span class="sc">$</span>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">group_by</span>(DeathCause) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">summarise</span>(<span class="at">AGB =</span> <span class="fu">sum</span>(AGB)) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb31-4"><a href="#cb31-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DeathCause, AGB)) <span class="sc">+</span> <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/degagb-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1446,25 +1456,25 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <h2>Uma única simulação</h2>
 <p>Todas as etapas de simulação podem ser incluídas em uma única função para economizar tempo.</p>
 <div class="cell" data-hash="index_cache/revealjs/single_0cf934efefe181af05159a6ae989a5f6">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>Rslt <span class="ot">&lt;-</span> <span class="fu">loggingsimulation1</span>(</span>
-<span id="cb31-2"><a href="#cb31-2"></a>  Paracou6_2016,</span>
-<span id="cb31-3"><a href="#cb31-3"></a>  <span class="at">plotmask =</span> PlotMask, </span>
-<span id="cb31-4"><a href="#cb31-4"></a>  <span class="at">topography =</span> DTMParacou,</span>
-<span id="cb31-5"><a href="#cb31-5"></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
-<span id="cb31-6"><a href="#cb31-6"></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
-<span id="cb31-7"><a href="#cb31-7"></a>  <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
-<span id="cb31-8"><a href="#cb31-8"></a>  <span class="at">volumeparameters =</span> ForestZoneVolumeParametersTable,</span>
-<span id="cb31-9"><a href="#cb31-9"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
-<span id="cb31-10"><a href="#cb31-10"></a>  <span class="at">objective =</span> <span class="dv">30</span>,</span>
-<span id="cb31-11"><a href="#cb31-11"></a>  <span class="at">fuel =</span> <span class="st">"0"</span>, </span>
-<span id="cb31-12"><a href="#cb31-12"></a>  <span class="at">winching =</span> <span class="st">"2"</span>, </span>
-<span id="cb31-13"><a href="#cb31-13"></a>  <span class="at">directionalfelling =</span> <span class="st">"2"</span>, </span>
-<span id="cb31-14"><a href="#cb31-14"></a>  <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb31-15"><a href="#cb31-15"></a>  <span class="at">specieslax =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb31-16"><a href="#cb31-16"></a>  <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb31-17"><a href="#cb31-17"></a>  <span class="at">crowndiameterparameters =</span> ParamCrownDiameterAllometry,</span>
-<span id="cb31-18"><a href="#cb31-18"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb31-19"><a href="#cb31-19"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>Rslt <span class="ot">&lt;-</span> <span class="fu">loggingsimulation1</span>(</span>
+<span id="cb32-2"><a href="#cb32-2"></a>  Paracou6_2016,</span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="at">plotmask =</span> PlotMask, </span>
+<span id="cb32-4"><a href="#cb32-4"></a>  <span class="at">topography =</span> DTMParacou,</span>
+<span id="cb32-5"><a href="#cb32-5"></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
+<span id="cb32-6"><a href="#cb32-6"></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
+<span id="cb32-7"><a href="#cb32-7"></a>  <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
+<span id="cb32-8"><a href="#cb32-8"></a>  <span class="at">volumeparameters =</span> ForestZoneVolumeParametersTable,</span>
+<span id="cb32-9"><a href="#cb32-9"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
+<span id="cb32-10"><a href="#cb32-10"></a>  <span class="at">objective =</span> <span class="dv">30</span>,</span>
+<span id="cb32-11"><a href="#cb32-11"></a>  <span class="at">fuel =</span> <span class="st">"0"</span>, </span>
+<span id="cb32-12"><a href="#cb32-12"></a>  <span class="at">winching =</span> <span class="st">"2"</span>, </span>
+<span id="cb32-13"><a href="#cb32-13"></a>  <span class="at">directionalfelling =</span> <span class="st">"2"</span>, </span>
+<span id="cb32-14"><a href="#cb32-14"></a>  <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb32-15"><a href="#cb32-15"></a>  <span class="at">specieslax =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb32-16"><a href="#cb32-16"></a>  <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb32-17"><a href="#cb32-17"></a>  <span class="at">crowndiameterparameters =</span> ParamCrownDiameterAllometry,</span>
+<span id="cb32-18"><a href="#cb32-18"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb32-19"><a href="#cb32-19"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-hash="index_cache/revealjs/single_0cf934efefe181af05159a6ae989a5f6">
 
@@ -1488,7 +1498,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <h2>Resultados</h2>
 <p>Retorna um resumo das saídas da função de simulação de registro.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1574,7 +1584,7 @@ Error in round(x$FuelWoodBiomass, digits = 1) :
 <h2>Cenários</h2>
 <p><code>LogingLab</code> inclui cenários predefinidos que correspondem a diferentes versões de registro de impacto reduzido.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>ScenariosTable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>ScenariosTable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
