@@ -6,6 +6,7 @@ date-format: medium
 format: 
   revealjs:
     theme: dark
+    output-location: fragment
 bibliography: references.bib
 ---
 
@@ -258,7 +259,7 @@ inventory <- cleaninventory(inventory, PlotMask, loggingparameters())
 
 <!-- GD: I wouldn't put the loggingparameters here as they are not related to checking the inventory. I would either put them in the "Entradas" section, or in the "Para saber mais" section.
 
-I've actually realised that in the paper we call this function "advanceloggingparameters" and not "loggingparameters" if I'm not mistaken... oups...--> 
+I've actually realised that in the paper we call this function "advanceloggingparameters" and not "loggingparameters" if I'm not mistaken... oups...-->
 
 ::: notes
 Notas.
@@ -329,7 +330,7 @@ ggplot(MainTrails) +
   geom_sf()
 ```
 
-<!--GD : I wouldn't print the DTM here to avoid having to explain it at this stage. Actually, yes, keep it as it will be usefull to explain the logging area, or move it just before doing the logging area, or next to it on the same slide?--> 
+<!--GD : I wouldn't print the DTM here to avoid having to explain it at this stage. Actually, yes, keep it as it will be usefull to explain the logging area, or move it just before doing the logging area, or next to it on the same slide?-->
 
 ::: notes
 Notas.
@@ -398,7 +399,7 @@ As árvores podem ser colhidas se:
 Se o volume colhível for maior que o volume objetivo e a diversificação não tiver sido escolhida, o MinFD apenas da primeira espécie de classificação econômica será aumentado. Se a diversificação for permitida, o MinFD das espécies de primeiro e segundo níveis econômicos será aumentado. Em seguida, as árvores a serem colhidas são escolhidas em ordem decrescente de volume, até que o volume objetivo seja atingido.
 
 <!-- I think the last paragraph is too complicated, and I wonder if the best wouldn't be to not mention it at all. 
-I'm actually unsured with the package does that: why increase MinFD when the trees are actually chosen in a decreasing order of volume untill the target volume is reached.... there must be a reason but I do'nt remember it...--> 
+I'm actually unsured with the package does that: why increase MinFD when the trees are actually chosen in a decreasing order of volume untill the target volume is reached.... there must be a reason but I do'nt remember it...-->
 
 ::: notes
 Notas.
@@ -476,7 +477,7 @@ Eles se juntam, em ordem decrescente de prioridade:
 1.  grupos em ordem decrescente de abundância de árvores,
 2.  aqueles com a menor distância até a trilha mais próxima.
 
-<!-- here I wonder as well if there is not to much information, with the risk of loosing the audiance, and potentially ourselves...--> 
+<!-- here I wonder as well if there is not to much information, with the risk of loosing the audiance, and potentially ourselves...-->
 
 ::: notes
 Notas
@@ -549,8 +550,7 @@ inventory <- inventory %>%
   )
 ```
 
-
-<!-- GD: I would put the code in a separated slide, as for the other steps--> 
+<!-- GD: I would put the code in a separated slide, as for the other steps-->
 
 ::: notes
 Notas.
@@ -610,7 +610,6 @@ TimberV$inventory %>%
 ```
 
 <!-- GD: yes, good to show this as well, and maybe here we could also add a slide on getting the biomass per cause of death, as we do in ManagForRes and as I propose to do for the presentation to practicionners -->
-
 
 ::: notes
 Notas.
@@ -719,4 +718,4 @@ Notas.
 
 ## Referências
 
-<!-- give also the reference to the vignette ?--> 
+<!-- give also the reference to the vignette ?-->

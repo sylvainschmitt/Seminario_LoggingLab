@@ -1,12 +1,16 @@
 ---
 title: "Figure for presentation to practitionners"
-format: html
 editor: visual
 date: today
+format: 
+  gfm:
+    toc: true
+    toc-depth: 1
 ---
 
-
 ```{r libs}
+#| message: false
+#| warning: false
 library(LoggingLab)
 library(tidyverse)
 library(sf)
@@ -16,8 +20,10 @@ theme_set(theme_bw())
 ## Prelogging inventory
 
 ```{r p6_pre_log}
-Paracou6_2016 %>% unite(col="GenSp", Genus, Species, sep="_") %>% 
+g <- Paracou6_2016 %>% unite(col="GenSp", Genus, Species, sep="_") %>% 
   st_as_sf(coords = c("Xutm", "Yutm")) %>% 
   ggplot(aes(color=GenSp, size=CircCorr/25)) + geom_sf() + theme(legend.position="none")
+ggsave("figs/pres_pract_prelogging_inventory.png", g, dpi = 300)
+g
 ```
 

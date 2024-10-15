@@ -8,7 +8,7 @@
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.555">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Sylvain Schmitt">
   <title>Seminário LoggingLab</title>
@@ -31,7 +31,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -98,7 +98,6 @@
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
-      margin-bottom: 0em;
     }
     .hanging-indent div.csl-entry {
       margin-left:2em;
@@ -241,8 +240,7 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -421,7 +419,7 @@ Sylvain Schmitt
 </div>
 </div>
 
-  <p class="date">Oct 14, 2024</p>
+  <p class="date">Oct 15, 2024</p>
 </section>
 <section class="slide level2">
 
@@ -500,8 +498,11 @@ Sylvain Schmitt
 <h2>Instalação do pacote</h2>
 <p>Usaremos o pacote LoggingLab para R <span class="citation" data-cites="Badouard2024">(<a href="#/referências" role="doc-biblioref" onclick="">Badouard et al. 2024</a>)</span> para simular a extração de madeira de impacto reduzido em uma floresta tropical. O pacote deve ser instalado a partir de seu repositório no Github, pois ainda não está no CRAN.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb1-2"><a href=""></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"VincyaneBadouard/LoggingLab"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"VincyaneBadouard/LoggingLab"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
 </div>
 <aside class="notes">
 <p>Notas.</p>
@@ -521,10 +522,13 @@ Sylvain Schmitt
 <h2>Outros pacotes R</h2>
 <p>Usaremos o <code>tidyverse</code> para manipular tabelas e criar gráficos, e o <code>sf</code> para manipular objetos espaciais.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">library</span>(LoggingLab)</span>
-<span id="cb2-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-3"><a href=""></a><span class="fu">library</span>(sf)</span>
-<span id="cb2-4"><a href=""></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(LoggingLab)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">library</span>(sf)</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
 </div>
 <aside class="notes">
 <p>Notas.</p>
@@ -614,7 +618,9 @@ OK, I see that you do this later, fine for me-->
 <h2>Inventário</h2>
 <p>O inventário do lote 6 de Paracou está disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">head</span>(Paracou6_2016)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">head</span>(Paracou6_2016)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>   Forest Plot PlotArea SubPlot idTree Protocole Xfield Yfield     Xutm
 1 Paracou    6     6.25       1 100726   Guyafor   13.5  201.0 286420.1
@@ -663,12 +669,16 @@ OK, I see that you do this later, fine for me-->
 <section id="inventário-3" class="slide level2">
 <h2>Inventário</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>Paracou6_2016 <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href=""></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href=""></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>Paracou6_2016 <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<img data-src="index_files/figure-revealjs/p6plot-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/p6plot-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -705,10 +715,14 @@ OK, I see that you do this later, fine for me-->
 <h2>Máscara do lote</h2>
 <p>A máscara do lote 6 de Paracou está disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">ggplot</span>(<span class="fu">st_as_sf</span>(PlotMask)) <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ggplot</span>(<span class="fu">st_as_sf</span>(PlotMask)) <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<img data-src="index_files/figure-revealjs/mask-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/mask-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -750,7 +764,9 @@ OK, I see that you do this later, fine for me-->
 <h2>Dados de espécies</h2>
 <p>Dados de espécies de Guiana Francesa são disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">head</span>(SpeciesCriteria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">head</span>(SpeciesCriteria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 8
   CommercialName  Genus  Species CommercialLevel MinFD UpMinFD MaxFD Aggregative
@@ -799,7 +815,9 @@ OK, I see that you do this later, fine for me-->
 <h2>Alometria volumétrica</h2>
 <p>Alometria volumétrica de Guiana Francesa são disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">head</span>(ForestZoneVolumeParametersTable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">head</span>(ForestZoneVolumeParametersTable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>           Forest    Zone     aCoef    bCoef
 1       Acarouany    West -0.061776  8.83580
@@ -848,8 +866,11 @@ OK, I see that you do this later, fine for me-->
 <h2>Validar o inventário</h2>
 <p>As árvores que não estão na área registrada ou que são muito pequenas para serem consideradas são excluídas.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>inventory <span class="ot">&lt;-</span> <span class="fu">inventorycheckformat</span>(Paracou6_2016)</span>
-<span id="cb11-2"><a href=""></a>inventory <span class="ot">&lt;-</span> <span class="fu">cleaninventory</span>(inventory, PlotMask, <span class="fu">loggingparameters</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">inventorycheckformat</span>(Paracou6_2016)</span>
+<span id="cb11-2"><a href="#cb11-2"></a>inventory <span class="ot">&lt;-</span> <span class="fu">cleaninventory</span>(inventory, PlotMask, <span class="fu">loggingparameters</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
 </div>
 <p><code>loggingparameters()</code> define todos os parâmetros de registro. Consulte sua ajuda (<code>?loggingparameters</code>). Os valores padrão são os usados na Guiana Francesa.</p>
 <!-- GD: I wouldn't put the loggingparameters here as they are not related to checking the inventory. I would either put them in the "Entradas" section, or in the "Para saber mais" section.
@@ -873,12 +894,16 @@ I've actually realised that in the paper we call this function "advanceloggingpa
 <h2>Validar o inventário</h2>
 <p>Como os dados já estavam limpos, não houve muitas alterações.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href=""></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href=""></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<img data-src="index_files/figure-revealjs/prepmap-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/prepmap-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -896,17 +921,19 @@ I've actually realised that in the paper we call this function "advanceloggingpa
 <h2>Calcular as dimensões da árvore</h2>
 <p>Calcule as dimensões da árvore (altura da árvore, do tronco e da copa, diâmetro da copa, volume colhível, densidade da madeira e biomassa).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>inventory <span class="ot">&lt;-</span> <span class="fu">addtreedim</span>(inventory, ForestZoneVolumeParametersTable)</span>
-<span id="cb13-2"><a href=""></a><span class="fu">head</span>(<span class="fu">select</span>(inventory, TreeHarvestableVolume, TrunkHeight, TreeHeight, CrownHeight,</span>
-<span id="cb13-3"><a href=""></a>            CrownDiameter, WoodDensity, AGB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">addtreedim</span>(inventory, ForestZoneVolumeParametersTable)</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">head</span>(<span class="fu">select</span>(inventory, TreeHarvestableVolume, TrunkHeight, TreeHeight, CrownHeight,</span>
+<span id="cb13-3"><a href="#cb13-3"></a>            CrownDiameter, WoodDensity, AGB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>  TreeHarvestableVolume TrunkHeight TreeHeight CrownHeight CrownDiameter
-1             0.1027084    8.272213   14.65595    6.383735      2.405034
-2             1.1181093   10.811462   27.40065   16.589191      8.645064
-3             0.1687473    9.203739   16.78716    7.583417      3.247338
-4             1.3075022   10.860306   28.35561   17.495301      8.709224
-5             0.2230879    9.613873   18.14034    8.526472      3.577887
-6             0.6517747   10.576502   24.12416   13.547658      6.607253
+1             0.1027084    8.272213   14.65595    6.383735      2.152964
+2             1.1181093   10.811462   27.40065   16.589191      9.401373
+3             0.1687473    9.203739   16.78716    7.583417      3.201057
+4             1.3075022   10.860306   28.35561   17.495301      8.624577
+5             0.2230879    9.613873   18.14034    8.526472      3.537165
+6             0.6517747   10.576502   24.12416   13.547658      6.136169
   WoodDensity       AGB
 1   0.7700000 0.1003184
 2   0.7040000 1.3401159
@@ -933,13 +960,17 @@ I've actually realised that in the paper we call this function "advanceloggingpa
 <section id="calcular-as-dimensões-da-árvore-1" class="slide level2">
 <h2>Calcular as dimensões da árvore</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href=""></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href=""></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> TreeHarvestableVolume)) <span class="sc">+</span> </span>
-<span id="cb15-4"><a href=""></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">trans =</span> <span class="st">"log"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> TreeHarvestableVolume)) <span class="sc">+</span> </span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">trans =</span> <span class="st">"log"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<img data-src="index_files/figure-revealjs/dimsplot-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/dimsplot-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -973,15 +1004,19 @@ I've actually realised that in the paper we call this function "advanceloggingpa
 </section>
 <section id="principais-trilhas-de-derrapagem-1" class="slide level2">
 <h2>Principais trilhas de derrapagem</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>MainTrails <span class="ot">&lt;-</span> <span class="fu">maintrailextract</span>(DTMParacou)</span>
-<span id="cb16-2"><a href=""></a><span class="fu">ggplot</span>(MainTrails) <span class="sc">+</span></span>
-<span id="cb16-3"><a href=""></a>  tidyterra<span class="sc">::</span><span class="fu">geom_spatraster</span>(<span class="at">data =</span> terra<span class="sc">::</span><span class="fu">rast</span>(DTMParacou)) <span class="sc">+</span> <span class="co"># add to pkg list</span></span>
-<span id="cb16-4"><a href=""></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="cell" data-hash="index_cache/revealjs/maintrail_8d088906b6df48bf36ec14d53db39cc3">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>MainTrails <span class="ot">&lt;-</span> <span class="fu">maintrailextract</span>(DTMParacou)</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">ggplot</span>(MainTrails) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  tidyterra<span class="sc">::</span><span class="fu">geom_spatraster</span>(<span class="at">data =</span> terra<span class="sc">::</span><span class="fu">rast</span>(DTMParacou)) <span class="sc">+</span> <span class="co"># add to pkg list</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-hash="index_cache/revealjs/maintrail_8d088906b6df48bf36ec14d53db39cc3">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/maintrail-1.png" width="960"></p>
+</div>
 </div>
 <!--GD : I wouldn't print the DTM here to avoid having to explain it at this stage. Actually, yes, keep it as it will be usefull to explain the logging area, or move it just before doing the logging area, or next to it on the same slide?-->
-<img data-src="index_files/figure-revealjs/maintrail-1.png" width="960" class="r-stretch"><aside class="notes">
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1016,17 +1051,20 @@ I've actually realised that in the paper we call this function "advanceloggingpa
 <section id="definição-de-área-colhível-1" class="slide level2">
 <h2>Definição de área colhível</h2>
 <p>Usamos um cenário manual para poder alterar os argumentos facilmente. O guincho é definido como 2, ou seja, a garra é usada, se possível (6 m de extensão), e o cabo é usado até 40 m.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>HarvestableArea <span class="ot">&lt;-</span> <span class="fu">harvestableareadefinition</span>(</span>
-<span id="cb17-2"><a href=""></a>  <span class="at">topography =</span> DTMParacou,</span>
-<span id="cb17-3"><a href=""></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
-<span id="cb17-4"><a href=""></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
-<span id="cb17-5"><a href=""></a>  <span class="at">maintrails =</span> MainTrails,</span>
-<span id="cb17-6"><a href=""></a>  <span class="at">plotmask =</span> PlotMask,</span>
-<span id="cb17-7"><a href=""></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
-<span id="cb17-8"><a href=""></a>  <span class="at">winching =</span> <span class="st">"2"</span>,</span>
-<span id="cb17-9"><a href=""></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb17-10"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/harvareas_6432f3b0a041019c8a95fa5f1fb6e452">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>HarvestableArea <span class="ot">&lt;-</span> <span class="fu">harvestableareadefinition</span>(</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="at">topography =</span> DTMParacou,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="at">maintrails =</span> MainTrails,</span>
+<span id="cb17-6"><a href="#cb17-6"></a>  <span class="at">plotmask =</span> PlotMask,</span>
+<span id="cb17-7"><a href="#cb17-7"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8"></a>  <span class="at">winching =</span> <span class="st">"2"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb17-10"><a href="#cb17-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-hash="index_cache/revealjs/harvareas_6432f3b0a041019c8a95fa5f1fb6e452">
+
 </div>
 <aside class="notes">
 <p>Notas.</p>
@@ -1046,12 +1084,16 @@ I've actually realised that in the paper we call this function "advanceloggingpa
 <h2>Definição de área colhível</h2>
 <p>As áreas verdes claras podem ser colhidas. As verdes escuras podem ser colhidas por máquinas.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>(base <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb18-2"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons, <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb18-3"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> HarvestableArea<span class="sc">$</span>MachinePolygons, <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>(base <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons, <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> HarvestableArea<span class="sc">$</span>MachinePolygons, <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<img data-src="index_files/figure-revealjs/harvareasplot-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/harvareasplot-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1097,32 +1139,34 @@ I'm actually unsured with the package does that: why increase MinFD when the tre
 <h2>Seleção de árvores</h2>
 <p>Se o volume extraível for muito baixo, a diversificação pode ser aplicada (<code>specieslax = TRUE</code>): as árvores de todas as classificações comerciais são selecionadas em ordem decrescente de volume até que o volume objetivo seja atingido, ou a extração pode continuar apesar de um volume objetivo não atingido ou ser abandonada (<code>objectivelax = FALSE</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>inventory <span class="ot">&lt;-</span> inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href=""></a>  <span class="fu">commercialcriteriajoin</span>(SpeciesCriteria)</span>
-<span id="cb19-3"><a href=""></a>TreeSelection <span class="ot">&lt;-</span> inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb19-4"><a href=""></a>  <span class="fu">treeselection</span>(</span>
-<span id="cb19-5"><a href=""></a>    <span class="at">topography =</span> DTMParacou,</span>
-<span id="cb19-6"><a href=""></a>    <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
-<span id="cb19-7"><a href=""></a>    <span class="at">scenario =</span><span class="st">"manual"</span>, </span>
-<span id="cb19-8"><a href=""></a>    <span class="at">objective =</span> <span class="dv">30</span>,</span>
-<span id="cb19-9"><a href=""></a>    <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
-<span id="cb19-10"><a href=""></a>    <span class="at">winching =</span> <span class="st">"2"</span>,</span>
-<span id="cb19-11"><a href=""></a>    <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb19-12"><a href=""></a>    <span class="at">specieslax =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb19-13"><a href=""></a>    <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb19-14"><a href=""></a>    <span class="at">harvestablearea =</span> HarvestableArea<span class="sc">$</span>HarvestableArea,</span>
-<span id="cb19-15"><a href=""></a>    <span class="at">plotslope =</span> HarvestableArea<span class="sc">$</span>PlotSlope,</span>
-<span id="cb19-16"><a href=""></a>    <span class="at">maintrails =</span> MainTrails,</span>
-<span id="cb19-17"><a href=""></a>    <span class="at">harvestablepolygons =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
-<span id="cb19-18"><a href=""></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb19-19"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>inventory <span class="ot">&lt;-</span> inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">commercialcriteriajoin</span>(SpeciesCriteria)</span>
+<span id="cb19-3"><a href="#cb19-3"></a>TreeSelection <span class="ot">&lt;-</span> inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">treeselection</span>(</span>
+<span id="cb19-5"><a href="#cb19-5"></a>    <span class="at">topography =</span> DTMParacou,</span>
+<span id="cb19-6"><a href="#cb19-6"></a>    <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
+<span id="cb19-7"><a href="#cb19-7"></a>    <span class="at">scenario =</span><span class="st">"manual"</span>, </span>
+<span id="cb19-8"><a href="#cb19-8"></a>    <span class="at">objective =</span> <span class="dv">30</span>,</span>
+<span id="cb19-9"><a href="#cb19-9"></a>    <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
+<span id="cb19-10"><a href="#cb19-10"></a>    <span class="at">winching =</span> <span class="st">"2"</span>,</span>
+<span id="cb19-11"><a href="#cb19-11"></a>    <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb19-12"><a href="#cb19-12"></a>    <span class="at">specieslax =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-13"><a href="#cb19-13"></a>    <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-14"><a href="#cb19-14"></a>    <span class="at">harvestablearea =</span> HarvestableArea<span class="sc">$</span>HarvestableArea,</span>
+<span id="cb19-15"><a href="#cb19-15"></a>    <span class="at">plotslope =</span> HarvestableArea<span class="sc">$</span>PlotSlope,</span>
+<span id="cb19-16"><a href="#cb19-16"></a>    <span class="at">maintrails =</span> MainTrails,</span>
+<span id="cb19-17"><a href="#cb19-17"></a>    <span class="at">harvestablepolygons =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
+<span id="cb19-18"><a href="#cb19-18"></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb19-19"><a href="#cb19-19"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stderr">
-<pre><code>As the harvestable volume (= 182.5m^3)
-                was higher (by 70.1m^3)
+<pre><code>As the harvestable volume (= 187.4m^3)
+                was higher (by 75m^3)
                 than the objective volume, the Minimum Falling Diameter (MinFD) of the 1st and 2nd economic ranks species
                   were increased to UpMinFD. The objective volume has now been reached.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>crs <span class="ot">&lt;-</span> <span class="fu">st_crs</span>(HarvestableArea<span class="sc">$</span>HarvestablePolygons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>crs <span class="ot">&lt;-</span> <span class="fu">st_crs</span>(HarvestableArea<span class="sc">$</span>HarvestablePolygons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <aside class="notes">
 <p>Notas.</p>
@@ -1142,13 +1186,17 @@ I'm actually unsured with the package does that: why increase MinFD when the tre
 <h2>Seleção de árvores</h2>
 <p><em>Bla.</em></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>base <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>HarvestableTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Harvestable"</span>)) <span class="sc">+</span></span>
-<span id="cb22-2"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>SelectedTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Selected"</span>)) <span class="sc">+</span></span>
-<span id="cb22-3"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>FutureTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Future"</span>)) <span class="sc">+</span></span>
-<span id="cb22-4"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>ReserveTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Reserve"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>base <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>HarvestableTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Harvestable"</span>)) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>SelectedTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Selected"</span>)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>FutureTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Future"</span>)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>ReserveTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Reserve"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<img data-src="index_files/figure-revealjs/harvest-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/harvest-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1200,21 +1248,24 @@ I'm actually unsured with the package does that: why increase MinFD when the tre
 </section>
 <section id="trilhas-secundárias-1" class="slide level2 smaller scrollable">
 <h2>Trilhas secundárias</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>ScndTrailOutputs <span class="ot">&lt;-</span> <span class="fu">secondtrailsopening</span>(</span>
-<span id="cb23-2"><a href=""></a>  <span class="at">topography =</span> DTMParacou,</span>
-<span id="cb23-3"><a href=""></a>  <span class="at">plotmask =</span> PlotMask,</span>
-<span id="cb23-4"><a href=""></a>  <span class="at">maintrails =</span> MainTrails,</span>
-<span id="cb23-5"><a href=""></a>  <span class="at">plotslope =</span> HarvestableArea<span class="sc">$</span>PlotSlope,</span>
-<span id="cb23-6"><a href=""></a>  <span class="at">harvestablepolygons =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
-<span id="cb23-7"><a href=""></a>  <span class="at">machinepolygons =</span> HarvestableArea<span class="sc">$</span>MachinePolygons,</span>
-<span id="cb23-8"><a href=""></a>  <span class="at">treeselectionoutputs =</span> TreeSelection,</span>
-<span id="cb23-9"><a href=""></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
-<span id="cb23-10"><a href=""></a>  <span class="at">winching =</span> <span class="st">"2"</span>,</span>
-<span id="cb23-11"><a href=""></a>  <span class="at">fuel =</span> <span class="st">"0"</span>,</span>
-<span id="cb23-12"><a href=""></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb23-13"><a href=""></a>)</span>
-<span id="cb23-14"><a href=""></a>inventory <span class="ot">&lt;-</span> ScndTrailOutputs<span class="sc">$</span>inventory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/2trail_753e936f230b2620204f604155834467">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>ScndTrailOutputs <span class="ot">&lt;-</span> <span class="fu">secondtrailsopening</span>(</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="at">topography =</span> DTMParacou,</span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="at">plotmask =</span> PlotMask,</span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="at">maintrails =</span> MainTrails,</span>
+<span id="cb23-5"><a href="#cb23-5"></a>  <span class="at">plotslope =</span> HarvestableArea<span class="sc">$</span>PlotSlope,</span>
+<span id="cb23-6"><a href="#cb23-6"></a>  <span class="at">harvestablepolygons =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
+<span id="cb23-7"><a href="#cb23-7"></a>  <span class="at">machinepolygons =</span> HarvestableArea<span class="sc">$</span>MachinePolygons,</span>
+<span id="cb23-8"><a href="#cb23-8"></a>  <span class="at">treeselectionoutputs =</span> TreeSelection,</span>
+<span id="cb23-9"><a href="#cb23-9"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
+<span id="cb23-10"><a href="#cb23-10"></a>  <span class="at">winching =</span> <span class="st">"2"</span>,</span>
+<span id="cb23-11"><a href="#cb23-11"></a>  <span class="at">fuel =</span> <span class="st">"0"</span>,</span>
+<span id="cb23-12"><a href="#cb23-12"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb23-13"><a href="#cb23-13"></a>)</span>
+<span id="cb23-14"><a href="#cb23-14"></a>inventory <span class="ot">&lt;-</span> ScndTrailOutputs<span class="sc">$</span>inventory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-hash="index_cache/revealjs/2trail_753e936f230b2620204f604155834467">
+
 </div>
 <p>Essa etapa pode levar algum tempo.</p>
 <aside class="notes">
@@ -1235,11 +1286,15 @@ I'm actually unsured with the package does that: why increase MinFD when the tre
 <h2>Trilhas secundárias</h2>
 <p><em>Bla.</em></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>base <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>SmoothedTrails)) <span class="sc">+</span></span>
-<span id="cb24-2"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>SelectedTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Selected"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>base <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>SmoothedTrails)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>SelectedTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Selected"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<img data-src="index_files/figure-revealjs/tracksplot-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/tracksplot-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1262,17 +1317,20 @@ I'm actually unsured with the package does that: why increase MinFD when the tre
 <li>com 40% de probabilidade: queda aleatória.</li>
 </ul>
 <!-- GD: again too much detail, but I wonder if that's what you said I shouldn't pay attention too... oups... sorry-->
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>inventory <span class="ot">&lt;-</span> inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb25-2"><a href=""></a>  <span class="fu">treefelling</span>(</span>
-<span id="cb25-3"><a href=""></a>    <span class="at">scenario =</span> <span class="st">"manual"</span>, </span>
-<span id="cb25-4"><a href=""></a>    <span class="at">fuel =</span> <span class="st">"0"</span>,</span>
-<span id="cb25-5"><a href=""></a>    <span class="at">winching =</span> <span class="st">"2"</span>, </span>
-<span id="cb25-6"><a href=""></a>    <span class="at">directionalfelling =</span> <span class="st">"2"</span>,</span>
-<span id="cb25-7"><a href=""></a>    <span class="at">maintrailsaccess =</span> ScndTrailOutputs<span class="sc">$</span>MainTrailsAccess,</span>
-<span id="cb25-8"><a href=""></a>    <span class="at">scndtrail =</span> ScndTrailOutputs<span class="sc">$</span>SmoothedTrails,</span>
-<span id="cb25-9"><a href=""></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb25-10"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/treefelling_d9556f7feb1bba07b6ba3e63efa09795">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>inventory <span class="ot">&lt;-</span> inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">treefelling</span>(</span>
+<span id="cb25-3"><a href="#cb25-3"></a>    <span class="at">scenario =</span> <span class="st">"manual"</span>, </span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="at">fuel =</span> <span class="st">"0"</span>,</span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="at">winching =</span> <span class="st">"2"</span>, </span>
+<span id="cb25-6"><a href="#cb25-6"></a>    <span class="at">directionalfelling =</span> <span class="st">"2"</span>,</span>
+<span id="cb25-7"><a href="#cb25-7"></a>    <span class="at">maintrailsaccess =</span> ScndTrailOutputs<span class="sc">$</span>MainTrailsAccess,</span>
+<span id="cb25-8"><a href="#cb25-8"></a>    <span class="at">scndtrail =</span> ScndTrailOutputs<span class="sc">$</span>SmoothedTrails,</span>
+<span id="cb25-9"><a href="#cb25-9"></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb25-10"><a href="#cb25-10"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-hash="index_cache/revealjs/treefelling_d9556f7feb1bba07b6ba3e63efa09795">
+
 </div>
 <!-- GD: I would put the code in a separated slide, as for the other steps-->
 <aside class="notes">
@@ -1293,11 +1351,15 @@ I'm actually unsured with the package does that: why increase MinFD when the tre
 <h2>Corte de árvores</h2>
 <p>Bla.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>FelledTrees <span class="ot">&lt;-</span> <span class="fu">getgeometry</span>(inventory, TreePolygon) <span class="sc">%&gt;%</span> <span class="fu">st_set_crs</span>(crs)</span>
-<span id="cb26-2"><a href=""></a>base <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>SmoothedTrails)) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> FelledTrees)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>FelledTrees <span class="ot">&lt;-</span> <span class="fu">getgeometry</span>(inventory, TreePolygon) <span class="sc">%&gt;%</span> <span class="fu">st_set_crs</span>(crs)</span>
+<span id="cb26-2"><a href="#cb26-2"></a>base <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>SmoothedTrails)) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> FelledTrees)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<img data-src="index_files/figure-revealjs/mappost-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/mappost-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1315,20 +1377,22 @@ I'm actually unsured with the package does that: why increase MinFD when the tre
 <h2>Quantificar os volumes registrados</h2>
 <p>Calcule o volume de madeira colhida em árvores saudáveis exploradas para madeira e nas árvores ocas, se elas também forem colhidas para lenha.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>TimberV <span class="ot">&lt;-</span> <span class="fu">timberharvestedvolume</span>(</span>
-<span id="cb27-2"><a href=""></a>  inventory, </span>
-<span id="cb27-3"><a href=""></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>, </span>
-<span id="cb27-4"><a href=""></a>  <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
-<span id="cb27-5"><a href=""></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb27-6"><a href=""></a>)</span>
-<span id="cb27-7"><a href=""></a>inventory <span class="ot">&lt;-</span> TimberV<span class="sc">$</span>inventory</span>
-<span id="cb27-8"><a href=""></a>TimberV[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>TimberV <span class="ot">&lt;-</span> <span class="fu">timberharvestedvolume</span>(</span>
+<span id="cb27-2"><a href="#cb27-2"></a>  inventory, </span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>, </span>
+<span id="cb27-4"><a href="#cb27-4"></a>  <span class="at">fuel =</span> <span class="st">"2"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb27-6"><a href="#cb27-6"></a>)</span>
+<span id="cb27-7"><a href="#cb27-7"></a>inventory <span class="ot">&lt;-</span> TimberV<span class="sc">$</span>inventory</span>
+<span id="cb27-8"><a href="#cb27-8"></a>TimberV[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>$TimberLoggedVolume
-[1] 106.0782
+[1] 107.9554
 
 $NoHollowTimberLoggedVolume
-[1] 93.4345</code></pre>
+[1] 93.61721</code></pre>
 </div>
 </div>
 <!-- GD: as discused, I don't think we should mention fuel wood and hollow trees at all, because it's complicated enough...
@@ -1351,25 +1415,27 @@ It would mean here that the function would just return the Timber volume. I wond
 <h2>Quantificar os volumes registrados</h2>
 <p>Os detalhes da produção por espécie estão no inventário.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>TimberV<span class="sc">$</span>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href=""></a>  <span class="fu">filter</span>(DeathCause <span class="sc">==</span> <span class="st">"cut"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-3"><a href=""></a>  <span class="fu">group_by</span>(CommercialName) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-4"><a href=""></a>  <span class="fu">summarise</span>(</span>
-<span id="cb29-5"><a href=""></a>    <span class="at">trees_n =</span> <span class="fu">n</span>(), </span>
-<span id="cb29-6"><a href=""></a>    <span class="at">volume =</span> <span class="fu">sum</span>(TimberLoggedVolume), </span>
-<span id="cb29-7"><a href=""></a>    <span class="at">CommercialLevel =</span> <span class="fu">unique</span>(CommercialLevel)</span>
-<span id="cb29-8"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>TimberV<span class="sc">$</span>inventory <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">filter</span>(DeathCause <span class="sc">==</span> <span class="st">"cut"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">group_by</span>(CommercialName) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb29-5"><a href="#cb29-5"></a>    <span class="at">trees_n =</span> <span class="fu">n</span>(), </span>
+<span id="cb29-6"><a href="#cb29-6"></a>    <span class="at">volume =</span> <span class="fu">sum</span>(TimberLoggedVolume), </span>
+<span id="cb29-7"><a href="#cb29-7"></a>    <span class="at">CommercialLevel =</span> <span class="fu">unique</span>(CommercialLevel)</span>
+<span id="cb29-8"><a href="#cb29-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 4
-  CommercialName  trees_n volume CommercialLevel
-  &lt;chr&gt;             &lt;int&gt;  &lt;dbl&gt;           &lt;dbl&gt;
-1 angélique             1   8.89               1
-2 chawari               1   4.11               2
-3 grignon franc         3  14.1                1
-4 maho noir             4  16.5                2
-5 wacapou guittin       1   3.00               2
-6 wapa                  7  29.4                2
-7 wapa courbaril        4  17.5                2</code></pre>
+  CommercialName trees_n volume CommercialLevel
+  &lt;chr&gt;            &lt;int&gt;  &lt;dbl&gt;           &lt;dbl&gt;
+1 chawari              1   4.11               2
+2 gonfolo gris         1   3.56               1
+3 grignon franc        4  21.6                1
+4 maho noir            4  16.5                2
+5 wacapou              1   3.61               1
+6 wapa                 9  39.7                2
+7 wapa courbaril       1   4.68               2</code></pre>
 </div>
 </div>
 <!-- GD: yes, good to show this as well, and maybe here we could also add a slide on getting the biomass per cause of death, as we do in ManagForRes and as I propose to do for the presentation to practicionners -->
@@ -1408,26 +1474,29 @@ It would mean here that the function would just return the Timber volume. I wond
 <section id="uma-única-simulação" class="slide level2 smaller">
 <h2>Uma única simulação</h2>
 <p>Todas as etapas de simulação podem ser incluídas em uma única função para economizar tempo.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>Rslt <span class="ot">&lt;-</span> <span class="fu">loggingsimulation1</span>(</span>
-<span id="cb31-2"><a href=""></a>  Paracou6_2016,</span>
-<span id="cb31-3"><a href=""></a>  <span class="at">plotmask =</span> PlotMask, </span>
-<span id="cb31-4"><a href=""></a>  <span class="at">topography =</span> DTMParacou,</span>
-<span id="cb31-5"><a href=""></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
-<span id="cb31-6"><a href=""></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
-<span id="cb31-7"><a href=""></a>  <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
-<span id="cb31-8"><a href=""></a>  <span class="at">volumeparameters =</span> ForestZoneVolumeParametersTable,</span>
-<span id="cb31-9"><a href=""></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
-<span id="cb31-10"><a href=""></a>  <span class="at">objective =</span> <span class="dv">30</span>,</span>
-<span id="cb31-11"><a href=""></a>  <span class="at">fuel =</span> <span class="st">"0"</span>, </span>
-<span id="cb31-12"><a href=""></a>  <span class="at">winching =</span> <span class="st">"2"</span>, </span>
-<span id="cb31-13"><a href=""></a>  <span class="at">directionalfelling =</span> <span class="st">"2"</span>, </span>
-<span id="cb31-14"><a href=""></a>  <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb31-15"><a href=""></a>  <span class="at">specieslax =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb31-16"><a href=""></a>  <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb31-17"><a href=""></a>  <span class="at">crowndiameterparameters =</span> ParamCrownDiameterAllometry,</span>
-<span id="cb31-18"><a href=""></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb31-19"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/single_0cf934efefe181af05159a6ae989a5f6">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>Rslt <span class="ot">&lt;-</span> <span class="fu">loggingsimulation1</span>(</span>
+<span id="cb31-2"><a href="#cb31-2"></a>  Paracou6_2016,</span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="at">plotmask =</span> PlotMask, </span>
+<span id="cb31-4"><a href="#cb31-4"></a>  <span class="at">topography =</span> DTMParacou,</span>
+<span id="cb31-5"><a href="#cb31-5"></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
+<span id="cb31-6"><a href="#cb31-6"></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
+<span id="cb31-7"><a href="#cb31-7"></a>  <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
+<span id="cb31-8"><a href="#cb31-8"></a>  <span class="at">volumeparameters =</span> ForestZoneVolumeParametersTable,</span>
+<span id="cb31-9"><a href="#cb31-9"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
+<span id="cb31-10"><a href="#cb31-10"></a>  <span class="at">objective =</span> <span class="dv">30</span>,</span>
+<span id="cb31-11"><a href="#cb31-11"></a>  <span class="at">fuel =</span> <span class="st">"0"</span>, </span>
+<span id="cb31-12"><a href="#cb31-12"></a>  <span class="at">winching =</span> <span class="st">"2"</span>, </span>
+<span id="cb31-13"><a href="#cb31-13"></a>  <span class="at">directionalfelling =</span> <span class="st">"2"</span>, </span>
+<span id="cb31-14"><a href="#cb31-14"></a>  <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb31-15"><a href="#cb31-15"></a>  <span class="at">specieslax =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb31-16"><a href="#cb31-16"></a>  <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb31-17"><a href="#cb31-17"></a>  <span class="at">crowndiameterparameters =</span> ParamCrownDiameterAllometry,</span>
+<span id="cb31-18"><a href="#cb31-18"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb31-19"><a href="#cb31-19"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-hash="index_cache/revealjs/single_0cf934efefe181af05159a6ae989a5f6">
+
 </div>
 <p>Várias simulações podem ser executadas pela função <code>loggingsimulation()</code> para levar em conta a estocasticidade com o argumento <code>iter</code> (número de simulações) e <code>cores</code> (número de núcleos de computador usados para paralelizar o cálculo).</p>
 <aside class="notes">
@@ -1448,7 +1517,9 @@ It would mean here that the function would just return the Timber volume. I wond
 <h2>Resultados</h2>
 <p>Retorna um resumo das saídas da função de simulação de registro.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>inventory : Paracou6_2016 
 scenario : manual 
@@ -1461,15 +1532,12 @@ specieslax : FALSE
 objectivelax : TRUE 
 Harvestable area : 3.75 ha
 Objective volume : 112.4 m3
-Initial harvestable volume : 179.3 m3,  47.9 m3/harvestable ha
-Timber logged volume : 111 m3,  29.6 m3/harvestable ha
-No hollow timber logged volume : 111 m3,  29.6 m3/harvestable ha
-Timber extracted volume (timber volume after purge : 95.5 m3,  25.5 m3/harvestable ha
-Logging residual biomass : 218.2 ton,  58.2 ton/harvestable ha
-Total forest biomass lost : 294.4 ton
-Trails density : 102.2 m/ha
-
-Please note that all volumes in m3/ha are per exploitable hectare, not per plot hectare.</code></pre>
+Initial harvestable volume : 179.4 m3,  47.9 m3/harvestable ha
+Timber logged volume : 112.2 m3,  29.9 m3/harvestable ha
+No hollow timber logged volume : 112.2 m3,  29.9 m3/harvestable ha
+Timber extracted volume (timber volume after purge : 96.5 m3,  25.8 m3/harvestable ha
+Error in round(x$FuelWoodBiomass, digits = 1) : 
+  argument non numérique pour une fonction mathématique</code></pre>
 </div>
 </div>
 <aside class="notes">
@@ -1535,7 +1603,9 @@ Please note that all volumes in m3/ha are per exploitable hectare, not per plot 
 <h2>Cenários</h2>
 <p><code>LogingLab</code> inclui cenários predefinidos que correspondem a diferentes versões de registro de impacto reduzido.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>ScenariosTable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>ScenariosTable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 6
   Type     SpatialDataType Objective Diversification Winching DirectionalFelling
@@ -1570,12 +1640,10 @@ Please note that all volumes in m3/ha are per exploitable hectare, not per plot 
 <section id="referências" class="slide level2 smaller scrollable">
 <h2>Referências</h2>
 <!-- give also the reference to the vignette ?-->
-<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
 </div>
-</div>
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Badouard2024" class="csl-entry" role="listitem">
 Badouard, Vincyane, Sylvain Schmitt, Guillaume Salzet, Thomas Gaquiere, Margaux Rojat, Caroline Bedeau, Olivier Brunaux, and Géraldine Derroire. 2024. <span>“<span>LoggingLab</span>: <span>An R</span> Package to Simulate Reduced-Impact Selective Logging in Tropical Forests Using Forest Inventory Data.”</span> <em>Ecological Modelling</em> 487 (January): 110539. <a href="https://doi.org/10.1016/j.ecolmodel.2023.110539">https://doi.org/10.1016/j.ecolmodel.2023.110539</a>.
 </div>
@@ -1607,6 +1675,7 @@ Badouard, Vincyane, Sylvain Schmitt, Guillaume Salzet, Thomas Gaquiere, Margaux 
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
+'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1792,80 +1861,42 @@ Badouard, Vincyane, Sylvain Schmitt, Guillaume Salzet, Thomas Gaquiere, Margaux 
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1943,27 +1974,10 @@ Badouard, Vincyane, Sylvain Schmitt, Guillaume Salzet, Thomas Gaquiere, Margaux 
         // clear code selection
         e.clearSelection();
       });
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-        }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
-            }
-          }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      function tippyHover(el, contentFn) {
         const config = {
           allowHTML: true,
+          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1973,17 +1987,8 @@ Badouard, Vincyane, Sylvain Schmitt, Guillaume Salzet, Thomas Gaquiere, Margaux 
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start',
+          placement: 'bottom-start'
         };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -1997,11 +2002,7 @@ Badouard, Vincyane, Sylvain Schmitt, Guillaume Salzet, Thomas Gaquiere, Margaux 
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
-          }
+          return note.innerHTML;
         });
       }
       const findCites = (el) => {
