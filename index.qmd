@@ -6,6 +6,7 @@ date-format: medium
 format: 
   revealjs:
     theme: dark
+    output-location: fragment
 bibliography: references.bib
 ---
 
@@ -680,3 +681,4 @@ Notas.
 :::
 
 ## Referências
+

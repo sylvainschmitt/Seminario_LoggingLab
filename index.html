@@ -419,7 +419,7 @@ Sylvain Schmitt
 </div>
 </div>
 
-  <p class="date">Oct 14, 2024</p>
+  <p class="date">Oct 15, 2024</p>
 </section>
 <section>
 <section id="introdução" class="title-slide slide level1 center">
@@ -496,6 +496,9 @@ Sylvain Schmitt
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"VincyaneBadouard/LoggingLab"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell fragment">
+
+</div>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -518,6 +521,9 @@ Sylvain Schmitt
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="fu">library</span>(sf)</span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
 </div>
 <aside class="notes">
 <p>Notas.</p>
@@ -604,6 +610,8 @@ Sylvain Schmitt
 <p>O inventário do lote 6 de Paracou está disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">head</span>(Paracou6_2016)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>   Forest Plot PlotArea SubPlot idTree Protocole Xfield Yfield     Xutm
 1 Paracou    6     6.25       1 100726   Guyafor   13.5  201.0 286420.1
@@ -655,9 +663,13 @@ Sylvain Schmitt
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>Paracou6_2016 <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/p6plot-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/p6plot-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -694,9 +706,13 @@ Sylvain Schmitt
 <p>A máscara do lote 6 de Paracou está disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ggplot</span>(<span class="fu">st_as_sf</span>(PlotMask)) <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/mask-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/mask-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -739,6 +755,8 @@ Sylvain Schmitt
 <p>Dados de espécies de Guiana Francesa são disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">head</span>(SpeciesCriteria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 8
   CommercialName  Genus  Species CommercialLevel MinFD UpMinFD MaxFD Aggregative
@@ -788,6 +806,8 @@ Sylvain Schmitt
 <p>Alometria volumétrica de Guiana Francesa são disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">head</span>(ForestZoneVolumeParametersTable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>           Forest    Zone     aCoef    bCoef
 1       Acarouany    West -0.061776  8.83580
@@ -837,6 +857,9 @@ Sylvain Schmitt
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">inventorycheckformat</span>(Paracou6_2016)</span>
 <span id="cb11-2"><a href="#cb11-2"></a>inventory <span class="ot">&lt;-</span> <span class="fu">cleaninventory</span>(inventory, PlotMask, <span class="fu">loggingparameters</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell fragment">
+
+</div>
 <p><code>loggingparameters()</code> define todos os parâmetros de registro. Consulte sua ajuda (<code>?loggingparameters</code>). Os valores padrão são os usados na Guiana Francesa.</p>
 <aside class="notes">
 <p>Notas.</p>
@@ -859,9 +882,13 @@ Sylvain Schmitt
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>inventory <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/prepmap-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/prepmap-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -882,14 +909,16 @@ Sylvain Schmitt
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">addtreedim</span>(inventory, ForestZoneVolumeParametersTable)</span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="fu">head</span>(<span class="fu">select</span>(inventory, TreeHarvestableVolume, TrunkHeight, TreeHeight, CrownHeight,</span>
 <span id="cb13-3"><a href="#cb13-3"></a>            CrownDiameter, WoodDensity, AGB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>  TreeHarvestableVolume TrunkHeight TreeHeight CrownHeight CrownDiameter
-1             0.1027084    8.272213   14.65595    6.383735      2.510462
-2             1.1181093   10.811462   27.40065   16.589191      8.545500
-3             0.1687473    9.203739   16.78716    7.583417      3.475661
-4             1.3075022   10.860306   28.35561   17.495301      8.651492
-5             0.2230879    9.613873   18.14034    8.526472      3.629078
-6             0.6517747   10.576502   24.12416   13.547658      7.709133
+1             0.1027084    8.272213   14.65595    6.383735      2.174181
+2             1.1181093   10.811462   27.40065   16.589191      7.746662
+3             0.1687473    9.203739   16.78716    7.583417      3.038558
+4             1.3075022   10.860306   28.35561   17.495301      9.048966
+5             0.2230879    9.613873   18.14034    8.526472      3.590780
+6             0.6517747   10.576502   24.12416   13.547658      6.510423
   WoodDensity       AGB
 1   0.7700000 0.1003184
 2   0.7040000 1.3401159
@@ -920,9 +949,13 @@ Sylvain Schmitt
 <span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> TreeHarvestableVolume)) <span class="sc">+</span> </span>
 <span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">trans =</span> <span class="st">"log"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/dimsplot-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/dimsplot-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -961,9 +994,13 @@ Sylvain Schmitt
 <span id="cb16-2"><a href="#cb16-2"></a><span class="fu">ggplot</span>(MainTrails) <span class="sc">+</span></span>
 <span id="cb16-3"><a href="#cb16-3"></a>  tidyterra<span class="sc">::</span><span class="fu">geom_spatraster</span>(<span class="at">data =</span> terra<span class="sc">::</span><span class="fu">rast</span>(DTMParacou)) <span class="sc">+</span> <span class="co"># add to pkg list</span></span>
 <span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/maintrail-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment" data-hash="index_cache/revealjs/maintrail_8d088906b6df48bf36ec14d53db39cc3">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/maintrail-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1010,6 +1047,9 @@ Sylvain Schmitt
 <span id="cb17-9"><a href="#cb17-9"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
 <span id="cb17-10"><a href="#cb17-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell fragment" data-hash="index_cache/revealjs/harvareas_6432f3b0a041019c8a95fa5f1fb6e452">
+
+</div>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1031,9 +1071,13 @@ Sylvain Schmitt
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>(base <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons, <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
 <span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> HarvestableArea<span class="sc">$</span>MachinePolygons, <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/harvareasplot-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/harvareasplot-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1096,6 +1140,8 @@ Sylvain Schmitt
 <span id="cb19-17"><a href="#cb19-17"></a>    <span class="at">harvestablepolygons =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
 <span id="cb19-18"><a href="#cb19-18"></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
 <span id="cb19-19"><a href="#cb19-19"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stderr">
 <pre><code>As the harvestable volume (= 187.4m^3)
                 was higher (by 75m^3)
@@ -1126,9 +1172,13 @@ Sylvain Schmitt
 <span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>SelectedTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Selected"</span>)) <span class="sc">+</span></span>
 <span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>FutureTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Future"</span>)) <span class="sc">+</span></span>
 <span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>ReserveTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Reserve"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/harvest-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/harvest-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1195,6 +1245,9 @@ Sylvain Schmitt
 <span id="cb23-13"><a href="#cb23-13"></a>)</span>
 <span id="cb23-14"><a href="#cb23-14"></a>inventory <span class="ot">&lt;-</span> ScndTrailOutputs<span class="sc">$</span>inventory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell fragment" data-hash="index_cache/revealjs/2trail_753e936f230b2620204f604155834467">
+
+</div>
 <p>Essa etapa pode levar algum tempo.</p>
 <aside class="notes">
 <p>Notas.</p>
@@ -1216,9 +1269,13 @@ Sylvain Schmitt
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>base <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>SmoothedTrails)) <span class="sc">+</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>SelectedTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Selected"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/tracksplot-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/tracksplot-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1252,6 +1309,9 @@ Sylvain Schmitt
 <span id="cb25-9"><a href="#cb25-9"></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
 <span id="cb25-10"><a href="#cb25-10"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell fragment" data-hash="index_cache/revealjs/treefelling_d9556f7feb1bba07b6ba3e63efa09795">
+
+</div>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1272,9 +1332,13 @@ Sylvain Schmitt
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>FelledTrees <span class="ot">&lt;-</span> <span class="fu">getgeometry</span>(inventory, TreePolygon) <span class="sc">%&gt;%</span> <span class="fu">st_set_crs</span>(crs)</span>
 <span id="cb26-2"><a href="#cb26-2"></a>base <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>SmoothedTrails)) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> FelledTrees)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/mappost-1.png" width="960" class="r-stretch"><aside class="notes">
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/mappost-1.png" width="960"></p>
+</div>
+</div>
+<aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1300,6 +1364,8 @@ Sylvain Schmitt
 <span id="cb27-6"><a href="#cb27-6"></a>)</span>
 <span id="cb27-7"><a href="#cb27-7"></a>inventory <span class="ot">&lt;-</span> TimberV<span class="sc">$</span>inventory</span>
 <span id="cb27-8"><a href="#cb27-8"></a>TimberV[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>$TimberLoggedVolume
 [1] 107.9554
@@ -1334,6 +1400,8 @@ $NoHollowTimberLoggedVolume
 <span id="cb29-6"><a href="#cb29-6"></a>    <span class="at">volume =</span> <span class="fu">sum</span>(TimberLoggedVolume), </span>
 <span id="cb29-7"><a href="#cb29-7"></a>    <span class="at">CommercialLevel =</span> <span class="fu">unique</span>(CommercialLevel)</span>
 <span id="cb29-8"><a href="#cb29-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 4
   CommercialName trees_n volume CommercialLevel
@@ -1403,6 +1471,9 @@ $NoHollowTimberLoggedVolume
 <span id="cb31-18"><a href="#cb31-18"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
 <span id="cb31-19"><a href="#cb31-19"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell fragment" data-hash="index_cache/revealjs/single_0cf934efefe181af05159a6ae989a5f6">
+
+</div>
 <p>Várias simulações podem ser executadas pela função <code>loggingsimulation()</code> para levar em conta a estocasticidade com o argumento <code>iter</code> (número de simulações) e <code>cores</code> (número de núcleos de computador usados para paralelizar o cálculo).</p>
 <aside class="notes">
 <p>Notas.</p>
@@ -1423,6 +1494,8 @@ $NoHollowTimberLoggedVolume
 <p>Retorna um resumo das saídas da função de simulação de registro.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>inventory : Paracou6_2016 
 scenario : manual 
@@ -1507,6 +1580,8 @@ Error in round(x$FuelWoodBiomass, digits = 1) :
 <p><code>LogingLab</code> inclui cenários predefinidos que correspondem a diferentes versões de registro de impacto reduzido.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>ScenariosTable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 6
   Type     SpatialDataType Objective Diversification Winching DirectionalFelling
