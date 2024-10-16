@@ -118,6 +118,8 @@
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
@@ -410,21 +412,25 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Seminário LoggingLab</h1>
+  <p class="subtitle">Um pacote R para simular o corte seletivo de impacto reduzido em florestas tropicais</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
 Sylvain Schmitt &amp; Géraldine Derroire 
 </div>
-</div>
+        <p class="quarto-title-affiliation">
+            CIRAD
+          </p>
+    </div>
 </div>
 
-  <p class="date">Oct 15, 2024</p>
+  <p class="date">Oct 16, 2024</p>
 </section>
 <section>
 <section id="introdução" class="title-slide slide level1 center">
 <h1>Introdução</h1>
-<p><em>Texto breve.</em></p>
+<p>O pacote LoggingLab do R, desenvolvido no contexto da extração seletiva de madeira na Guiana Francesa, permite que cada estágio da extração seletiva de madeira seja simulado de forma espacialmente explícita. Isso permite que os efeitos de diferentes práticas de exploração madeireira no ecossistema sejam avaliados e comparados com precisão. O objetivo desse workshop prático será apresentar e usar em conjunto as funções gerais desse pacote.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -463,14 +469,15 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="column" style="width:30%;">
 <p><img data-src="figs/Fig_Flowchart.jpg"></p>
 </div><div class="column" style="width:70%;">
+<p>Os estágios são:</p>
 <ul>
 <li>preparação de dados</li>
 <li>trilhas principais</li>
-<li>áreas colhíveis</li>
+<li>zonas exploráveis</li>
 <li>seleção de árvores</li>
-<li>trilhas secundárias</li>
+<li>trilhas de arraste</li>
 <li>corte de árvores</li>
-<li>quantificação de volume</li>
+<li>quantificação de volumes</li>
 </ul>
 </div>
 </div>
@@ -514,12 +521,14 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="outros-pacotes-r" class="slide level2">
 <h2>Outros pacotes R</h2>
-<p>Usaremos o <code>tidyverse</code> para manipular tabelas e criar gráficos, e o <code>sf</code> para manipular objetos espaciais.</p>
+<p>Usaremos o <code>tidyverse</code> para manipular tabelas e criar gráficos, o <code>sf</code> para manipular objetos espaciais e o <code>terra</code> e o <code>tidyterra</code> para manipular dados raster.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(LoggingLab)</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="fu">library</span>(sf)</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">library</span>(terra)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">library</span>(tidyterra)</span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
@@ -541,9 +550,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <section>
 <section id="entradas" class="title-slide slide level1 center">
 <h1>Entradas</h1>
-<p>Bla.</p>
+<p>As entradas do <code>LoggingLab</code> são as seguintes:</p>
 <ul>
-<li><strong>Inventário</strong>: inventários de árvores da parcela registrada</li>
+<li><strong>Inventário</strong>: inventários de árvores da parcela</li>
 <li><strong>Máscara do lote</strong>: os limites da área a ser explorada</li>
 <li><strong>Dados da espécie</strong>: dados específicos para cada espécie</li>
 <li><strong>Alometria volumétrica</strong>: os parâmetros de alometria a serem calculados</li>
@@ -564,7 +573,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="inventário" class="slide level2">
 <h2>Inventário</h2>
-<p><em>O que é isso? Explain that we work will full inventories (all species, all DBH above a certain threshold) and on a small area.</em></p>
+<p>O inventário e o diâmetro e as coordenadas de todos os arvores de todas as espécies com menos de um determinado diâmetro (normalmente 10cm). No momento, o simulador está trabalhando nessas pequenas áreas e não representa toda a operação de uma concessão, pois seu foco é a quantificação detalhada dos danos pós-operacionais de acordo com as práticas.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -582,14 +591,16 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <section id="inventário-1" class="slide level2">
 <h2>Inventário</h2>
 <p>As colunas exigidas pelo <code>LoggingLab</code> são:</p>
+<div>
 <ul>
-<li><code>Forest</code>: o nome da floresta para aplicar a fórmula de volume correspondente.</li>
-<li><code>idTree</code>: um identificador exclusivo para cada árvore.</li>
-<li><code>Xutm</code> e <code>Yutm</code>: as coordenadas de cada árvore.</li>
-<li><code>CodeAlive</code>: árvore viva ou morta.</li>
-<li><code>Family</code>, <code>Genus</code>, <code>Species</code>: dados botânicos.</li>
-<li><code>CircCorr</code>: circunferência de cada árvore.</li>
+<li class="fragment"><code>Forest</code>: o nome da floresta</li>
+<li class="fragment"><code>idTree</code>: um identificador exclusivo para cada árvore</li>
+<li class="fragment"><code>Xutm</code> e <code>Yutm</code>: as coordenadas de cada árvore</li>
+<li class="fragment"><code>CodeAlive</code>: árvore viva ou morta.</li>
+<li class="fragment"><code>Family</code>, <code>Genus</code>, <code>Species</code>: dados botânicos</li>
+<li class="fragment"><code>CircCorr</code>: circunferência de cada árvore</li>
 </ul>
+</div>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -658,6 +669,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="inventário-3" class="slide level2">
 <h2>Inventário</h2>
+<p>Podemos fazer um mapa do lote 6 de Paraou em 2016.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>Paracou6_2016 <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
@@ -684,8 +696,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="máscara-do-lote" class="slide level2">
 <h2>Máscara do lote</h2>
-<p>A máscara do lote define os limites da área a ser registrada ou seja, os limites do lote.</p>
-<p><em>Por que?</em></p>
+<p>A máscara do lote define os limites da área a ser registrada ou seja, os limites do lote. A máscara do lote é usada pelo <code>LoggingLab</code> para validar o inventário e definir a área de trabalho.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -725,16 +736,18 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="dados-de-espécies" class="slide level2 smaller">
+<section id="dados-de-espécies" class="slide level2">
 <h2>Dados de espécies</h2>
 <p><code>SpeciesCriteria</code> contém dados específicos de cada espécie. As colunas são:</p>
+<div>
 <ul>
-<li><p><code>CommercialLevel</code>: Nível de interesse econômico. 1: principal espécie econômica, 2 ou mais: espécies registradas com o objetivo de diversificação, 0: espécies cujo gênero é coberto por um nome comercial, mas que não são registradas.</p></li>
-<li><p><code>MinFD</code>: Diâmetro mínimo de corte, em centímetros.</p></li>
-<li><p><code>UpMinFD</code>: Diâmetro mínimo de corte aprimorado (caso de povoamento excessivamente rico), em centímetros.</p></li>
-<li><p><code>MaxFD</code>: Diâmetro máximo de corte, em centímetros.</p></li>
-<li><p><code>Aggregative</code>: Caráter agregador da espécie. Se for <code>TRUE</code>, as árvores isoladas não serão cortadas.</p></li>
+<li class="fragment"><code>CommercialLevel</code>: Nível de interesse econômico</li>
+<li class="fragment"><code>MinFD</code>: Diâmetro mínimo de corte, em centímetros</li>
+<li class="fragment"><code>UpMinFD</code>: Diâmetro mínimo de corte aprimorado (caso de povoamento excessivamente rico), em centímetros</li>
+<li class="fragment"><code>MaxFD</code>: Diâmetro máximo de corte, em centímetros</li>
+<li class="fragment"><code>Aggregative</code>: Natureza agregadora da espécie para converter árvores isoladas</li>
 </ul>
+</div>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -784,8 +797,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="alometria-volumétrica" class="slide level2">
 <h2>Alometria volumétrica</h2>
-<p><code>ForestZoneVolumeParametersTable</code> contém os parâmetros de alometria a serem calculados.</p>
-<p><span class="math display">\[Volume = aCoef + bCoef \times DBH^2\]</span><em>Por que?</em></p>
+<p>O <code>LoggingLab</code> usa alometrias volumétricas com parâmetros que variam de acordo com a região explorada. Por exemplo, por volume de árvores que o <code>LoggingLab</code> usa:</p>
+<p><span class="math display">\[Volume = aCoef + bCoef \times DBH^2\]</span></p>
+<p>Com <span class="math inline">\(Volume\)</span> o volume das árvores e <span class="math inline">\(DBH\)</span> o diametro das árvores.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -817,7 +831,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 6 Montagne_Tortue    East -0.084516 10.46132</code></pre>
 </div>
 </div>
-<p><em>Other allometries can be modify, such as crown allometries.</em></p>
+<p>Outras alometrias podem ser modificadas, como as alometrias de coroa.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -835,7 +849,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <section>
 <section id="simulação-de-exploração" class="title-slide slide level1 center">
 <h1>Simulação de exploração</h1>
-<p><em>Texto breve.</em></p>
+<p>Agora, vamos chegar ao coração do <code>LoggingLab</code> e executar uma simulação de exploração passo a passo.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -860,6 +874,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="cell fragment">
 
 </div>
+<p><code>inventorycheckformat</code> verifica se os dados de inventário recebidos são compatíveis com o <code>LoggingLab</code>, enquanto <code>cleaninventory</code> limpa os dados de inventário.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -903,7 +918,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="calcular-as-dimensões-da-árvore" class="slide level2">
 <h2>Calcular as dimensões da árvore</h2>
-<p>Calcule as dimensões da árvore (altura da árvore, do tronco e da copa, diâmetro da copa, volume colhível, densidade da madeira e biomassa).</p>
+<p>Em seguida, o <code>addtreedim</code> calcula as dimensões da árvore (altura da árvore, tronco e copa, diâmetro da copa, volume explorável, densidade da madeira e biomassa).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">addtreedim</span>(inventory, ForestZoneVolumeParametersTable)</span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="fu">head</span>(<span class="fu">select</span>(inventory, TreeHarvestableVolume, TrunkHeight, TreeHeight, CrownHeight,</span>
@@ -912,12 +927,12 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>  TreeHarvestableVolume TrunkHeight TreeHeight CrownHeight CrownDiameter
-1             0.1027084    8.272213   14.65595    6.383735      2.598252
-2             1.1181093   10.811462   27.40065   16.589191      7.772994
-3             0.1687473    9.203739   16.78716    7.583417      3.407940
-4             1.3075022   10.860306   28.35561   17.495301      8.484720
-5             0.2230879    9.613873   18.14034    8.526472      3.361951
-6             0.6517747   10.576502   24.12416   13.547658      6.371736
+1             0.1027084    8.272213   14.65595    6.383735      2.427817
+2             1.1181093   10.811462   27.40065   16.589191      8.570963
+3             0.1687473    9.203739   16.78716    7.583417      3.342327
+4             1.3075022   10.860306   28.35561   17.495301      9.307876
+5             0.2230879    9.613873   18.14034    8.526472      3.535540
+6             0.6517747   10.576502   24.12416   13.547658      6.818658
   WoodDensity       AGB
 1   0.7700000 0.1003184
 2   0.7040000 1.3401159
@@ -943,6 +958,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="calcular-as-dimensões-da-árvore-1" class="slide level2">
 <h2>Calcular as dimensões da árvore</h2>
+<p>Por exemplo, podemos elaborar um mapa do volume explorável.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>inventory <span class="sc">%&gt;%</span> </span>
 <span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
@@ -968,10 +984,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="principais-trilhas-de-derrapagem" class="slide level2">
-<h2>Principais trilhas de derrapagem</h2>
-<p>Gere a trilha principal do terreno inventariado, como linhas na borda e fora do terreno.</p>
-<p><em>Por que ?</em></p>
+<section id="trilhas-principais" class="slide level2">
+<h2>Trilhas principais</h2>
+<p>Para simular a operação, precisamos definir a chegada das trilhas principais. Como estamos simulando apenas uma pequena área, o <code>maintrailextract</code> gera a trilhas principal da área que está sendo explorado usando os bits de máscara do lote.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -986,8 +1001,8 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="principais-trilhas-de-derrapagem-1" class="slide level2">
-<h2>Principais trilhas de derrapagem</h2>
+<section id="trilhas-principais-1" class="slide level2">
+<h2>Trilhas principais</h2>
 <div class="cell" data-hash="index_cache/revealjs/maintrail_f123d2d8e6d8427cb620ccc61f3215df">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>MainTrails <span class="ot">&lt;-</span> <span class="fu">maintrailextract</span>(DTMParacou)</span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="fu">ggplot</span>(MainTrails) <span class="sc">+</span></span>
@@ -1012,10 +1027,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="definição-de-área-colhível" class="slide level2">
-<h2>Definição de área colhível</h2>
-<p>Defina as zonas de colheita e as zonas acessíveis por máquinas dentro da parcela.</p>
-<p>Por padrão, uma unidade de prospecção é uma área conectada a uma trilha de caminhão ou a uma trilha principal de skid, com uma inclinação de menos de 27%, evitando planícies e o sistema de água (buffer de 30 m).</p>
+<section id="zonas-exploráveis" class="slide level2">
+<h2>Zonas exploráveis</h2>
+<p>Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de prospecção é uma área conectada a uma trilha de caminhão ou trilha principal de skidding, com uma inclinação inferior a 27%, evitando planícies e o sistema de água (buffer de 30 m).</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1030,9 +1044,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="definição-de-área-colhível-1" class="slide level2">
-<h2>Definição de área colhível</h2>
-<p>Usamos um cenário manual para poder alterar os argumentos facilmente. O guincho é definido como 2, ou seja, a garra é usada, se possível (6 m de extensão), e o cabo é usado até 40 m.</p>
+<section id="zonas-exploráveis-1" class="slide level2">
+<h2>Zonas exploráveis</h2>
+<p>Usamos <code>harvestableareadefinition</code> com uma opção “winching” definida como 2, ou seja, a garra é usada, se possível (extensão de 6 m), e o cabo é usado até 40 m.</p>
 <div class="cell" data-hash="index_cache/revealjs/harvareas_6432f3b0a041019c8a95fa5f1fb6e452">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>HarvestableArea <span class="ot">&lt;-</span> <span class="fu">harvestableareadefinition</span>(</span>
 <span id="cb17-2"><a href="#cb17-2"></a>  <span class="at">topography =</span> DTMParacou,</span>
@@ -1062,12 +1076,12 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="definição-de-área-colhível-2" class="slide level2 smaller">
-<h2>Definição de área colhível</h2>
-<p>As áreas verdes claras podem ser colhidas. As verdes escuras podem ser colhidas por máquinas.</p>
+<section id="zonas-exploráveis-2" class="slide level2 smaller">
+<h2>Zonas exploráveis</h2>
+<p>As áreas verdes claras podem ser colhidas. As áreas verde-escuras podem ser colhidas por máquina. As áreas verde-escuras são as áreas baixas com o sistema de água.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>(base <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>    tidyterra<span class="sc">::</span><span class="fu">geom_spatraster</span>(<span class="at">data =</span> terra<span class="sc">::</span><span class="fu">rast</span>(DTMParacou), <span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>    <span class="fu">geom_spatraster</span>(<span class="at">data =</span> <span class="fu">rast</span>(DTMParacou), <span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
 <span id="cb18-3"><a href="#cb18-3"></a>    <span class="fu">scale_fill_continuous</span>(<span class="st">"Altura (m)"</span>, <span class="at">na.value =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
 <span id="cb18-4"><a href="#cb18-4"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons, <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
 <span id="cb18-5"><a href="#cb18-5"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> HarvestableArea<span class="sc">$</span>MachinePolygons, <span class="at">fill =</span> <span class="st">"olivedrab"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1091,17 +1105,18 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="seleção-de-árvores" class="slide level2 smaller scrollable">
+<section id="seleção-de-árvores" class="slide level2 smaller">
 <h2>Seleção de árvores</h2>
-<p>Selecionar árvores para colheita e árvores futuras e de reserva.</p>
-<p>As árvores podem ser colhidas se:</p>
+<p>Em seguida, selecionamos as árvores a serem colhidas e as árvores futuras e de reserva. As árvores podem ser colhidas se:</p>
+<div>
 <ul>
-<li>Pertencem a espécies de primeira categoria econômica ou mais, se houver diversificação.</li>
-<li>O DBH estiver entre o MinFD e o MaxFD.</li>
-<li>Não estiverem isoladas (&gt;100 m por padrão) de outros indivíduos da mesma espécie no caso de espécies agregadas.</li>
-<li>Estão localizadas em declives &lt; 22%.</li>
-<li>Estão fora das trilhas principais.</li>
+<li class="fragment"><p>Pertencem a espécies de primeira categoria econômica ou mais, se houver diversificação.</p></li>
+<li class="fragment"><p>O DBH estiver entre o MinFD e o MaxFD.</p></li>
+<li class="fragment"><p>Não estiverem isoladas (&gt;100 m por padrão) de outros indivíduos da mesma espécie no caso de espécies agregadas.</p></li>
+<li class="fragment"><p>Estão localizadas em declives &lt; 22%.</p></li>
+<li class="fragment"><p>Estão fora das trilhas principais.</p></li>
 </ul>
+</div>
 <p>As árvores a serem colhidas são escolhidas em ordem decrescente de volume, até que o volume objetivo seja atingido.</p>
 <aside class="notes">
 <p>Notas.</p>
@@ -1166,7 +1181,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="seleção-de-árvores-2" class="slide level2 smaller">
 <h2>Seleção de árvores</h2>
-<p><em>Bla.</em></p>
+<p>Podemos mapear árvores exploráveis, selecionadas, futuras e de reserva.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>base <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>HarvestableTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Harvestable"</span>)) <span class="sc">+</span></span>
 <span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>SelectedTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Selected"</span>)) <span class="sc">+</span></span>
@@ -1192,9 +1207,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="trilhas-secundárias" class="slide level2">
-<h2>Trilhas secundárias</h2>
-<p>As trilhas secundárias de derrapagem permitem que as árvores selecionadas sejam colhidas pelas máquinas escolhidas. A rota é otimizada para reduzir a distância percorrida, respeitando as restrições topográficas e evitando as árvores a serem protegidas. Elas têm 4 metros de largura, com uma inclinação máxima de 22% e uma inclinação lateral máxima de 4%. Elas evitam árvores a serem cortadas, árvores grandes (&gt;50 cm) e árvores de reserva.</p>
+<section id="trilhas-de-arraste" class="slide level2">
+<h2>Trilhas de arraste</h2>
+<p>As trilhas de arraste permitem que as árvores selecionadas sejam colhidas pelas máquinas escolhidas. A rota é otimizada para reduzir a distância percorrida, respeitando as restrições topográficas e evitando as árvores a serem protegidas. Elas têm 4 metros de largura, com uma inclinação máxima de 22% e uma inclinação lateral máxima de 4%. Elas evitam árvores a serem cortadas, árvores grandes (&gt;50 cm) e árvores de reserva.</p>
 <aside class="notes">
 <p>Notas</p>
 <style type="text/css">
@@ -1209,8 +1224,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="trilhas-secundárias-1" class="slide level2">
-<h2>Trilhas secundárias</h2>
+<section id="trilhas-de-arraste-1" class="slide level2">
+<h2>Trilhas de arraste</h2>
+<p><code>secondstrailsopening</code> permite que você defina trihlas de arraste.</p>
 <div class="cell" data-hash="index_cache/revealjs/2trail_753e936f230b2620204f604155834467">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>ScndTrailOutputs <span class="ot">&lt;-</span> <span class="fu">secondtrailsopening</span>(</span>
 <span id="cb23-2"><a href="#cb23-2"></a>  <span class="at">topography =</span> DTMParacou,</span>
@@ -1230,7 +1246,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="cell fragment" data-hash="index_cache/revealjs/2trail_753e936f230b2620204f604155834467">
 
 </div>
-<p>Essa etapa pode levar algum tempo.</p>
+<p>⚠️ Essa etapa pode levar algum tempo.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1245,9 +1261,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="trilhas-secundárias-2" class="slide level2 smaller scrollable">
-<h2>Trilhas secundárias</h2>
-<p><em>Bla.</em></p>
+<section id="trilhas-de-arraste-2" class="slide level2 smaller">
+<h2>Trilhas de arraste</h2>
+<p>Podemos mapear as trilhas de arraste com o árvores selecionadas.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>base <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>SmoothedTrails)) <span class="sc">+</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> TreeSelection<span class="sc">$</span>SelectedTreesPoints, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Selected"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1273,11 +1289,11 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="corte-de-árvores" class="slide level2">
 <h2>Corte de árvores</h2>
-<p>Simula o corte de árvores, com a direção bem-sucedida ou não da queda da árvore, ao pé do caminho, em um ângulo em relação ao caminho e evitando as árvores a serem protegidas, conforme desejado. A derrubada da árvore cria uma queda de vento no solo, cujas dimensões são calculadas usando alometrias específicas.</p>
+<p>Em seguida, simulamos o corte da árvore, com a direção bem-sucedida ou não da queda da árvore, ao pé do caminho, em um ângulo em relação ao caminho e evitando as árvores a serem protegidas, conforme desejado. O corte da árvore cria uma árvore no solo, cujas dimensões são calculadas usando alometrias específicas.</p>
 </section>
 <section id="corte-de-árvores-1" class="slide level2">
 <h2>Corte de árvores</h2>
-<p><em>Bla.</em></p>
+<p><code>treefelling</code> permite que você simula a corte de árvores.</p>
 <div class="cell" data-hash="index_cache/revealjs/treefelling_d9556f7feb1bba07b6ba3e63efa09795">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>inventory <span class="ot">&lt;-</span> inventory <span class="sc">%&gt;%</span> </span>
 <span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">treefelling</span>(</span>
@@ -1307,9 +1323,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="corte-de-árvores-2" class="slide level2 smaller scrollable">
+<section id="corte-de-árvores-2" class="slide level2 smaller">
 <h2>Corte de árvores</h2>
-<p>Bla.</p>
+<p>Podemos mapear os árvores no solo.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>FelledTrees <span class="ot">&lt;-</span> <span class="fu">getgeometry</span>(inventory, TreePolygon) <span class="sc">%&gt;%</span> <span class="fu">st_set_crs</span>(crs)</span>
 <span id="cb26-2"><a href="#cb26-2"></a>base <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(SecondaryTrails<span class="sc">$</span>SmoothedTrails)) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> FelledTrees)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1333,9 +1349,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="quantificar-os-volumes" class="slide level2">
-<h2>Quantificar os volumes</h2>
-<p>Calcule o volume de madeira colhida em árvores saudáveis exploradas para madeira e nas árvores ocas, se elas também forem colhidas para lenha.</p>
+<section id="quantificar-de-volumes" class="slide level2">
+<h2>Quantificar de volumes</h2>
+<p>Por fim, podemos quantificar o volume de madeira colhida de árvores saudáveis usadas para a produção de madeira com <code>timberharvestedvolume</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>TimberV <span class="ot">&lt;-</span> <span class="fu">timberharvestedvolume</span>(</span>
 <span id="cb27-2"><a href="#cb27-2"></a>  inventory, </span>
@@ -1364,9 +1380,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="quantificar-os-volumes-1" class="slide level2">
-<h2>Quantificar os volumes</h2>
-<p>Os detalhes da produção por espécie estão no inventário.</p>
+<section id="quantificar-de-volumes-1" class="slide level2">
+<h2>Quantificar de volumes</h2>
+<p>Podemos quantificar os detalhes da produção por espécie estão no inventário.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>TimberV<span class="sc">$</span>inventory <span class="sc">%&gt;%</span> </span>
 <span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">filter</span>(DeathCause <span class="sc">==</span> <span class="st">"cut"</span>) <span class="sc">%&gt;%</span> </span>
@@ -1391,7 +1407,6 @@ Sylvain Schmitt &amp; Géraldine Derroire
 7 wapa courbaril       1   4.68               2</code></pre>
 </div>
 </div>
-<!-- GD: yes, good to show this as well, and maybe here we could also add a slide on getting the biomass per cause of death, as we do in ManagForRes and as I propose to do for the presentation to practicionners -->
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1406,9 +1421,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="quantificar-os-volumes-2" class="slide level2">
-<h2>Quantificar os volumes</h2>
-<p>Bla.</p>
+<section id="quantificar-de-volumes-2" class="slide level2">
+<h2>Quantificar de volumes</h2>
+<p>Mas, acima de tudo, podemos quantificar o volume de danos por causa de morte.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>TimberV<span class="sc">$</span>inventory <span class="sc">%&gt;%</span> </span>
 <span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">group_by</span>(DeathCause) <span class="sc">%&gt;%</span> </span>
@@ -1437,7 +1452,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <section>
 <section id="para-saber-mais" class="title-slide slide level1 center">
 <h1>Para saber mais</h1>
-<p>Texto breve</p>
+<p>Algumas informações adicionais para aqueles que desejam ir além com o <code>LoggingLab</code>.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1496,7 +1511,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="resultados" class="slide level2">
 <h2>Resultados</h2>
-<p>Retorna um resumo das saídas da função de simulação de registro.</p>
+<p><code>loggingsummary1</code> retorna um resumo das saídas da função de simulação.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1537,9 +1552,7 @@ Error in round(x$FuelWoodBiomass, digits = 1) :
 </section>
 <section id="cenários" class="slide level2">
 <h2>Cenários</h2>
-<p>Os cenários reúnem os principais parâmetros de gerenciamento.</p>
-<p>Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.</p>
-<p><em>Mais.</em></p>
+<p>Os cenários reúnem os principais parâmetros de gerenciamento. Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1556,15 +1569,17 @@ Error in round(x$FuelWoodBiomass, digits = 1) :
 </section>
 <section id="cenários-1" class="slide level2 smaller">
 <h2>Cenários</h2>
-<p>As colunas são:</p>
+<p>As colunas do cenário são:</p>
+<div>
 <ul>
-<li><code>Type</code>: O nome do cenário.</li>
-<li><code>SpatialDataType</code>: o tipo de dados espaciais (Lidar ou SRTM).</li>
-<li><code>Objective</code>: Volume objetivo por hectare.</li>
-<li><code>Diversification</code>: Permitir o corte de outras espécies além das principais espécies comerciais.</li>
-<li><code>Winching</code>: Método de guincho. Sem cabo ou garra = “0”, somente cabo = “1”, garra + cabo = “2”.</li>
-<li><code>DirectionalFelling</code>: “0” = não utilizado, ‘1’ = apenas para evitar danos a árvores futuras e de reserva, ‘2’ = evitar danos a árvores futuras e de reserva + orientação da trilha.</li>
+<li class="fragment"><code>Type</code>: o nome do cenário</li>
+<li class="fragment"><code>SpatialDataType</code>: o tipo de dados espaciais (Lidar ou SRTM)</li>
+<li class="fragment"><code>Objective</code>: o volume objetivo por hectare</li>
+<li class="fragment"><code>Diversification</code>: por permitir o corte de outras espécies além das principais espécies comerciais</li>
+<li class="fragment"><code>Winching</code>: o método de guincho, sem cabo ou garra = “0”, somente cabo = “1”, garra + cabo = “2”</li>
+<li class="fragment"><code>DirectionalFelling</code>: “0” = não utilizado, ‘1’ = apenas para evitar danos a árvores futuras e de reserva, ‘2’ = evitar danos a árvores futuras e de reserva + orientação da trilha</li>
 </ul>
+</div>
 <p>Todas as funções permitem <code>scenario = “manual”</code>: nesse caso, todos os argumentos devem ser adicionados manualmente. Seu nome é o mesmo das colunas.</p>
 <aside class="notes">
 <p>Notas.</p>
@@ -1582,7 +1597,7 @@ Error in round(x$FuelWoodBiomass, digits = 1) :
 </section>
 <section id="cenários-2" class="slide level2">
 <h2>Cenários</h2>
-<p><code>LogingLab</code> inclui cenários predefinidos que correspondem a diferentes versões de registro de impacto reduzido.</p>
+<p><code>LogingLab</code> inclui cenários predefinidos que correspondem a diferentes versões de registro de impacto reduzido na Guiana Francesa.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>ScenariosTable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1600,14 +1615,250 @@ Error in round(x$FuelWoodBiomass, digits = 1) :
 </div>
 </div>
 </section>
-<section id="parâmetros-de-exploração" class="slide level2">
+<section id="parâmetros-de-exploração" class="slide level2 smaller scrollable">
 <h2>Parâmetros de exploração</h2>
-<p><code>loggingparameters()</code> define todos os parâmetros de registro. Consulte sua ajuda (<code>?loggingparameters</code>). Os valores padrão são os usados na Guiana Francesa.</p>
+<p><code>loggingparameters()</code> define todos os parâmetros de exploração. Consulte sua ajuda (<code>?loggingparameters</code>). Os valores padrão são os usados na Guiana Francesa.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">loggingparameters</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>$MinDBHValue
+[1] 10
+
+$MaxTrailCenterlineSlope
+[1] 22
+
+$MaxTrailCrossSlope
+[1] 4
+
+$GrappleMaxslope
+[1] 20
+
+$CableTreesMaxSlope
+[1] 35
+
+$PlateauMaxSlope
+[1] 5
+
+$SlopeDistance
+[1] 3
+
+$WaterSourcesBufferZone
+[1] 30
+
+$WaterSourcesRelativeHeight
+[1] 2
+
+$MinMainTrailWidth
+[1] 5
+
+$MaxMainTrailWidth
+[1] 6
+
+$ScndTrailWidth
+[1] 4
+
+$BigTrees
+[1] 50
+
+$ResamplDistDTM
+[1] 5
+
+$SmoothingFact
+[1] 10
+
+$CableLength
+[1] 40
+
+$GrappleLength
+[1] 6
+
+$IsolateTreeMinDistance
+[1] 100
+
+$FutureTreesMinDiameter
+[1] 35
+
+$TreefallSuccessProportion
+[1] 0.6
+
+$MinTreefallOrientation
+[1] 30
+
+$MaxTreefallOrientation
+[1] 45
+
+$TreeHollowPartForFuel
+[1] 0.3333333
+
+$CrownPartForFuel
+[1] 0.6666667
+
+$Purge
+[1] 0.14
+
+$MaxTrailDensity
+[1] 200
+
+$MaxLandingArea
+[1] 1500
+
+$CostMatrix
+$CostMatrix[[1]]
+$CostMatrix[[1]][[1]]
+$CostMatrix[[1]][[1]]$Slope
+[1] 3
+
+$CostMatrix[[1]][[1]]$Cost
+[1] 3
+
+
+$CostMatrix[[1]][[2]]
+$CostMatrix[[1]][[2]]$Slope
+[1] 5
+
+$CostMatrix[[1]][[2]]$Cost
+[1] 5
+
+
+$CostMatrix[[1]][[3]]
+$CostMatrix[[1]][[3]]$Slope
+[1] 12
+
+$CostMatrix[[1]][[3]]$Cost
+[1] 20
+
+
+$CostMatrix[[1]][[4]]
+$CostMatrix[[1]][[4]]$Slope
+[1] 20
+
+$CostMatrix[[1]][[4]]$Cost
+[1] 60
+
+
+$CostMatrix[[1]][[5]]
+$CostMatrix[[1]][[5]]$Slope
+[1] 35
+
+$CostMatrix[[1]][[5]]$Cost
+[1] 1000
+
+
+$CostMatrix[[1]][[6]]
+$CostMatrix[[1]][[6]]$Slope
+[1] Inf
+
+$CostMatrix[[1]][[6]]$Cost
+[1] Inf
+
+
+
+$CostMatrix[[2]]
+$CostMatrix[[2]][[1]]
+$CostMatrix[[2]][[1]]$CostType
+[1] "Initial"
+
+$CostMatrix[[2]][[1]]$CostValue
+[1] 1000
+
+
+$CostMatrix[[2]][[2]]
+$CostMatrix[[2]][[2]]$CostType
+[1] "Access"
+
+$CostMatrix[[2]][[2]]$CostValue
+[1] Inf
+
+
+$CostMatrix[[2]][[3]]
+$CostMatrix[[2]][[3]]$CostType
+[1] "BigTrees"
+
+$CostMatrix[[2]][[3]]$CostValue
+[1] 500
+
+
+$CostMatrix[[2]][[4]]
+$CostMatrix[[2]][[4]]$CostType
+[1] "Reserves"
+
+$CostMatrix[[2]][[4]]$CostValue
+[1] 500
+
+
+$CostMatrix[[2]][[5]]
+$CostMatrix[[2]][[5]]$CostType
+[1] "Futures"
+
+$CostMatrix[[2]][[5]]$CostValue
+[1] 50
+
+
+$CostMatrix[[2]][[6]]
+$CostMatrix[[2]][[6]]$CostType
+[1] "MainTrails"
+
+$CostMatrix[[2]][[6]]$CostValue
+[1] 1e-04
+
+
+$CostMatrix[[2]][[7]]
+$CostMatrix[[2]][[7]]$CostType
+[1] "SecondTrails"
+
+$CostMatrix[[2]][[7]]$CostValue
+[1] 0.1
+
+
+
+
+$TreeHarvestableVolumeAllometry
+function (DBH, aCoef, bCoef) 
+aCoef + bCoef * (DBH/100)^2
+&lt;environment: 0x5b31d1642630&gt;
+
+$TrunkHeightAllometry
+function (DBH, TreeHarvestableVolume) 
+TreeHarvestableVolume/(pi * (((DBH/100)/2)^2))
+&lt;environment: 0x5b31d1642630&gt;
+
+$TreeHeightAllometry
+function (DBH) 
+exp(0.07359191 + 1.34241216 * log(DBH) + -0.12282344 * log(DBH)^2)
+&lt;environment: 0x5b31d1642630&gt;
+
+$CrownDiameterAllometry
+function (DBH, TreeHeight, alpha, beta) 
+exp(((log(DBH) - alpha - rnorm(length(DBH), 0, 0.0295966977))/beta))/TreeHeight
+&lt;environment: 0x5b31d1642630&gt;
+
+$RottenModel
+function (DBH) 
+1/(1 + exp(-(-5.151 + 0.042 * DBH)))
+&lt;environment: 0x5b31d1642630&gt;
+
+$VisiblyDefectModel
+function (LogDBH) 
+1/(1 + exp(-(-3.392 + 0.357 * LogDBH)))
+&lt;environment: 0x5b31d1642630&gt;
+
+$Treefall2ndDeathModel
+function (DBH) 
+1/(1 + exp(-(-0.47323 + -0.02564 * DBH)))
+&lt;environment: 0x5b31d1642630&gt;</code></pre>
+</div>
+</div>
 </section></section>
 <section>
 <section id="conclusão" class="title-slide slide level1 center">
 <h1>Conclusão</h1>
-<p>Texto breve</p>
+<p>Parabéns 👏 , agora vocês são profissionais do <code>LoggingLab</code>`!</p>
+<p>Falando mais seriamente, ficaremos felizes em responder a quaisquer perguntas que você possa ter, portanto, não hesite em dar uma olhada no <a href="https://github.com/VincyaneBadouard/LoggingLab/issues">GitHub</a> para quaisquer dúvidas futuras.</p>
+<div class="footer">
+<p><em>Sylvain Schmitt (sylvain.schmitt@cirad.fr) &amp; Géraldine Derroire (geraldine.derroire@cirad.fr)</em></p>
+</div>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1624,7 +1875,8 @@ Error in round(x$FuelWoodBiomass, digits = 1) :
 </section>
 <section id="referências" class="slide level2 smaller scrollable">
 <h2>Referências</h2>
-<div class="footer footer-default">
+
+<img src="figs/logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
 
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
@@ -1643,6 +1895,7 @@ Badouard, Vincyane, Sylvain Schmitt, Guillaume Salzet, Thomas Gaquiere, Margaux 
   <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -1664,7 +1917,8 @@ Badouard, Vincyane, Sylvain Schmitt, Guillaume Salzet, Thomas Gaquiere, Margaux 
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1685,7 +1939,7 @@ Badouard, Vincyane, Sylvain Schmitt, Guillaume Salzet, Thomas Gaquiere, Margaux 
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -1787,10 +2041,10 @@ Badouard, Vincyane, Sylvain Schmitt, Guillaume Salzet, Thomas Gaquiere, Margaux 
         hideCursorTime: 5000,
 
         // Opens links in an iframe preview overlay
-        previewLinks: false,
+        previewLinks: true,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
+        transition: 'fade',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',
@@ -1835,7 +2089,7 @@ Badouard, Vincyane, Sylvain Schmitt, Guillaume Salzet, Thomas Gaquiere, Margaux 
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,
