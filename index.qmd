@@ -17,6 +17,11 @@ format:
 bibliography: references.bib
 ---
 
+```{r}
+set.seed(24)
+```
+
+
 # Introdução
 
 O pacote LoggingLab do R, desenvolvido no contexto da extração seletiva de madeira na Guiana Francesa, permite que cada estágio da extração seletiva de madeira seja simulado de forma espacialmente explícita. Isso permite que os efeitos de diferentes práticas de exploração madeireira no ecossistema sejam avaliados e comparados com precisão. O objetivo desse workshop prático será apresentar e usar em conjunto as funções gerais desse pacote.
@@ -37,7 +42,7 @@ Notas.
 
 ## O que o pacote faz?
 
-::::: columns
+::: columns
 ::: {.column width="30%"}
 ![](figs/Fig_Flowchart.jpg)
 :::
@@ -53,7 +58,7 @@ Os estágios são:
 -   corte de árvores
 -   quantificação de volumes
 :::
-:::::
+:::
 
 ::: notes
 Notas.
@@ -94,7 +99,7 @@ Notas.
 
 # Entradas
 
-As entradas do `LoggingLab` são as seguintes:
+Os dados e parâmetros necessários para usar `LoggingLab` são as seguintes:
 
 -   **Inventário**: inventários de árvores da parcela
 -   **Máscara do lote**: os limites da área a ser explorada
@@ -107,10 +112,12 @@ Notas.
 
 ## Inventário
 
-O inventário e o diâmetro e as coordenadas de todos os arvores de todas as espécies com menos de um determinado diâmetro (normalmente 10cm). No momento, o simulador está trabalhando nessas pequenas áreas e não representa toda a operação de uma concessão, pois seu foco é a quantificação detalhada dos danos pós-operacionais de acordo com as práticas.
+O inventário deve conter o diâmetro, a a identificação botânica e as coordenadas de todos os arvores com menos de um determinado diâmetro (normalmente DAP \>= 10cm).
+
+No momento, o simulador está trabalhando em pequenos lotes (alguns hectares) e não representa toda a operação de uma concessão, pois seu foco é a quantificação detalhada dos danos pós-operacionais de acordo com as práticas.
 
 ::: notes
-Notas.
+DAP: diametro a altura do peito
 :::
 
 ## Inventário
@@ -147,6 +154,8 @@ Notas.
 
 Podemos fazer um mapa do lote 6 de Paraou em 2016.
 
+<!-- GD: for the presentation to the practitionner, I will use a color per species and a size proportunional to the DBH to illustrate all the infos needed. You may want (or not) to do the same here (the code is in fig_pres_pract.qmd)-->
+
 ```{r p6plot}
 #| echo: true
 Paracou6_2016 %>% 
@@ -160,7 +169,7 @@ Notas.
 
 ## Máscara do lote
 
-A máscara do lote define os limites da área a ser registrada ou seja, os limites do lote. A máscara do lote é usada pelo `LoggingLab` para validar o inventário e definir a área de trabalho.
+A máscara do lote define os limites da área a ser registrada <!-- not sure registrada is the right term... a ser considerada ?--> ou seja, os limites do lote. A máscara do lote é usada pelo `LoggingLab` para validar o inventário e definir a zonas exploráveis.
 
 ::: notes
 Notas.
@@ -188,11 +197,12 @@ Notas.
 -   `MinFD`: Diâmetro mínimo de corte, em centímetros
 -   `UpMinFD`: Diâmetro mínimo de corte aprimorado (caso de povoamento excessivamente rico), em centímetros
 -   `MaxFD`: Diâmetro máximo de corte, em centímetros
--   `Aggregative`: Natureza agregadora da espécie para converter árvores isoladas
+-   `Aggregative`: Natureza agregadora da espécie para converter árvores isoladas <!-- not sure converter is the right word... evitar ?
+    Also, I'm not sure we want to explain this as it may take quite some time and it is not central... what do you think?-->
 :::
 
 ::: notes
-Notas.
+Explain here what are the different level of CommercialLevel, as there may not be different level in Brasil.
 :::
 
 ## Dados de espécies
@@ -208,7 +218,7 @@ head(SpeciesCriteria)
 Notas.
 :::
 
-## Alometria volumétrica
+## Alometrias volumétricas
 
 O `LoggingLab` usa alometrias volumétricas com parâmetros que variam de acordo com a região explorada. Por exemplo, por volume de árvores que o `LoggingLab` usa:
 
@@ -220,9 +230,9 @@ Com $Volume$ o volume das árvores e $DBH$ o diametro das árvores.
 Notas.
 :::
 
-## Alometria volumétrica
+## Alometrias volumétrica
 
-Alometria volumétrica de Guiana Francesa são disponível dentro `LoggingLab`.
+Alometrias volumétricas para diferentes regiões da Guiana Francesa são disponível dentro `LoggingLab`.
 
 ```{r allometry}
 #| echo: true
@@ -237,7 +247,7 @@ Notas.
 
 # Simulação de exploração
 
-Agora, vamos chegar ao coração do `LoggingLab` e executar uma simulação de exploração passo a passo.
+Agora, vamos executar uma simulação de exploração passo a passo usando `LoggingLab`.
 
 ::: notes
 Notas.
@@ -301,13 +311,20 @@ inventory %>%
   scale_color_viridis_c(trans = "log")
 ```
 
+```{=html}
+<!-- this is good to show it as a map. 
+But I wonder if this could lead to confusision as it shows the harvestable volume for all trees, but all trees are not harvestable (may be too small or not commercial)...
+Maybe present the biomass ? less informative in the context of logging but would avoid confusion/questions?-->
+```
 ::: notes
 Notas.
 :::
 
 ## Trilhas principais
 
-Para simular a operação, precisamos definir a chegada das trilhas principais. Como estamos simulando apenas uma pequena área, o `maintrailextract` gera a trilhas principal da área que está sendo explorado usando os bits de máscara do lote.
+Como estamos simulando apenas a exploração em alguns hectares, não estamos simulando as trilhas principais. Mas precisamos de sua localização para simular as trilhas de arraste.
+
+O `maintrailextract` gera as trilhas principais da área que está sendo explorado usando os bordas de máscara do lote.
 
 ::: notes
 Notas.
@@ -323,13 +340,24 @@ ggplot(MainTrails) +
   geom_sf()
 ```
 
+<!-- I think we should put them in color/bold otherwise this is the same figure than the mask.
+In the compiled html, the figure doesnt' show, I don't know why...-->
+
 ::: notes
 Notas.
 :::
 
 ## Zonas exploráveis
 
-Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de prospecção é uma área conectada a uma trilha de caminhão ou trilha principal de skidding, com uma inclinação inferior a 27%, evitando planícies e o sistema de água (buffer de 30 m).
+Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de prospecção é:
+
+::: incremental
+- uma área conectada a uma trilha de caminhão ou trilha principal de skidding
+- com uma inclinação inferior a 27%
+- evitando planícies e o sistema de água (buffer de 30 m).
+::: 
+
+<!-- maybe don't talk about piste à camions to avoid spending time on vocabulary?--> 
 
 ::: notes
 Notas.
@@ -360,15 +388,17 @@ Notas.
 
 ## Zonas exploráveis {.smaller}
 
-As áreas verdes claras podem ser colhidas. As áreas verde-escuras podem ser colhidas por máquina. As áreas verde-escuras são as áreas baixas com o sistema de água.
+As áreas verdes claras podem ser colhidas (áreas verde-escuras podem ser colhidas por máquina e verde-claro com cabo). As outras áreas são as áreas não exploráveis (areas baixas com o sistema de água).
+
+<!-- I've tried to make the map more readable-->
 
 ```{r harvareasplot}
 #| echo: true
 (base <- ggplot() +
     geom_spatraster(data = rast(DTMParacou), alpha = .5) +
-    scale_fill_continuous("Altura (m)", na.value = NA) +
-    geom_sf(data = HarvestableArea$HarvestablePolygons, fill = "olivedrab", alpha = 0.1) +
-    geom_sf(data = HarvestableArea$MachinePolygons, fill = "olivedrab", alpha = 0.7))
+    scale_fill_gradient(low = "darkblue", high = "white", "Altura (m)", na.value = NA) + 
+    geom_sf(data = HarvestableArea$HarvestablePolygons, fill = "darkgreen", alpha = 0.3) +
+    geom_sf(data = HarvestableArea$MachinePolygons, fill = "darkgreen", alpha = 0.7))
 ```
 
 ::: notes
@@ -391,7 +421,12 @@ Em seguida, selecionamos as árvores a serem colhidas e as árvores futuras e de
 -   Estão fora das trilhas principais.
 :::
 
+<!-- depending on if we decide to talk or not about species aggregation, remove the critera non isoladas, let's decide on this and be consistent with the practicionner presentation-->
+
 As árvores a serem colhidas são escolhidas em ordem decrescente de volume, até que o volume objetivo seja atingido.
+
+As árvores futuras são aqueles a serem explorados na próxima campanha. 
+As árvores de reserva são conservadas como árvores-semente para regeneração natural.
 
 ::: notes
 Notas.
@@ -400,6 +435,8 @@ Notas.
 ## Seleção de árvores {.smaller}
 
 Se o volume extraível for muito baixo, a diversificação pode ser aplicada (`specieslax = TRUE`): as árvores de todas as classificações comerciais são selecionadas em ordem decrescente de volume até que o volume objetivo seja atingido, ou a extração pode continuar apesar de um volume objetivo não atingido ou ser abandonada (`objectivelax = FALSE`).
+
+<!-- idem, do we want to talk about "forced" diversification if too poor ? --> 
 
 ```{r treesel}
 #| echo: true
@@ -412,7 +449,7 @@ TreeSelection <- inventory %>%
     speciescriteria = SpeciesCriteria,
     scenario ="manual", 
     objective = 30,
-    fuel = "2",
+    fuel = "0",
     winching = "2",
     diversification = TRUE, 
     specieslax = FALSE,
@@ -425,6 +462,9 @@ TreeSelection <- inventory %>%
   )
 crs <- st_crs(HarvestableArea$HarvestablePolygons)
 ```
+
+<!-- IMPORTANT COMMENT: here I would not simulate fuel wood, as discussed. So put fuel="0", as you do for the trail layout bellow
+I CHANGED IT, here and everywhere-->
 
 ::: notes
 Notas.
@@ -456,7 +496,7 @@ Notas
 
 ## Trilhas de arraste
 
-`secondstrailsopening` permite que você defina trihlas de arraste.
+`secondstrailsopening` permite definir trihlas de arraste.
 
 ```{r 2trail}
 #| echo: true
@@ -499,7 +539,11 @@ Notas
 
 ## Corte de árvores
 
-Em seguida, simulamos o corte da árvore, com a direção bem-sucedida ou não da queda da árvore, ao pé do caminho, em um ângulo em relação ao caminho e evitando as árvores a serem protegidas, conforme desejado. O corte da árvore cria uma árvore no solo, cujas dimensões são calculadas usando alometrias específicas.
+Em seguida, simulamos o corte da árvore. O corte da árvore cria uma árvore no solo, cujas dimensões são calculadas usando alometrias específicas.
+
+O corte direcional visa direcionar a queda da árvore, com o pé um ângulo em relação ao caminho, e evitando as árvores a serem protegidas.
+Mas o corte direcional pode falhar (em 40% dos casos)! 
+
 
 ## Corte de árvores
 
@@ -531,8 +575,10 @@ Podemos mapear os árvores no solo.
 ```{r mappost}
 #| echo: true
 FelledTrees <- getgeometry(inventory, TreePolygon) %>% st_set_crs(crs)
-base + geom_sf(data = st_as_sf(SecondaryTrails$SmoothedTrails)) + geom_sf(data = FelledTrees)
+base + geom_sf(data = st_as_sf(SecondaryTrails$SmoothedTrails)) + geom_sf(data = FelledTrees, fill = "lightpink")
 ```
+
+
 
 ::: notes
 Notas.
@@ -547,7 +593,7 @@ Por fim, podemos quantificar o volume de madeira colhida de árvores saudáveis 
 TimberV <- timberharvestedvolume(
   inventory, 
   scenario = "manual", 
-  fuel = "2",
+  fuel = "0",
   advancedloggingparameters = loggingparameters()
 )
 TimberV$TimberLoggedVolume
@@ -559,7 +605,7 @@ Notas.
 
 ## Quantificar de volumes
 
-Podemos quantificar os detalhes da produção por espécie estão no inventário.
+Os detalhes da produção por espécie estão no inventário.
 
 ```{r timbervsp}
 #| echo: true
@@ -588,6 +634,15 @@ TimberV$inventory %>%
   summarise(AGB = sum(AGB)) %>% na.omit() %>% 
   ggplot(aes(DeathCause, AGB)) + geom_col() + xlab("")
 ```
+
+<!-- Actually, if you do it like that you just get the cause of death but not really the volume of damage.
+We indeed considered that the unused part of harvested trees are also damage.
+So either we keep the graph like that and change the text, or we change the graph to get the actual quantity of damage.
+I'm in favour of the second option.
+
+I made a function for that for ManagForRes, I will adapt it for the presentation to practitionners, we can use it here if we decide to go for that.
+Note for me; it's in Misc/2211_check_deathtree_fate.Rmd
+-->
 
 ::: notes
 Notas.
@@ -650,7 +705,7 @@ Notas.
 
 ## Cenários
 
-Os cenários reúnem os principais parâmetros de gerenciamento. Eles são usados para definir a área explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.
+Os cenários reúnem os principais parâmetros de exploração. Eles são usados para definir a zona explorável, as árvores a serem cortadas e a modelagem de trilhas secundárias.
 
 ::: notes
 Notas.
