@@ -427,16 +427,13 @@ Sylvain Schmitt &amp; Géraldine Derroire
 
   <p class="date">Oct 18, 2024</p>
 </section>
-<section class="slide level2">
-
-<div class="cell">
-
-</div>
-</section>
 <section>
 <section id="introdução" class="title-slide slide level1 center">
 <h1>Introdução</h1>
 <p>O pacote LoggingLab do R, desenvolvido no contexto da extração seletiva de madeira na Guiana Francesa, permite que cada estágio da extração seletiva de madeira seja simulado de forma espacialmente explícita. Isso permite que os efeitos de diferentes práticas de exploração madeireira no ecossistema sejam avaliados e comparados com precisão. O objetivo desse workshop prático será apresentar e usar em conjunto as funções gerais desse pacote.</p>
+<div class="cell">
+
+</div>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -674,14 +671,13 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="inventário-3" class="slide level2">
+<section id="inventário-3" class="slide level2 smaller">
 <h2>Inventário</h2>
 <p>Podemos fazer um mapa do lote 6 de Paraou em 2016.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>Paracou6_2016 <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">paste</span>(Genus, Species), <span class="at">size =</span> CircCorr)) <span class="sc">+</span> <span class="fu">geom_sf</span>() <span class="sc">+</span> </span>
-<span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">25</span>, <span class="dv">3</span>)) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>Paracou6_2016 <span class="sc">%&gt;%</span>   <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">paste</span>(Genus, Species), <span class="at">size =</span> CircCorr)) <span class="sc">+</span> <span class="fu">geom_sf</span>() <span class="sc">+</span> </span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">25</span>, <span class="dv">3</span>)) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output-display">
@@ -719,7 +715,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="máscara-do-lote-1" class="slide level2">
+<section id="máscara-do-lote-1" class="slide level2 smaller">
 <h2>Máscara do lote</h2>
 <p>A máscara do lote 6 de Paracou está disponível dentro <code>LoggingLab</code>.</p>
 <div class="cell">
@@ -968,11 +964,10 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <h2>Calcular as dimensões da árvore</h2>
 <p>Por exemplo, podemos elaborar um mapa do volume explorável.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>inventory <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> AGB, <span class="at">size =</span> CircCorr)) <span class="sc">+</span> </span>
-<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="st">"Biomassa</span><span class="sc">\n</span><span class="st">(tonelada)"</span>, <span class="at">trans =</span> <span class="st">"log"</span>, <span class="at">labels =</span> <span class="sc">~</span><span class="fu">round</span>(., <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a>  <span class="fu">scale_size_continuous</span>(<span class="st">"Circunferência"</span>, <span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">25</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>inventory <span class="sc">%&gt;%</span> <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> AGB, <span class="at">size =</span> CircCorr)) <span class="sc">+</span> </span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="st">"Biomassa</span><span class="sc">\n</span><span class="st">(tonelada)"</span>, <span class="at">trans =</span> <span class="st">"log"</span>, <span class="at">labels =</span> <span class="sc">~</span><span class="fu">round</span>(., <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">scale_size_continuous</span>(<span class="st">"Circunferência"</span>, <span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">25</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output-display">
@@ -1092,7 +1087,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="zonas-exploráveis-2" class="slide level2 smaller">
+<section id="zonas-exploráveis-2" class="slide level2 smaller scrollable">
 <h2>Zonas exploráveis</h2>
 <p>As áreas verdes escuras podem ser colhidas por máquina e as áreas verdes claras por cabo. As outras áreas não podem ser colhidas.</p>
 <div class="cell">
@@ -1437,7 +1432,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="quantificar-de-volumes-2" class="slide level2">
+<section id="quantificar-de-volumes-2" class="slide level2 smaller">
 <h2>Quantificar de volumes</h2>
 <p>Mas, acima de tudo, podemos quantificar o volume de danos por causa de morte.</p>
 <div class="cell">
@@ -1841,37 +1836,37 @@ $CostMatrix[[2]][[7]]$CostValue
 $TreeHarvestableVolumeAllometry
 function (DBH, aCoef, bCoef) 
 aCoef + bCoef * (DBH/100)^2
-&lt;environment: 0x5adf57a17760&gt;
+&lt;environment: 0x622acc3dd4e8&gt;
 
 $TrunkHeightAllometry
 function (DBH, TreeHarvestableVolume) 
 TreeHarvestableVolume/(pi * (((DBH/100)/2)^2))
-&lt;environment: 0x5adf57a17760&gt;
+&lt;environment: 0x622acc3dd4e8&gt;
 
 $TreeHeightAllometry
 function (DBH) 
 exp(0.07359191 + 1.34241216 * log(DBH) + -0.12282344 * log(DBH)^2)
-&lt;environment: 0x5adf57a17760&gt;
+&lt;environment: 0x622acc3dd4e8&gt;
 
 $CrownDiameterAllometry
 function (DBH, TreeHeight, alpha, beta) 
 exp(((log(DBH) - alpha - rnorm(length(DBH), 0, 0.0295966977))/beta))/TreeHeight
-&lt;environment: 0x5adf57a17760&gt;
+&lt;environment: 0x622acc3dd4e8&gt;
 
 $RottenModel
 function (DBH) 
 1/(1 + exp(-(-5.151 + 0.042 * DBH)))
-&lt;environment: 0x5adf57a17760&gt;
+&lt;environment: 0x622acc3dd4e8&gt;
 
 $VisiblyDefectModel
 function (LogDBH) 
 1/(1 + exp(-(-3.392 + 0.357 * LogDBH)))
-&lt;environment: 0x5adf57a17760&gt;
+&lt;environment: 0x622acc3dd4e8&gt;
 
 $Treefall2ndDeathModel
 function (DBH) 
 1/(1 + exp(-(-0.47323 + -0.02564 * DBH)))
-&lt;environment: 0x5adf57a17760&gt;</code></pre>
+&lt;environment: 0x622acc3dd4e8&gt;</code></pre>
 </div>
 </div>
 </section></section>

@@ -17,13 +17,13 @@ format:
 bibliography: references.bib
 ---
 
-```{r}
-set.seed(42)
-```
-
 # Introdução
 
 O pacote LoggingLab do R, desenvolvido no contexto da extração seletiva de madeira na Guiana Francesa, permite que cada estágio da extração seletiva de madeira seja simulado de forma espacialmente explícita. Isso permite que os efeitos de diferentes práticas de exploração madeireira no ecossistema sejam avaliados e comparados com precisão. O objetivo desse workshop prático será apresentar e usar em conjunto as funções gerais desse pacote.
+
+```{r}
+set.seed(42)
+```
 
 ::: notes
 Notas.
@@ -149,14 +149,13 @@ head(Paracou6_2016)
 Notas.
 :::
 
-## Inventário
+## Inventário {.smaller}
 
 Podemos fazer um mapa do lote 6 de Paraou em 2016.
 
 ```{r p6plot}
 #| echo: true
-Paracou6_2016 %>% 
-  st_as_sf(coords = c("Xutm", "Yutm")) %>% 
+Paracou6_2016 %>%   st_as_sf(coords = c("Xutm", "Yutm")) %>% 
   ggplot(aes(color = paste(Genus, Species), size = CircCorr)) + geom_sf() + 
   scale_size_continuous(range = c(.25, 3)) + theme(legend.position = "none")
 ```
@@ -173,7 +172,7 @@ A máscara do lote define os limites da área a ser considerada ou seja, os limi
 Notas.
 :::
 
-## Máscara do lote
+## Máscara do lote {.smaller}
 
 A máscara do lote 6 de Paracou está disponível dentro `LoggingLab`.
 
@@ -302,8 +301,7 @@ Por exemplo, podemos elaborar um mapa do volume explorável.
 
 ```{r dimsplot}
 #| echo: true
-inventory %>% 
-  st_as_sf(coords = c("Xutm", "Yutm")) %>% 
+inventory %>% st_as_sf(coords = c("Xutm", "Yutm")) %>% 
   ggplot() + geom_sf(aes(col = AGB, size = CircCorr)) + 
   scale_color_viridis_c("Biomassa\n(tonelada)", trans = "log", labels = ~round(., 1)) +
   scale_size_continuous("Circunferência", range = c(.25, 3))
@@ -373,7 +371,7 @@ HarvestableArea <- harvestableareadefinition(
 Notas.
 :::
 
-## Zonas exploráveis {.smaller}
+## Zonas exploráveis {.smaller .scrollable}
 
 As áreas verdes escuras podem ser colhidas por máquina e as áreas verdes claras por cabo. As outras áreas não podem ser colhidas.
 
@@ -593,7 +591,7 @@ TimberV$inventory %>%
 Notas.
 :::
 
-## Quantificar de volumes
+## Quantificar de volumes {.smaller}
 
 Mas, acima de tudo, podemos quantificar o volume de danos por causa de morte.
 
