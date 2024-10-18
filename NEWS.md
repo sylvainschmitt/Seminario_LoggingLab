@@ -1,3 +1,4 @@
+-   Seminario_LoggingLab 0.1.0.9010: [\@sylvainschmitt](https://github.com/sylvainschmitt) see what you keep from G's 2nd review #5
 -   Seminario_LoggingLab 0.1.0.9009: 1st full version #5
 -   Seminario_LoggingLab 0.1.0.9008: Gerladine's 1st review integration #5
 -   Seminario_LoggingLab 0.1.0.9007: fig_pres_pract
