@@ -21,7 +21,6 @@ bibliography: references.bib
 set.seed(42)
 ```
 
-
 # Introdução
 
 O pacote LoggingLab do R, desenvolvido no contexto da extração seletiva de madeira na Guiana Francesa, permite que cada estágio da extração seletiva de madeira seja simulado de forma espacialmente explícita. Isso permite que os efeitos de diferentes práticas de exploração madeireira no ecossistema sejam avaliados e comparados com precisão. O objetivo desse workshop prático será apresentar e usar em conjunto as funções gerais desse pacote.
@@ -42,7 +41,7 @@ Notas.
 
 ## O que o pacote faz?
 
-::: columns
+::::: columns
 ::: {.column width="30%"}
 ![](figs/Fig_Flowchart.jpg)
 :::
@@ -58,7 +57,7 @@ Os estágios são:
 -   corte de árvores
 -   quantificação de volumes
 :::
-:::
+:::::
 
 ::: notes
 Notas.
@@ -154,13 +153,12 @@ Notas.
 
 Podemos fazer um mapa do lote 6 de Paraou em 2016.
 
-<!-- GD: for the presentation to the practitionner, I will use a color per species and a size proportunional to the DBH to illustrate all the infos needed. You may want (or not) to do the same here (the code is in fig_pres_pract.qmd)-->
-
 ```{r p6plot}
 #| echo: true
 Paracou6_2016 %>% 
   st_as_sf(coords = c("Xutm", "Yutm")) %>% 
-  ggplot() + geom_sf()
+  ggplot(aes(color = paste(Genus, Species), size = CircCorr)) + geom_sf() + 
+  scale_size_continuous(range = c(.25, 3)) + theme(legend.position = "none")
 ```
 
 ::: notes
@@ -267,7 +265,7 @@ inventory <- cleaninventory(inventory, PlotMask)
 Notas.
 :::
 
-## Validar o inventário
+## Validar o inventário {.smaller}
 
 Como os dados já estavam limpos, não houve muitas alterações.
 
@@ -275,7 +273,8 @@ Como os dados já estavam limpos, não houve muitas alterações.
 #| echo: true
 inventory %>% 
   st_as_sf(coords = c("Xutm", "Yutm")) %>% 
-  ggplot() + geom_sf()
+  ggplot(aes(color = paste(Genus, Species), size = CircCorr)) + geom_sf() + 
+  scale_size_continuous(range = c(.25, 3)) + theme(legend.position = "none")
 ```
 
 ::: notes
@@ -297,7 +296,7 @@ head(select(inventory, TreeHarvestableVolume, TrunkHeight, TreeHeight, CrownHeig
 Notas.
 :::
 
-## Calcular as dimensões da árvore
+## Calcular as dimensões da árvore {.smaller}
 
 Por exemplo, podemos elaborar um mapa do volume explorável.
 
@@ -305,15 +304,11 @@ Por exemplo, podemos elaborar um mapa do volume explorável.
 #| echo: true
 inventory %>% 
   st_as_sf(coords = c("Xutm", "Yutm")) %>% 
-  ggplot() + geom_sf(aes(col = TreeHarvestableVolume)) + 
-  scale_color_viridis_c(trans = "log")
+  ggplot() + geom_sf(aes(col = AGB, size = CircCorr)) + 
+  scale_color_viridis_c("Biomassa\n(tonelada)", trans = "log", labels = ~round(., 1)) +
+  scale_size_continuous("Circunferência", range = c(.25, 3))
 ```
 
-```{=html}
-<!-- this is good to show it as a map. 
-But I wonder if this could lead to confusision as it shows the harvestable volume for all trees, but all trees are not harvestable (may be too small or not commercial)...
-Maybe present the biomass ? less informative in the context of logging but would avoid confusion/questions?-->
-```
 ::: notes
 Notas.
 :::
@@ -335,11 +330,8 @@ Notas.
 #| cache: true
 MainTrails <- maintrailextract(DTMParacou)
 ggplot(MainTrails) +
-  geom_sf()
+  geom_sf(linewidth = 4)
 ```
-
-<!-- I think we should put them in color/bold otherwise this is the same figure than the mask.
-In the compiled html, the figure doesnt' show, I don't know why...-->
 
 ::: notes
 Notas.
@@ -350,15 +342,15 @@ Notas.
 Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de prospecção é:
 
 ::: incremental
-- com uma inclinação inferior a 27%
-- evitando planícies e o sistema de água (buffer de 30 m).
-::: 
+-   com uma inclinação inferior a 27%
+-   evitando planícies e o sistema de água (buffer de 30 m).
+:::
 
 ::: notes
 Notas.
 :::
 
-## Zonas exploráveis
+## Zonas exploráveis {.smaller}
 
 Usamos `harvestableareadefinition` com uma opção “winching” definida como 2, ou seja, a garra é usada, se possível (extensão de 6 m), e o cabo é usado até 40 m.
 
@@ -383,14 +375,11 @@ Notas.
 
 ## Zonas exploráveis {.smaller}
 
-As áreas verdes claras podem ser colhidas (áreas verde-escuras podem ser colhidas por máquina e verde-claro com cabo). As outras áreas são as áreas não exploráveis (areas baixas com o sistema de água).
-
-<!-- I've tried to make the map more readable-->
+As áreas verdes escuras podem ser colhidas por máquina e as áreas verdes claras por cabo. As outras áreas não podem ser colhidas.
 
 ```{r harvareasplot}
 #| echo: true
-(base <- ggplot() +
-    geom_spatraster(data = rast(DTMParacou), alpha = .5) +
+(base <- ggplot() + geom_spatraster(data = rast(DTMParacou), alpha = .5) +
     scale_fill_gradient(low = "darkblue", high = "white", "Altura (m)", na.value = NA) + 
     geom_sf(data = HarvestableArea$HarvestablePolygons, fill = "darkgreen", alpha = 0.3) +
     geom_sf(data = HarvestableArea$MachinePolygons, fill = "darkgreen", alpha = 0.7))
@@ -416,8 +405,7 @@ Em seguida, selecionamos as árvores a serem colhidas e as árvores futuras e de
 
 As árvores a serem colhidas são escolhidas em ordem decrescente de volume, até que o volume objetivo seja atingido.
 
-As árvores futuras são aqueles a serem explorados na próxima campanha. 
-As árvores de reserva são conservadas como árvores-semente para regeneração natural.
+As árvores futuras são aqueles a serem explorados na próxima campanha. As árvores de reserva são conservadas como árvores-semente para regeneração natural.
 
 ::: notes
 Notas.
@@ -425,7 +413,7 @@ Notas.
 
 ## Seleção de árvores {.smaller}
 
-Bla.
+O função `treeselection` seleciona árvores com os critérios anteriores.
 
 ```{r treesel}
 #| echo: true
@@ -527,9 +515,7 @@ Notas
 
 Em seguida, simulamos o corte da árvore. O corte da árvore cria uma árvore no solo, cujas dimensões são calculadas usando alometrias específicas.
 
-O corte direcional visa direcionar a queda da árvore, com o pé um ângulo em relação ao caminho, e evitando as árvores a serem protegidas.
-Mas o corte direcional pode falhar (em 40% dos casos)! 
-
+O corte direcional visa direcionar a queda da árvore, com o pé um ângulo em relação ao caminho, e evitando as árvores a serem protegidas. Mas o corte direcional pode falhar (em 40% dos casos)!
 
 ## Corte de árvores
 
@@ -563,8 +549,6 @@ Podemos mapear os árvores no solo.
 FelledTrees <- getgeometry(inventory, TreePolygon) %>% st_set_crs(crs)
 base + geom_sf(data = st_as_sf(SecondaryTrails$SmoothedTrails)) + geom_sf(data = FelledTrees, fill = "lightpink")
 ```
-
-
 
 ::: notes
 Notas.
