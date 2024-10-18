@@ -169,7 +169,7 @@ Notas.
 
 ## Máscara do lote
 
-A máscara do lote define os limites da área a ser registrada <!-- not sure registrada is the right term... a ser considerada ?--> ou seja, os limites do lote. A máscara do lote é usada pelo `LoggingLab` para validar o inventário e definir a zonas exploráveis.
+A máscara do lote define os limites da área a ser considerada ou seja, os limites do lote. A máscara do lote é usada pelo `LoggingLab` para validar o inventário e definir a zonas exploráveis.
 
 ::: notes
 Notas.
@@ -197,12 +197,10 @@ Notas.
 -   `MinFD`: Diâmetro mínimo de corte, em centímetros
 -   `UpMinFD`: Diâmetro mínimo de corte aprimorado (caso de povoamento excessivamente rico), em centímetros
 -   `MaxFD`: Diâmetro máximo de corte, em centímetros
--   `Aggregative`: Natureza agregadora da espécie para converter árvores isoladas <!-- not sure converter is the right word... evitar ?
-    Also, I'm not sure we want to explain this as it may take quite some time and it is not central... what do you think?-->
 :::
 
 ::: notes
-Explain here what are the different level of CommercialLevel, as there may not be different level in Brasil.
+Explique aqui quais são os diferentes níveis do CommercialLevel, pois pode não haver níveis diferentes no Brasil.
 :::
 
 ## Dados de espécies
@@ -352,12 +350,9 @@ Notas.
 Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de prospecção é:
 
 ::: incremental
-- uma área conectada a uma trilha de caminhão ou trilha principal de skidding
 - com uma inclinação inferior a 27%
 - evitando planícies e o sistema de água (buffer de 30 m).
 ::: 
-
-<!-- maybe don't talk about piste à camions to avoid spending time on vocabulary?--> 
 
 ::: notes
 Notas.
@@ -414,14 +409,10 @@ Em seguida, selecionamos as árvores a serem colhidas e as árvores futuras e de
 
 -   O DBH estiver entre o MinFD e o MaxFD.
 
--   Não estiverem isoladas (\>100 m por padrão) de outros indivíduos da mesma espécie no caso de espécies agregadas.
-
 -   Estão localizadas em declives \< 22%.
 
 -   Estão fora das trilhas principais.
 :::
-
-<!-- depending on if we decide to talk or not about species aggregation, remove the critera non isoladas, let's decide on this and be consistent with the practicionner presentation-->
 
 As árvores a serem colhidas são escolhidas em ordem decrescente de volume, até que o volume objetivo seja atingido.
 
@@ -434,9 +425,7 @@ Notas.
 
 ## Seleção de árvores {.smaller}
 
-Se o volume extraível for muito baixo, a diversificação pode ser aplicada (`specieslax = TRUE`): as árvores de todas as classificações comerciais são selecionadas em ordem decrescente de volume até que o volume objetivo seja atingido, ou a extração pode continuar apesar de um volume objetivo não atingido ou ser abandonada (`objectivelax = FALSE`).
-
-<!-- idem, do we want to talk about "forced" diversification if too poor ? --> 
+Bla.
 
 ```{r treesel}
 #| echo: true
@@ -462,9 +451,6 @@ TreeSelection <- inventory %>%
   )
 crs <- st_crs(HarvestableArea$HarvestablePolygons)
 ```
-
-<!-- IMPORTANT COMMENT: here I would not simulate fuel wood, as discussed. So put fuel="0", as you do for the trail layout bellow
-I CHANGED IT, here and everywhere-->
 
 ::: notes
 Notas.
