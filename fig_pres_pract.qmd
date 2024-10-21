@@ -11,19 +11,118 @@ format:
 ```{r libs}
 #| message: false
 #| warning: false
+#| cache: TRUE
 library(LoggingLab)
 library(tidyverse)
 library(sf)
+library(data.table)
 theme_set(theme_bw())
 ```
+
+```{r}
+set.seed(42)
+```
+
+# First part of the presentation
 
 ## Prelogging inventory
 
 ```{r p6_pre_log}
-g <- Paracou6_2016 %>% unite(col="GenSp", Genus, Species, sep="_") %>% 
-  st_as_sf(coords = c("Xutm", "Yutm")) %>% 
-  ggplot(aes(color=GenSp, size=CircCorr/25)) + geom_sf() + theme(legend.position="none")
+g <- Paracou6_2016 %>%   st_as_sf(coords = c("Xutm", "Yutm")) %>% 
+  ggplot(aes(color = paste(Genus, Species), size = CircCorr)) + geom_sf() + 
+  scale_size_continuous(range = c(.25, 3)) + theme(legend.position = "none")
 ggsave("figs/pres_pract_prelogging_inventory.png", g, dpi = 300)
 g
 ```
+
+## Others figures first part
+
+They are taken from the presentation for students, and are all for the following parameters: 
+
+-   objective = 30 
+-   fuel = "0" 
+-   winching = "2" 
+-   directionalfelling = "2" 
+-   diversification = TRUE 
+-   specieslax = FALSE 
+-   objectivelax = TRUE
+
+
+# For comparision
+
+## Set the scenarios
+
+I set the following scenarios, with the pivot being the one used by Sylvain for the presentation to students (and used in the first part of the presentation to practitionners), but with objectivelax=FALSE.
+
+```{r}
+my_scenar <- data.table(scenar = c("pivot", "vol_10", "vol_20", "no_div", 
+                                   "trail2foot", "only_cable", "no_dir_fell"),
+                        objective = c(30, 10, 20, 30, 30, 30, 30),
+                        fuel = rep("0", 7), 
+                        winching = c("2", "2", "2", "2", "0", "1", "2"),
+                        directionalfelling = c("2", "2", "2", "2", "2", "2", "0"),
+                        diversification = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE),
+                        specieslax = rep(FALSE, 7),
+                        objectivelax = rep(FALSE, 7))
+```
+
+
+I create a function to run these scenaio and calculate the following outputs of interest.
+I always set the seed to the same seed before each simulation.
+
+```{r}
+scenario = "pivot"
+my_scenar = my_scenar
+
+
+scenar_compare <- function (scenario,  # the name of the scenario to test
+                            my_scenar) # the table with all the scenario
+  {
+    set.seed(42)
+    # Run the scenario
+      Res <- loggingsimulation1(
+        Paracou6_2016,
+        plotmask = PlotMask, 
+        topography = DTMParacou,
+        creekverticaldistance = CreekDistances$distvert,
+        creekhorizontaldistance = CreekDistances$disthorz,
+        speciescriteria = SpeciesCriteria,
+        volumeparameters = ForestZoneVolumeParametersTable,
+        scenario = "manual",
+        objective = my_scenar[scenar==scenario, objective],
+        fuel = my_scenar[scenar==scenario, fuel], 
+        winching = my_scenar[scenar==scenario, winching], 
+        directionalfelling = my_scenar[scenar==scenario, directionalfelling], 
+        diversification = my_scenar[scenar==scenario, diversification], 
+        specieslax = my_scenar[scenar==scenario, specieslax], 
+        objectivelax = my_scenar[scenar==scenario, objectivelax],
+        crowndiameterparameters = ParamCrownDiameterAllometry,
+        advancedloggingparameters = loggingparameters())
+      
+    # Get the input (to check) as a table
+      # TO DO (all in the output)
+      
+    # Get the output of interest as a table
+      # Harvestable area
+        # TO DO (in the output)
+      
+      # Vol of timber per ha
+        # TO DO (in the output but put per ha)
+      
+      # Biomass of damage per ha
+        # TO DO (not in the output ?)
+      
+      # Proportion of damage in the total lost biomass
+        # TO DO (not in the output ?)
+      
+      # TrailscDensity (m/ha)
+        # TO DO (in the output)
+      
+    # Return a list of 2 (input, output)
+  }
+  
+
+
+```
+
 
