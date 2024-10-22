@@ -303,7 +303,7 @@ Por exemplo, podemos elaborar um mapa do volume explorável.
 #| echo: true
 inventory %>% st_as_sf(coords = c("Xutm", "Yutm")) %>% 
   ggplot() + geom_sf(aes(col = AGB, size = CircCorr)) + 
-  scale_color_viridis_c("Biomassa\n(tonelada)", trans = "log", labels = ~round(., 1)) +
+  scale_color_viridis_c("Biomassa", trans = "log", labels = ~round(., 1)) +
   scale_size_continuous("Circunferência", range = c(.25, 3))
 ```
 
@@ -423,12 +423,10 @@ TreeSelection <- inventory %>%
     topography = DTMParacou,
     speciescriteria = SpeciesCriteria,
     scenario ="manual", 
-    objective = 30,
+    objective = 20,
     fuel = "0",
-    winching = "2",
     diversification = TRUE, 
-    specieslax = FALSE,
-    objectivelax = TRUE,
+    winching = "2",
     harvestablearea = HarvestableArea$HarvestableArea,
     plotslope = HarvestableArea$PlotSlope,
     maintrails = MainTrails,
@@ -591,7 +589,7 @@ TimberV$inventory %>%
 Notas.
 :::
 
-## Quantificar de volumes {.smaller}
+## Quantificar de volumes
 
 Mas, acima de tudo, podemos quantificar o volume de danos por causa de morte.
 
@@ -599,18 +597,12 @@ Mas, acima de tudo, podemos quantificar o volume de danos por causa de morte.
 #| echo: true
 TimberV$inventory %>% 
   group_by(DeathCause) %>% 
-  summarise(AGB = sum(AGB)) %>% na.omit() %>% 
-  ggplot(aes(DeathCause, AGB)) + geom_col() + xlab("")
+  mutate(lost_agb = ifelse(DeathCause == "cut", 
+                           AGB - TimberLoggedVolume * WoodDensity, 
+                           AGB)) %>% 
+  summarise(AGB = sum(AGB) / HarvestableArea$HarvestableArea) %>% 
+  na.omit()
 ```
-
-<!-- Actually, if you do it like that you just get the cause of death but not really the volume of damage.
-We indeed considered that the unused part of harvested trees are also damage.
-So either we keep the graph like that and change the text, or we change the graph to get the actual quantity of damage.
-I'm in favour of the second option.
-
-I made a function for that for ManagForRes, I will adapt it for the presentation to practitionners, we can use it here if we decide to go for that.
-Note for me; it's in Misc/2211_check_deathtree_fate.Rmd
--->
 
 ::: notes
 Notas.
@@ -640,13 +632,11 @@ Rslt <- loggingsimulation1(
   speciescriteria = SpeciesCriteria,
   volumeparameters = ForestZoneVolumeParametersTable,
   scenario = "manual",
-  objective = 30,
+  objective = 20,
   fuel = "0", 
   winching = "2", 
   directionalfelling = "2", 
   diversification = TRUE, 
-  specieslax = FALSE, 
-  objectivelax = TRUE,
   crowndiameterparameters = ParamCrownDiameterAllometry,
   advancedloggingparameters = loggingparameters()
 )

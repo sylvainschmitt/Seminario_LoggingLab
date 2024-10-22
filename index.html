@@ -425,7 +425,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
     </div>
 </div>
 
-  <p class="date">Oct 18, 2024</p>
+  <p class="date">Oct 22, 2024</p>
 </section>
 <section>
 <section id="introdução" class="title-slide slide level1 center">
@@ -966,7 +966,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>inventory <span class="sc">%&gt;%</span> <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> AGB, <span class="at">size =</span> CircCorr)) <span class="sc">+</span> </span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="st">"Biomassa</span><span class="sc">\n</span><span class="st">(tonelada)"</span>, <span class="at">trans =</span> <span class="st">"log"</span>, <span class="at">labels =</span> <span class="sc">~</span><span class="fu">round</span>(., <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="st">"Biomassa"</span>, <span class="at">trans =</span> <span class="st">"log"</span>, <span class="at">labels =</span> <span class="sc">~</span><span class="fu">round</span>(., <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">scale_size_continuous</span>(<span class="st">"Circunferência"</span>, <span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">25</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
@@ -1153,23 +1153,21 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <span id="cb19-5"><a href="#cb19-5"></a>    <span class="at">topography =</span> DTMParacou,</span>
 <span id="cb19-6"><a href="#cb19-6"></a>    <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
 <span id="cb19-7"><a href="#cb19-7"></a>    <span class="at">scenario =</span><span class="st">"manual"</span>, </span>
-<span id="cb19-8"><a href="#cb19-8"></a>    <span class="at">objective =</span> <span class="dv">30</span>,</span>
+<span id="cb19-8"><a href="#cb19-8"></a>    <span class="at">objective =</span> <span class="dv">20</span>,</span>
 <span id="cb19-9"><a href="#cb19-9"></a>    <span class="at">fuel =</span> <span class="st">"0"</span>,</span>
-<span id="cb19-10"><a href="#cb19-10"></a>    <span class="at">winching =</span> <span class="st">"2"</span>,</span>
-<span id="cb19-11"><a href="#cb19-11"></a>    <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb19-12"><a href="#cb19-12"></a>    <span class="at">specieslax =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb19-13"><a href="#cb19-13"></a>    <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb19-14"><a href="#cb19-14"></a>    <span class="at">harvestablearea =</span> HarvestableArea<span class="sc">$</span>HarvestableArea,</span>
-<span id="cb19-15"><a href="#cb19-15"></a>    <span class="at">plotslope =</span> HarvestableArea<span class="sc">$</span>PlotSlope,</span>
-<span id="cb19-16"><a href="#cb19-16"></a>    <span class="at">maintrails =</span> MainTrails,</span>
-<span id="cb19-17"><a href="#cb19-17"></a>    <span class="at">harvestablepolygons =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
-<span id="cb19-18"><a href="#cb19-18"></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb19-19"><a href="#cb19-19"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-10"><a href="#cb19-10"></a>    <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb19-11"><a href="#cb19-11"></a>    <span class="at">winching =</span> <span class="st">"2"</span>,</span>
+<span id="cb19-12"><a href="#cb19-12"></a>    <span class="at">harvestablearea =</span> HarvestableArea<span class="sc">$</span>HarvestableArea,</span>
+<span id="cb19-13"><a href="#cb19-13"></a>    <span class="at">plotslope =</span> HarvestableArea<span class="sc">$</span>PlotSlope,</span>
+<span id="cb19-14"><a href="#cb19-14"></a>    <span class="at">maintrails =</span> MainTrails,</span>
+<span id="cb19-15"><a href="#cb19-15"></a>    <span class="at">harvestablepolygons =</span> HarvestableArea<span class="sc">$</span>HarvestablePolygons,</span>
+<span id="cb19-16"><a href="#cb19-16"></a>    <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb19-17"><a href="#cb19-17"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stderr">
-<pre><code>As the harvestable volume (= 187.4m^3)
-                was higher (by 75m^3)
+<pre><code>As the harvestable volume (= 169.5m^3)
+                was higher (by 94.5m^3)
                 than the objective volume, the Minimum Falling Diameter (MinFD) of the 1st and 2nd economic ranks species
                   were increased to UpMinFD. The objective volume has now been reached.</code></pre>
 </div>
@@ -1374,7 +1372,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 93.61721</code></pre>
+<pre><code>[1] 74.84268</code></pre>
 </div>
 </div>
 <aside class="notes">
@@ -1406,16 +1404,15 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 4
+<pre><code># A tibble: 6 × 4
   CommercialName trees_n volume CommercialLevel
   &lt;chr&gt;            &lt;int&gt;  &lt;dbl&gt;           &lt;dbl&gt;
-1 chawari              1   4.11               2
-2 gonfolo gris         1   3.56               1
-3 grignon franc        4  21.6                1
-4 maho noir            4  16.5                2
-5 wacapou              1   3.61               1
-6 wapa                 9  39.7                2
-7 wapa courbaril       1   4.68               2</code></pre>
+1 angélique            1   8.89               1
+2 chawari              1   4.11               2
+3 grignon franc        3  16.9                1
+4 maho noir            2   8.76               2
+5 wapa                 5  27.1                2
+6 wapa courbaril       2   9.10               2</code></pre>
 </div>
 </div>
 <aside class="notes">
@@ -1432,28 +1429,28 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="quantificar-de-volumes-2" class="slide level2 smaller">
+<section id="quantificar-de-volumes-2" class="slide level2">
 <h2>Quantificar de volumes</h2>
 <p>Mas, acima de tudo, podemos quantificar o volume de danos por causa de morte.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>TimberV<span class="sc">$</span>inventory <span class="sc">%&gt;%</span> </span>
 <span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">group_by</span>(DeathCause) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">summarise</span>(<span class="at">AGB =</span> <span class="fu">sum</span>(AGB)) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb31-4"><a href="#cb31-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DeathCause, AGB)) <span class="sc">+</span> <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">mutate</span>(<span class="at">lost_agb =</span> <span class="fu">ifelse</span>(DeathCause <span class="sc">==</span> <span class="st">"cut"</span>, </span>
+<span id="cb31-4"><a href="#cb31-4"></a>                           AGB <span class="sc">-</span> TimberLoggedVolume <span class="sc">*</span> WoodDensity, </span>
+<span id="cb31-5"><a href="#cb31-5"></a>                           AGB)) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-6"><a href="#cb31-6"></a>  <span class="fu">summarise</span>(<span class="at">AGB =</span> <span class="fu">sum</span>(AGB) <span class="sc">/</span> HarvestableArea<span class="sc">$</span>HarvestableArea) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-7"><a href="#cb31-7"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/degagb-1.png" width="960"></p>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  DeathCause    AGB
+  &lt;chr&gt;       &lt;dbl&gt;
+1 2ndtrail     23.1
+2 cut          28.3
+3 treefall2nd  10.1</code></pre>
 </div>
 </div>
-<!-- Actually, if you do it like that you just get the cause of death but not really the volume of damage.
-We indeed considered that the unused part of harvested trees are also damage.
-So either we keep the graph like that and change the text, or we change the graph to get the actual quantity of damage.
-I'm in favour of the second option.
-
-I made a function for that for ManagForRes, I will adapt it for the presentation to practitionners, we can use it here if we decide to go for that.
-Note for me; it's in Misc/2211_check_deathtree_fate.Rmd
--->
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1489,28 +1486,26 @@ Note for me; it's in Misc/2211_check_deathtree_fate.Rmd
 <section id="uma-única-simulação" class="slide level2 smaller">
 <h2>Uma única simulação</h2>
 <p>Todas as etapas de simulação podem ser incluídas em uma única função para economizar tempo.</p>
-<div class="cell" data-hash="index_cache/revealjs/single_0cf934efefe181af05159a6ae989a5f6">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>Rslt <span class="ot">&lt;-</span> <span class="fu">loggingsimulation1</span>(</span>
-<span id="cb32-2"><a href="#cb32-2"></a>  Paracou6_2016,</span>
-<span id="cb32-3"><a href="#cb32-3"></a>  <span class="at">plotmask =</span> PlotMask, </span>
-<span id="cb32-4"><a href="#cb32-4"></a>  <span class="at">topography =</span> DTMParacou,</span>
-<span id="cb32-5"><a href="#cb32-5"></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
-<span id="cb32-6"><a href="#cb32-6"></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
-<span id="cb32-7"><a href="#cb32-7"></a>  <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
-<span id="cb32-8"><a href="#cb32-8"></a>  <span class="at">volumeparameters =</span> ForestZoneVolumeParametersTable,</span>
-<span id="cb32-9"><a href="#cb32-9"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
-<span id="cb32-10"><a href="#cb32-10"></a>  <span class="at">objective =</span> <span class="dv">30</span>,</span>
-<span id="cb32-11"><a href="#cb32-11"></a>  <span class="at">fuel =</span> <span class="st">"0"</span>, </span>
-<span id="cb32-12"><a href="#cb32-12"></a>  <span class="at">winching =</span> <span class="st">"2"</span>, </span>
-<span id="cb32-13"><a href="#cb32-13"></a>  <span class="at">directionalfelling =</span> <span class="st">"2"</span>, </span>
-<span id="cb32-14"><a href="#cb32-14"></a>  <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb32-15"><a href="#cb32-15"></a>  <span class="at">specieslax =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb32-16"><a href="#cb32-16"></a>  <span class="at">objectivelax =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb32-17"><a href="#cb32-17"></a>  <span class="at">crowndiameterparameters =</span> ParamCrownDiameterAllometry,</span>
-<span id="cb32-18"><a href="#cb32-18"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
-<span id="cb32-19"><a href="#cb32-19"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/single_09fca213eae4f4c694c5d47627643290">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>Rslt <span class="ot">&lt;-</span> <span class="fu">loggingsimulation1</span>(</span>
+<span id="cb33-2"><a href="#cb33-2"></a>  Paracou6_2016,</span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="at">plotmask =</span> PlotMask, </span>
+<span id="cb33-4"><a href="#cb33-4"></a>  <span class="at">topography =</span> DTMParacou,</span>
+<span id="cb33-5"><a href="#cb33-5"></a>  <span class="at">creekverticaldistance =</span> CreekDistances<span class="sc">$</span>distvert,</span>
+<span id="cb33-6"><a href="#cb33-6"></a>  <span class="at">creekhorizontaldistance =</span> CreekDistances<span class="sc">$</span>disthorz,</span>
+<span id="cb33-7"><a href="#cb33-7"></a>  <span class="at">speciescriteria =</span> SpeciesCriteria,</span>
+<span id="cb33-8"><a href="#cb33-8"></a>  <span class="at">volumeparameters =</span> ForestZoneVolumeParametersTable,</span>
+<span id="cb33-9"><a href="#cb33-9"></a>  <span class="at">scenario =</span> <span class="st">"manual"</span>,</span>
+<span id="cb33-10"><a href="#cb33-10"></a>  <span class="at">objective =</span> <span class="dv">20</span>,</span>
+<span id="cb33-11"><a href="#cb33-11"></a>  <span class="at">fuel =</span> <span class="st">"0"</span>, </span>
+<span id="cb33-12"><a href="#cb33-12"></a>  <span class="at">winching =</span> <span class="st">"2"</span>, </span>
+<span id="cb33-13"><a href="#cb33-13"></a>  <span class="at">directionalfelling =</span> <span class="st">"2"</span>, </span>
+<span id="cb33-14"><a href="#cb33-14"></a>  <span class="at">diversification =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb33-15"><a href="#cb33-15"></a>  <span class="at">crowndiameterparameters =</span> ParamCrownDiameterAllometry,</span>
+<span id="cb33-16"><a href="#cb33-16"></a>  <span class="at">advancedloggingparameters =</span> <span class="fu">loggingparameters</span>()</span>
+<span id="cb33-17"><a href="#cb33-17"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-hash="index_cache/revealjs/single_0cf934efefe181af05159a6ae989a5f6">
+<div class="cell fragment" data-hash="index_cache/revealjs/single_09fca213eae4f4c694c5d47627643290">
 
 </div>
 <p>Várias simulações podem ser executadas pela função <code>loggingsimulation()</code> para levar em conta a estocasticidade com o argumento <code>iter</code> (número de simulações) e <code>cores</code> (número de núcleos de computador usados para paralelizar o cálculo).</p>
@@ -1532,25 +1527,25 @@ Note for me; it's in Misc/2211_check_deathtree_fate.Rmd
 <h2>Resultados</h2>
 <p><code>loggingsummary1</code> retorna um resumo das saídas da função de simulação.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>inventory : Paracou6_2016 
 scenario : manual 
-objective : 30 m3/harvestable ha
+objective : 20 m3/harvestable ha
 fuel : 0 
 diversification : TRUE 
 winching : 2 
 directionalfelling : 2 
 specieslax : FALSE 
-objectivelax : TRUE 
+objectivelax : FALSE 
 Harvestable area : 3.75 ha
-Objective volume : 112.4 m3
-Initial harvestable volume : 179.4 m3,  47.9 m3/harvestable ha
-Timber logged volume : 112.2 m3,  29.9 m3/harvestable ha
-No hollow timber logged volume : 112.2 m3,  29.9 m3/harvestable ha
-Timber extracted volume (timber volume after purge : 96.5 m3,  25.8 m3/harvestable ha
+Objective volume : 74.9 m3
+Initial harvestable volume : 171.4 m3,  45.7 m3/harvestable ha
+Timber logged volume : 74.6 m3,  19.9 m3/harvestable ha
+No hollow timber logged volume : 74.6 m3,  19.9 m3/harvestable ha
+Timber extracted volume (timber volume after purge : 64.1 m3,  17.1 m3/harvestable ha
 Error in round(x$FuelWoodBiomass, digits = 1) : 
   argument non numérique pour une fonction mathématique</code></pre>
 </div>
@@ -1618,7 +1613,7 @@ Error in round(x$FuelWoodBiomass, digits = 1) :
 <h2>Cenários</h2>
 <p><code>LogingLab</code> inclui cenários predefinidos que correspondem a diferentes versões de registro de impacto reduzido na Guiana Francesa.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>ScenariosTable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>ScenariosTable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1638,7 +1633,7 @@ Error in round(x$FuelWoodBiomass, digits = 1) :
 <h2>Parâmetros de exploração</h2>
 <p><code>loggingparameters()</code> define todos os parâmetros de exploração. Consulte sua ajuda (<code>?loggingparameters</code>). Os valores padrão são os usados na Guiana Francesa.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">loggingparameters</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">loggingparameters</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1836,37 +1831,37 @@ $CostMatrix[[2]][[7]]$CostValue
 $TreeHarvestableVolumeAllometry
 function (DBH, aCoef, bCoef) 
 aCoef + bCoef * (DBH/100)^2
-&lt;environment: 0x622acc3dd4e8&gt;
+&lt;environment: 0x62161cf40d98&gt;
 
 $TrunkHeightAllometry
 function (DBH, TreeHarvestableVolume) 
 TreeHarvestableVolume/(pi * (((DBH/100)/2)^2))
-&lt;environment: 0x622acc3dd4e8&gt;
+&lt;environment: 0x62161cf40d98&gt;
 
 $TreeHeightAllometry
 function (DBH) 
 exp(0.07359191 + 1.34241216 * log(DBH) + -0.12282344 * log(DBH)^2)
-&lt;environment: 0x622acc3dd4e8&gt;
+&lt;environment: 0x62161cf40d98&gt;
 
 $CrownDiameterAllometry
 function (DBH, TreeHeight, alpha, beta) 
 exp(((log(DBH) - alpha - rnorm(length(DBH), 0, 0.0295966977))/beta))/TreeHeight
-&lt;environment: 0x622acc3dd4e8&gt;
+&lt;environment: 0x62161cf40d98&gt;
 
 $RottenModel
 function (DBH) 
 1/(1 + exp(-(-5.151 + 0.042 * DBH)))
-&lt;environment: 0x622acc3dd4e8&gt;
+&lt;environment: 0x62161cf40d98&gt;
 
 $VisiblyDefectModel
 function (LogDBH) 
 1/(1 + exp(-(-3.392 + 0.357 * LogDBH)))
-&lt;environment: 0x622acc3dd4e8&gt;
+&lt;environment: 0x62161cf40d98&gt;
 
 $Treefall2ndDeathModel
 function (DBH) 
 1/(1 + exp(-(-0.47323 + -0.02564 * DBH)))
-&lt;environment: 0x622acc3dd4e8&gt;</code></pre>
+&lt;environment: 0x62161cf40d98&gt;</code></pre>
 </div>
 </div>
 </section></section>
