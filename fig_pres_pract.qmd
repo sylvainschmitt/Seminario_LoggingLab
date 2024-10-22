@@ -64,17 +64,15 @@ my_scenar <- data.table(scenar = c("pivot", "vol_10", "vol_20", "no_div",
                         diversification = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE),
                         specieslax = rep(FALSE, 7),
                         objectivelax = rep(FALSE, 7))
+my_scenar
 ```
 
+## Run the scenarios
 
-I create a function to run these scenaio and calculate the following outputs of interest.
+I create a function to run these scenarios and calculate the following outputs of interest.
 I always set the seed to the same seed before each simulation.
 
 ```{r}
-scenario = "pivot"
-my_scenar = my_scenar
-
-
 scenar_compare <- function (scenario,  # the name of the scenario to test
                             my_scenar) # the table with all the scenario
   {
@@ -99,30 +97,99 @@ scenar_compare <- function (scenario,  # the name of the scenario to test
         crowndiameterparameters = ParamCrownDiameterAllometry,
         advancedloggingparameters = loggingparameters())
       
-    # Get the input (to check) as a table
+    # Get the input (to check) as a named vector
       # TO DO (all in the output)
-      
-    # Get the output of interest as a table
+        input <- c(scenario,
+                   Res$objective,
+                   Res$fuel,
+                   Res$winching,
+                   Res$directionalfelling,
+                   Res$diversification,
+                   Res$specieslax,
+                   Res$objectivelax)
+        names(input) <- c("scenar", "objective", "fuel", "winching", "directionalfelling", 
+                          "diversification", "specieslax", "objectivelax")
+    # Get the output inventory
+        inventoryPost <- as.data.table(Res$inventory)
+    
+    # Get the output of interest as a one row datatable
+        output <- data.table(Scenario = scenario, 
+                             HarvestableArea = as.numeric(NA), VolTimbHa = as.numeric(NA),
+                             DamageBiomassHa = as.numeric(NA), PercentDam = as.numeric(NA),
+                             TrailDensity = as.numeric(NA))
       # Harvestable area
-        # TO DO (in the output)
-      
+        output$HarvestableArea <- round(Res$HarvestableArea, 2)
       # Vol of timber per ha
-        # TO DO (in the output but put per ha)
-      
+        output$VolTimbHa <- round(Res$TimberLoggedVolume / Res$HarvestableArea, 1)
+            # Res$TimberLoggedVolume / Res$HarvestableArea ==
+            #   inventoryPost[DeathCause=="cut", sum(TreeHarvestableVolume)/
+            #                   Res$HarvestableArea] 
       # Biomass of damage per ha
-        # TO DO (not in the output ?)
-      
-      # Proportion of damage in the total lost biomass
-        # TO DO (not in the output ?)
-      
+        output$DamageBiomassHa <- round(Res$LoggingResidualBiomass / Res$HarvestableArea, 2)
+             # Res$LoggingResidualBiomass / Res$HarvestableArea ==
+             #   (inventoryPost[DeathCause=="cut", 
+             #                  sum(AGB - TimberLoggedVolume * WoodDensity)] +
+             #   inventoryPost[DeathCause %in% c("treefall2nd", "2ndtrail"), sum(AGB)]) /
+             #   Res$HarvestableArea
+      # Percentage of damage in the total lost biomass
+        output$PercentDam <- round(Res$LoggingResidualBiomass * 100 / Res$LostBiomass, 1)
+              # Res$LoggingResidualBiomass * 100 / Res$LostBiomass ==
+              #  Res$LoggingResidualBiomass * 100 / 
+              #     inventoryPost[DeathCause %in% c("treefall2nd", "2ndtrail", "cut"),
+              #                   sum(AGB)]  
       # TrailscDensity (m/ha)
-        # TO DO (in the output)
+        output$TrailDensity <- round(as.numeric(Res$TrailsDensity))
       
     # Return a list of 2 (input, output)
-  }
-  
-
-
+        return(list(input, output))
+        
+    }
 ```
 
+I run it for every scenario 
 
+```{r}
+res_pivot <- scenar_compare(scenario = "pivot", my_scenar = my_scenar)
+```
+
+```{r}
+res_vol_10 <- scenar_compare(scenario = "vol_10", my_scenar = my_scenar)
+```
+
+```{r}
+res_vol_20 <- scenar_compare(scenario = "vol_20", my_scenar = my_scenar)
+```
+
+```{r}
+res_no_div <- scenar_compare(scenario = "no_div", my_scenar = my_scenar)
+```
+
+```{r}
+res_trail2foot <- scenar_compare(scenario = "trail2foot", my_scenar = my_scenar)
+```
+
+```{r}
+res_only_cable <- scenar_compare(scenario = "only_cable", my_scenar = my_scenar)
+```
+
+```{r}
+res_no_dir_fell <- scenar_compare(scenario = "no_dir_fell", my_scenar = my_scenar)
+```
+
+I quickly check if the scenarios are correct.
+
+```{r}
+# only to check
+my_scenar == rbind(res_pivot[[1]], res_vol_10[[1]], res_vol_20[[1]], res_no_div[[1]],
+                   res_trail2foot[[1]], res_only_cable[[1]], res_no_dir_fell[[1]])
+```
+
+And I get the results for all scenarios: 
+
+```{r}
+res_all <- rbind(res_pivot[[2]], res_vol_10[[2]], res_vol_20[[2]], res_no_div[[2]],
+                   res_trail2foot[[2]], res_only_cable[[2]], res_no_dir_fell[[2]])
+res_all
+```
+
+## Format the output tables for the slides
