@@ -6,20 +6,24 @@ format:
   gfm:
     toc: true
     toc-depth: 1
+execute:  
+  cache: true
+  echo: false    
 ---
 
 ```{r libs}
-#| message: false
+#| message: false # valid only for the chuck
 #| warning: false
-#| cache: TRUE
 library(LoggingLab)
 library(tidyverse)
 library(sf)
-library(data.table)
+library(flextable)
+library(terra)
+library(tidyterra)
 theme_set(theme_bw())
 ```
 
-```{r}
+```{r seed}
 set.seed(42)
 ```
 
@@ -39,28 +43,77 @@ g
 
 They are taken from the presentation for students, and are all for the following parameters: 
 
--   objective = 30 
+-   objective = 20 
 -   fuel = "0" 
 -   winching = "2" 
 -   directionalfelling = "2" 
 -   diversification = TRUE 
 -   specieslax = FALSE 
--   objectivelax = TRUE
+-   objectivelax = FALSE
+
+
+## Figure output
+
+```{r runforMap}
+set.seed(42)
+Res4Map <- loggingsimulation1(
+        Paracou6_2016,
+        plotmask = PlotMask, 
+        topography = DTMParacou,
+        creekverticaldistance = CreekDistances$distvert,
+        creekhorizontaldistance = CreekDistances$disthorz,
+        speciescriteria = SpeciesCriteria,
+        volumeparameters = ForestZoneVolumeParametersTable,
+        scenario = "manual",
+        objective = 20,
+        fuel = "0", 
+        winching = "2", 
+        directionalfelling =  "2", 
+        diversification = TRUE, 
+        specieslax = FALSE, 
+        objectivelax = FALSE,
+        crowndiameterparameters = ParamCrownDiameterAllometry,
+        advancedloggingparameters = loggingparameters())
+```
+```{r MapRes}
+# harvastable area
+MapRes <- ggplot() + geom_spatraster(data = rast(DTMParacou), alpha = .5) +
+    scale_fill_gradient(low = "darkblue", high = "white", "Altura (m)", na.value = NA) + 
+    geom_sf(data = Res4Map$HarvestablePolygons, fill = "darkgreen", alpha = 0.3) +
+    geom_sf(data = Res4Map$MachinePolygons, fill = "darkgreen", alpha = 0.7)
+
+# add tree selection
+MapRes <- MapRes + geom_sf(data = Res4Map$HarvestableTreesPoints, aes(colour = "Harvestable")) +
+  geom_sf(data = Res4Map$SelectedTreesPoints, aes(colour = "Selected")) +
+  geom_sf(data = Res4Map$FutureTreesPoints, aes(colour = "Future")) +
+  geom_sf(data = Res4Map$ReserveTreesPoints, aes(colour = "Reserve"))
+
+# add trails
+MapRes <- MapRes + geom_sf(data = st_as_sf(Res4Map$SmoothedTrails))
+
+# add cut trees
+crs <- st_crs(Res4Map$HarvestablePolygons)
+FelledTrees <- getgeometry(Res4Map$inventory, TreePolygon) %>% st_set_crs(crs)
+MapRes <- MapRes + geom_sf(data = FelledTrees, fill = "lightpink")
+ggsave("figs/MapRes.png", MapRes, dpi = 300)
+```
+
 
 
 # For comparision
 
 ## Set the scenarios
 
-I set the following scenarios, with the pivot being the one used by Sylvain for the presentation to students (and used in the first part of the presentation to practitionners), but with objectivelax=FALSE.
+I set the following scenarios, with the pivot being the one used by Sylvain for the presentation to students (and used in the first part of the presentation to practitionners).
 
-```{r}
-my_scenar <- data.table(scenar = c("pivot", "vol_10", "vol_20", "no_div", 
+```{r setScenar}
+library(data.table)
+my_scenar <- data.table(scenar = c("pivot", "vol_10", "vol_30", "no_div", 
                                    "trail2foot", "only_cable", "no_dir_fell"),
-                        objective = c(30, 10, 20, 30, 30, 30, 30),
+                        objective = c(20, 10, 30, 20, 20, 20, 20),
                         fuel = rep("0", 7), 
                         winching = c("2", "2", "2", "2", "0", "1", "2"),
-                        directionalfelling = c("2", "2", "2", "2", "2", "2", "0"),
+                        directionalfelling = c("2", "2", "2", "2", "1", "2", "0"),
                         diversification = c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE),
                         specieslax = rep(FALSE, 7),
                         objectivelax = rep(FALSE, 7))
@@ -72,7 +125,7 @@ my_scenar
 I create a function to run these scenarios and calculate the following outputs of interest.
 I always set the seed to the same seed before each simulation.
 
-```{r}
+```{r compareFunc}
 scenar_compare <- function (scenario,  # the name of the scenario to test
                             my_scenar) # the table with all the scenario
   {
@@ -148,48 +201,109 @@ scenar_compare <- function (scenario,  # the name of the scenario to test
 
 I run it for every scenario 
 
-```{r}
+```{r runPivot}
 res_pivot <- scenar_compare(scenario = "pivot", my_scenar = my_scenar)
 ```
 
-```{r}
+```{r runVol10}
 res_vol_10 <- scenar_compare(scenario = "vol_10", my_scenar = my_scenar)
 ```
 
-```{r}
-res_vol_20 <- scenar_compare(scenario = "vol_20", my_scenar = my_scenar)
+```{r runVol30}
+res_vol_30 <- scenar_compare(scenario = "vol_30", my_scenar = my_scenar)
 ```
 
-```{r}
+```{r runNoDiv, eval=FALSE}
 res_no_div <- scenar_compare(scenario = "no_div", my_scenar = my_scenar)
 ```
 
-```{r}
+```{r runTrail2foot}
 res_trail2foot <- scenar_compare(scenario = "trail2foot", my_scenar = my_scenar)
 ```
 
-```{r}
+```{r runOnlyCabl}
 res_only_cable <- scenar_compare(scenario = "only_cable", my_scenar = my_scenar)
 ```
 
-```{r}
+```{r RunNoDirFell}
 res_no_dir_fell <- scenar_compare(scenario = "no_dir_fell", my_scenar = my_scenar)
 ```
 
 I quickly check if the scenarios are correct.
 
-```{r}
+```{r checkscenar}
 # only to check
-my_scenar == rbind(res_pivot[[1]], res_vol_10[[1]], res_vol_20[[1]], res_no_div[[1]],
+my_scenar 
+rbind(res_pivot[[1]], res_vol_10[[1]], res_vol_30[[1]], #res_no_div[[1]],
                    res_trail2foot[[1]], res_only_cable[[1]], res_no_dir_fell[[1]])
 ```
 
 And I get the results for all scenarios: 
 
-```{r}
-res_all <- rbind(res_pivot[[2]], res_vol_10[[2]], res_vol_20[[2]], res_no_div[[2]],
+```{r getAllRes}
+res_all <- rbind(res_pivot[[2]], res_vol_10[[2]], res_vol_30[[2]], # res_no_div[[2]],
                    res_trail2foot[[2]], res_only_cable[[2]], res_no_dir_fell[[2]])
 res_all
 ```
 
+The similarity of the scenario without directionnal felling with the pivot is surprising. 
+But I have checked changing the seed for both (to 33) => the damages are higher for both and they are still very similar.
+So I keep these results.
+
 ## Format the output tables for the slides
+
+```{r}
+colnames(res_all) <- c("Scenario", "Superfície da área explorável (ha)",
+                       "Volume de madeira colhida (m3/ha)",
+                       "Danos de exploração (t/ha)",
+                       "Porcentagem de danos na biomassa total perdida",
+                       "Densidade de trilhas secundárias (m/ha)")
+```
+
+
+
+### Compare logging intensity
+
+```{r comVol}
+res_Vol <- res_all[Scenario %in% c("pivot", "vol_10", "vol_30")]
+res_Vol <- transpose(res_Vol, make.names = "Scenario", keep.names = "")
+res_Vol <- res_Vol[, .(V1, vol_10, pivot, vol_30)]
+tabVol <- flextable(res_Vol)
+tabVol <- set_header_labels(tabVol, V1 = "", pivot = "Volume objetivo\n 20 m3/ha",
+                            vol_10 = "Volume objetivo\n 10 m3/ha", 
+                            vol_30 = "Volume objetivo\n 30 m3/ha")
+tabVol <- autofit(tabVol)
+tabVol
+save_as_image(x = tabVol, path = "figs/tab_vol.png")
+```
+
+
+### Winching methods
+
+```{r comWinch}
+res_Winch <- res_all[Scenario %in% c("pivot", "trail2foot", "only_cable")]
+res_Winch <- transpose(res_Winch, make.names = "Scenario", keep.names = "")
+res_Winch <- res_Winch[, .(V1, trail2foot, pivot, only_cable)]
+tabWinch <- flextable(res_Winch)
+tabWinch <- set_header_labels(tabWinch, V1 = "", pivot = "Garra e cabo",
+                            trail2foot = "Trilha ao pé da árvore", 
+                            only_cable = "Somente cabo")
+tabWinch <- autofit(tabWinch)
+tabWinch
+save_as_image(x = tabWinch, path = "figs/tab_Winch.png")
+```
+
+
+### Abbatage dirigé
+
+```{r comdirFell}
+res_dirFell <- res_all[Scenario %in% c("pivot", "no_dir_fell")]
+res_dirFell <- transpose(res_dirFell, make.names = "Scenario", keep.names = "")
+res_dirFell <- res_dirFell[, .(V1, no_dir_fell, pivot)]
+tabdirFell <- flextable(res_dirFell)
+tabdirFell <- set_header_labels(tabdirFell, V1 = "", pivot = "Com corte direcional",
+                            no_dir_fell = "Sem corte direcional")
+tabdirFell <- autofit(tabdirFell)
+tabdirFell
+save_as_image(x = tabdirFell, path = "figs/tab_dirFell.png")
+```
