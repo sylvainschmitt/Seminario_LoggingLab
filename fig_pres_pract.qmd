@@ -18,6 +18,8 @@ library(LoggingLab)
 library(tidyverse)
 library(sf)
 library(flextable)
+library(terra)
+library(tidyterra)
 theme_set(theme_bw())
 ```
 
@@ -48,6 +50,54 @@ They are taken from the presentation for students, and are all for the following
 -   diversification = TRUE 
 -   specieslax = FALSE 
 -   objectivelax = FALSE
+
+
+## Figure output
+
+```{r runforMap}
+set.seed(42)
+Res4Map <- loggingsimulation1(
+        Paracou6_2016,
+        plotmask = PlotMask, 
+        topography = DTMParacou,
+        creekverticaldistance = CreekDistances$distvert,
+        creekhorizontaldistance = CreekDistances$disthorz,
+        speciescriteria = SpeciesCriteria,
+        volumeparameters = ForestZoneVolumeParametersTable,
+        scenario = "manual",
+        objective = 20,
+        fuel = "0", 
+        winching = "2", 
+        directionalfelling =  "2", 
+        diversification = TRUE, 
+        specieslax = FALSE, 
+        objectivelax = FALSE,
+        crowndiameterparameters = ParamCrownDiameterAllometry,
+        advancedloggingparameters = loggingparameters())
+```
+```{r MapRes}
+# harvastable area
+MapRes <- ggplot() + geom_spatraster(data = rast(DTMParacou), alpha = .5) +
+    scale_fill_gradient(low = "darkblue", high = "white", "Altura (m)", na.value = NA) + 
+    geom_sf(data = Res4Map$HarvestablePolygons, fill = "darkgreen", alpha = 0.3) +
+    geom_sf(data = Res4Map$MachinePolygons, fill = "darkgreen", alpha = 0.7)
+
+# add tree selection
+MapRes <- MapRes + geom_sf(data = Res4Map$HarvestableTreesPoints, aes(colour = "Harvestable")) +
+  geom_sf(data = Res4Map$SelectedTreesPoints, aes(colour = "Selected")) +
+  geom_sf(data = Res4Map$FutureTreesPoints, aes(colour = "Future")) +
+  geom_sf(data = Res4Map$ReserveTreesPoints, aes(colour = "Reserve"))
+
+# add trails
+MapRes <- MapRes + geom_sf(data = st_as_sf(Res4Map$SmoothedTrails))
+
+# add cut trees
+crs <- st_crs(Res4Map$HarvestablePolygons)
+FelledTrees <- getgeometry(Res4Map$inventory, TreePolygon) %>% st_set_crs(crs)
+MapRes <- MapRes + geom_sf(data = FelledTrees, fill = "lightpink")
+ggsave("figs/MapRes.png", MapRes, dpi = 300)
+```
+
 
 
 # For comparision

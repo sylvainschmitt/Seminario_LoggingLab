@@ -12,3 +12,5 @@ lubridate
 sf
 data.table
 flextable
+terra
+tidyterra
