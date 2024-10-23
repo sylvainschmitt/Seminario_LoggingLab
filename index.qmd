@@ -47,7 +47,7 @@ Notas.
 :::
 
 ::: {.column width="70%"}
-Os estágios são:
+Os etapas são:
 
 -   preparação de dados
 -   trilhas principais
@@ -111,7 +111,7 @@ Notas.
 
 ## Inventário
 
-O inventário deve conter o diâmetro, a a identificação botânica e as coordenadas de todos os arvores com menos de um determinado diâmetro (normalmente DAP \>= 10cm).
+O inventário deve conter o diâmetro, a a identificação botânica e as coordenadas de todos as árvores com menos de um determinado diâmetro (normalmente DAP \>= 10cm).
 
 No momento, o simulador está trabalhando em pequenos lotes (alguns hectares) e não representa toda a operação de uma concessão, pois seu foco é a quantificação detalhada dos danos pós-operacionais de acordo com as práticas.
 
@@ -234,7 +234,7 @@ Alometrias volumétricas para diferentes regiões da Guiana Francesa são dispon
 head(ForestZoneVolumeParametersTable)
 ```
 
-Outras alometrias podem ser modificadas, como as alometrias de coroa.
+Outras alometrias podem ser modificadas, como as alometrias de copa.
 
 ::: notes
 Notas.
@@ -337,11 +337,11 @@ Notas.
 
 ## Zonas exploráveis
 
-Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de prospecção é:
+Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de trabalho é:
 
 ::: incremental
 -   com uma inclinação inferior a 27%
--   evitando planícies e o sistema de água (buffer de 30 m).
+-   evitando nascentes e cursos d´água (buffer de 30 m).
 :::
 
 ::: notes
@@ -511,7 +511,7 @@ Notas
 
 Em seguida, simulamos o corte da árvore. O corte da árvore cria uma árvore no solo, cujas dimensões são calculadas usando alometrias específicas.
 
-O corte direcional visa direcionar a queda da árvore, com o pé um ângulo em relação ao caminho, e evitando as árvores a serem protegidas. Mas o corte direcional pode falhar (em 40% dos casos)!
+O corte direcional visa direcionar a queda da árvore, com o pé em um ângulo em relação ao caminho, e evitando as árvores a serem protegidas. Mas o corte direcional pode falhar (em 40% dos casos)!
 
 ## Corte de árvores
 
@@ -642,7 +642,7 @@ Rslt <- loggingsimulation1(
 )
 ```
 
-Várias simulações podem ser executadas pela função `loggingsimulation()` para levar em conta a estocasticidade com o argumento `iter` (número de simulações) e `cores` (número de núcleos de computador usados para paralelizar o cálculo).
+Várias simulações podem ser executadas pela função `loggingsimulation()` para levar em conta a estocasticidade com o argumento `iter` (número de simulações) e `cores` (número de núcleos de computador usados para realizar cálculos em paralelo).
 
 ::: notes
 Notas.
@@ -654,7 +654,7 @@ Notas.
 
 ```{r res}
 #| echo: true
-try(loggingsummary1(Rslt))
+loggingsummary1(Rslt)
 ```
 
 ::: notes

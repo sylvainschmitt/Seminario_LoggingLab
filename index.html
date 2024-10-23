@@ -472,7 +472,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="column" style="width:30%;">
 <p><img data-src="figs/Fig_Flowchart.jpg"></p>
 </div><div class="column" style="width:70%;">
-<p>Os estágios são:</p>
+<p>Os etapas são:</p>
 <ul>
 <li>preparação de dados</li>
 <li>trilhas principais</li>
@@ -576,7 +576,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="inventário" class="slide level2">
 <h2>Inventário</h2>
-<p>O inventário deve conter o diâmetro, a a identificação botânica e as coordenadas de todos os arvores com menos de um determinado diâmetro (normalmente DAP &gt;= 10cm).</p>
+<p>O inventário deve conter o diâmetro, a a identificação botânica e as coordenadas de todos as árvores com menos de um determinado diâmetro (normalmente DAP &gt;= 10cm).</p>
 <p>No momento, o simulador está trabalhando em pequenos lotes (alguns hectares) e não representa toda a operação de uma concessão, pois seu foco é a quantificação detalhada dos danos pós-operacionais de acordo com as práticas.</p>
 <aside class="notes">
 <p>DAP: diametro a altura do peito</p>
@@ -834,7 +834,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 6 Montagne_Tortue    East -0.084516 10.46132</code></pre>
 </div>
 </div>
-<p>Outras alometrias podem ser modificadas, como as alometrias de coroa.</p>
+<p>Outras alometrias podem ser modificadas, como as alometrias de copa.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1034,11 +1034,11 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="zonas-exploráveis" class="slide level2">
 <h2>Zonas exploráveis</h2>
-<p>Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de prospecção é:</p>
+<p>Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de trabalho é:</p>
 <div>
 <ul>
 <li class="fragment">com uma inclinação inferior a 27%</li>
-<li class="fragment">evitando planícies e o sistema de água (buffer de 30 m).</li>
+<li class="fragment">evitando nascentes e cursos d´água (buffer de 30 m).</li>
 </ul>
 </div>
 <aside class="notes">
@@ -1298,7 +1298,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <section id="corte-de-árvores" class="slide level2">
 <h2>Corte de árvores</h2>
 <p>Em seguida, simulamos o corte da árvore. O corte da árvore cria uma árvore no solo, cujas dimensões são calculadas usando alometrias específicas.</p>
-<p>O corte direcional visa direcionar a queda da árvore, com o pé um ângulo em relação ao caminho, e evitando as árvores a serem protegidas. Mas o corte direcional pode falhar (em 40% dos casos)!</p>
+<p>O corte direcional visa direcionar a queda da árvore, com o pé em um ângulo em relação ao caminho, e evitando as árvores a serem protegidas. Mas o corte direcional pode falhar (em 40% dos casos)!</p>
 </section>
 <section id="corte-de-árvores-1" class="slide level2">
 <h2>Corte de árvores</h2>
@@ -1508,7 +1508,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="cell fragment" data-hash="index_cache/revealjs/single_09fca213eae4f4c694c5d47627643290">
 
 </div>
-<p>Várias simulações podem ser executadas pela função <code>loggingsimulation()</code> para levar em conta a estocasticidade com o argumento <code>iter</code> (número de simulações) e <code>cores</code> (número de núcleos de computador usados para paralelizar o cálculo).</p>
+<p>Várias simulações podem ser executadas pela função <code>loggingsimulation()</code> para levar em conta a estocasticidade com o argumento <code>iter</code> (número de simulações) e <code>cores</code> (número de núcleos de computador usados para realizar cálculos em paralelo).</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1527,7 +1527,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <h2>Resultados</h2>
 <p><code>loggingsummary1</code> retorna um resumo das saídas da função de simulação.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">loggingsummary1</span>(Rslt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1546,8 +1546,11 @@ Initial harvestable volume : 171.4 m3,  45.7 m3/harvestable ha
 Timber logged volume : 74.6 m3,  19.9 m3/harvestable ha
 No hollow timber logged volume : 74.6 m3,  19.9 m3/harvestable ha
 Timber extracted volume (timber volume after purge : 64.1 m3,  17.1 m3/harvestable ha
-Error in round(x$FuelWoodBiomass, digits = 1) : 
-  argument non numérique pour une fonction mathématique</code></pre>
+Logging residual biomass : 162 ton,  43.2 ton/harvestable ha
+Total forest biomass lost : 213.7 ton
+Trails density : 87.1 m/ha
+
+Please note that all volumes in m3/ha are per exploitable hectare, not per plot hectare.</code></pre>
 </div>
 </div>
 <aside class="notes">
@@ -1831,37 +1834,37 @@ $CostMatrix[[2]][[7]]$CostValue
 $TreeHarvestableVolumeAllometry
 function (DBH, aCoef, bCoef) 
 aCoef + bCoef * (DBH/100)^2
-&lt;environment: 0x5e925f440f80&gt;
+&lt;environment: 0x58d47b8c18b8&gt;
 
 $TrunkHeightAllometry
 function (DBH, TreeHarvestableVolume) 
 TreeHarvestableVolume/(pi * (((DBH/100)/2)^2))
-&lt;environment: 0x5e925f440f80&gt;
+&lt;environment: 0x58d47b8c18b8&gt;
 
 $TreeHeightAllometry
 function (DBH) 
 exp(0.07359191 + 1.34241216 * log(DBH) + -0.12282344 * log(DBH)^2)
-&lt;environment: 0x5e925f440f80&gt;
+&lt;environment: 0x58d47b8c18b8&gt;
 
 $CrownDiameterAllometry
 function (DBH, TreeHeight, alpha, beta) 
 exp(((log(DBH) - alpha - rnorm(length(DBH), 0, 0.0295966977))/beta))/TreeHeight
-&lt;environment: 0x5e925f440f80&gt;
+&lt;environment: 0x58d47b8c18b8&gt;
 
 $RottenModel
 function (DBH) 
 1/(1 + exp(-(-5.151 + 0.042 * DBH)))
-&lt;environment: 0x5e925f440f80&gt;
+&lt;environment: 0x58d47b8c18b8&gt;
 
 $VisiblyDefectModel
 function (LogDBH) 
 1/(1 + exp(-(-3.392 + 0.357 * LogDBH)))
-&lt;environment: 0x5e925f440f80&gt;
+&lt;environment: 0x58d47b8c18b8&gt;
 
 $Treefall2ndDeathModel
 function (DBH) 
 1/(1 + exp(-(-0.47323 + -0.02564 * DBH)))
-&lt;environment: 0x5e925f440f80&gt;</code></pre>
+&lt;environment: 0x58d47b8c18b8&gt;</code></pre>
 </div>
 </div>
 </section></section>
