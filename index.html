@@ -425,7 +425,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
     </div>
 </div>
 
-  <p class="date">Oct 22, 2024</p>
+  <p class="date">Oct 23, 2024</p>
 </section>
 <section>
 <section id="introdução" class="title-slide slide level1 center">
@@ -1431,7 +1431,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="quantificar-de-volumes-2" class="slide level2">
 <h2>Quantificar de volumes</h2>
-<p>Mas, acima de tudo, podemos quantificar o volume de danos por causa de morte.</p>
+<p>Mas, acima de tudo, podemos quantificar o biomassa de danos por causa de morte.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>TimberV<span class="sc">$</span>inventory <span class="sc">%&gt;%</span> </span>
 <span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">group_by</span>(DeathCause) <span class="sc">%&gt;%</span> </span>
@@ -1831,37 +1831,37 @@ $CostMatrix[[2]][[7]]$CostValue
 $TreeHarvestableVolumeAllometry
 function (DBH, aCoef, bCoef) 
 aCoef + bCoef * (DBH/100)^2
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x5e925f440f80&gt;
 
 $TrunkHeightAllometry
 function (DBH, TreeHarvestableVolume) 
 TreeHarvestableVolume/(pi * (((DBH/100)/2)^2))
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x5e925f440f80&gt;
 
 $TreeHeightAllometry
 function (DBH) 
 exp(0.07359191 + 1.34241216 * log(DBH) + -0.12282344 * log(DBH)^2)
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x5e925f440f80&gt;
 
 $CrownDiameterAllometry
 function (DBH, TreeHeight, alpha, beta) 
 exp(((log(DBH) - alpha - rnorm(length(DBH), 0, 0.0295966977))/beta))/TreeHeight
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x5e925f440f80&gt;
 
 $RottenModel
 function (DBH) 
 1/(1 + exp(-(-5.151 + 0.042 * DBH)))
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x5e925f440f80&gt;
 
 $VisiblyDefectModel
 function (LogDBH) 
 1/(1 + exp(-(-3.392 + 0.357 * LogDBH)))
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x5e925f440f80&gt;
 
 $Treefall2ndDeathModel
 function (DBH) 
 1/(1 + exp(-(-0.47323 + -0.02564 * DBH)))
-&lt;environment: 0x62161cf40d98&gt;</code></pre>
+&lt;environment: 0x5e925f440f80&gt;</code></pre>
 </div>
 </div>
 </section></section>
