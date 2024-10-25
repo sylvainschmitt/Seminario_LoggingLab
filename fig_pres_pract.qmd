@@ -41,16 +41,15 @@ g
 
 ## Others figures first part
 
-They are taken from the presentation for students, and are all for the following parameters: 
+They are taken from the presentation for students, and are all for the following parameters:
 
--   objective = 20 
--   fuel = "0" 
--   winching = "2" 
--   directionalfelling = "2" 
--   diversification = TRUE 
--   specieslax = FALSE 
+-   objective = 20
+-   fuel = "0"
+-   winching = "2"
+-   directionalfelling = "2"
+-   diversification = TRUE
+-   specieslax = FALSE
 -   objectivelax = FALSE
-
 
 ## Figure output
 
@@ -75,6 +74,7 @@ Res4Map <- loggingsimulation1(
         crowndiameterparameters = ParamCrownDiameterAllometry,
         advancedloggingparameters = loggingparameters())
 ```
+
 ```{r MapRes}
 # harvastable area
 MapRes <- ggplot() + geom_spatraster(data = rast(DTMParacou), alpha = .5) +
@@ -98,8 +98,6 @@ MapRes <- MapRes + geom_sf(data = FelledTrees, fill = "lightpink")
 ggsave("figs/MapRes.png", MapRes, dpi = 300)
 ```
 
-
-
 # For comparision
 
 ## Set the scenarios
@@ -122,12 +120,12 @@ my_scenar
 
 ## Run the scenarios
 
-I create a function to run these scenarios and calculate the following outputs of interest.
-I always set the seed to the same seed before each simulation.
+I create a function to run these scenarios and calculate the following outputs of interest. I always set the seed to the same seed before each simulation.
 
 ```{r compareFunc}
 scenar_compare <- function (scenario,  # the name of the scenario to test
                             my_scenar) # the table with all the scenario
+                           
   {
     set.seed(42)
     # Run the scenario
@@ -199,7 +197,7 @@ scenar_compare <- function (scenario,  # the name of the scenario to test
     }
 ```
 
-I run it for every scenario 
+I run it for every scenario
 
 ```{r runPivot}
 res_pivot <- scenar_compare(scenario = "pivot", my_scenar = my_scenar)
@@ -238,7 +236,7 @@ rbind(res_pivot[[1]], res_vol_10[[1]], res_vol_30[[1]], #res_no_div[[1]],
                    res_trail2foot[[1]], res_only_cable[[1]], res_no_dir_fell[[1]])
 ```
 
-And I get the results for all scenarios: 
+And I get the results for all scenarios:
 
 ```{r getAllRes}
 res_all <- rbind(res_pivot[[2]], res_vol_10[[2]], res_vol_30[[2]], # res_no_div[[2]],
@@ -246,9 +244,7 @@ res_all <- rbind(res_pivot[[2]], res_vol_10[[2]], res_vol_30[[2]], # res_no_div[
 res_all
 ```
 
-The similarity of the scenario without directionnal felling with the pivot is surprising. 
-But I have checked changing the seed for both (to 33) => the damages are higher for both and they are still very similar.
-So I keep these results.
+The similarity of the scenario without directionnal felling with the pivot is surprising. But I have checked changing the seed for both (to 33) =\> the damages are higher for both and they are still very similar. So I keep these results.
 
 ## Format the output tables for the slides
 
@@ -259,8 +255,6 @@ colnames(res_all) <- c("Scenario", "Superfície da área explorável (ha)",
                        "Porcentagem de danos na biomassa total perdida",
                        "Densidade de trilhas secundárias (m/ha)")
 ```
-
-
 
 ### Compare logging intensity
 
@@ -277,7 +271,6 @@ tabVol
 save_as_image(x = tabVol, path = "figs/tab_vol.png")
 ```
 
-
 ### Winching methods
 
 ```{r comWinch}
@@ -293,7 +286,6 @@ tabWinch
 save_as_image(x = tabWinch, path = "figs/tab_Winch.png")
 ```
 
-
 ### Abbatage dirigé
 
 ```{r comdirFell}
@@ -307,3 +299,69 @@ tabdirFell <- autofit(tabdirFell)
 tabdirFell
 save_as_image(x = tabdirFell, path = "figs/tab_dirFell.png")
 ```
+
+I run these two scenarios again to check the volume of secondary tree falls in commercial species.
+
+```{r rerunPivot}
+scenario <- "pivot"
+ResPiv <- loggingsimulation1(
+        Paracou6_2016,
+        plotmask = PlotMask, 
+        topography = DTMParacou,
+        creekverticaldistance = CreekDistances$distvert,
+        creekhorizontaldistance = CreekDistances$disthorz,
+        speciescriteria = SpeciesCriteria,
+        volumeparameters = ForestZoneVolumeParametersTable,
+        scenario = "manual",
+        objective = my_scenar[scenar==scenario, objective],
+        fuel = my_scenar[scenar==scenario, fuel], 
+        winching = my_scenar[scenar==scenario, winching], 
+        directionalfelling = my_scenar[scenar==scenario, directionalfelling], 
+        diversification = my_scenar[scenar==scenario, diversification], 
+        specieslax = my_scenar[scenar==scenario, specieslax], 
+        objectivelax = my_scenar[scenar==scenario, objectivelax],
+        crowndiameterparameters = ParamCrownDiameterAllometry,
+        advancedloggingparameters = loggingparameters())
+```
+
+
+```{r rerunNoDir}
+scenario <- "no_dir_fell"
+ResNoDir <- loggingsimulation1(
+        Paracou6_2016,
+        plotmask = PlotMask, 
+        topography = DTMParacou,
+        creekverticaldistance = CreekDistances$distvert,
+        creekhorizontaldistance = CreekDistances$disthorz,
+        speciescriteria = SpeciesCriteria,
+        volumeparameters = ForestZoneVolumeParametersTable,
+        scenario = "manual",
+        objective = my_scenar[scenar==scenario, objective],
+        fuel = my_scenar[scenar==scenario, fuel], 
+        winching = my_scenar[scenar==scenario, winching], 
+        directionalfelling = my_scenar[scenar==scenario, directionalfelling], 
+        diversification = my_scenar[scenar==scenario, diversification], 
+        specieslax = my_scenar[scenar==scenario, specieslax], 
+        objectivelax = my_scenar[scenar==scenario, objectivelax],
+        crowndiameterparameters = ParamCrownDiameterAllometry,
+        advancedloggingparameters = loggingparameters())
+```
+
+
+Biomass of damage from tree fall in commercial level 1, with directionnal felling
+
+```{r}
+InvPiv <- as.data.table(ResPiv$inventory)
+DamComPiv <- InvPiv[DeathCause=="treefall2nd" & CommercialLevel=="1", sum(AGB)]
+DamComPiv
+```
+
+Biomass of damage from tree fall in commercial level 1, without directionnal felling
+
+```{r}
+InvNoDir <- as.data.table(ResNoDir$inventory)
+DamComNoDir <- InvNoDir[DeathCause=="treefall2nd" & CommercialLevel=="1", sum(AGB)]
+DamComNoDir
+```
+
+argh...
