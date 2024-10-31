@@ -405,6 +405,12 @@
       margin-right: 0; 
     }
   </style>
+  <style>
+  .reveal .slide-logo {
+    max-height: unset;
+    height: 75px;
+  }
+  </style>
 </head>
 <body class="quarto-dark">
   <div class="reveal">
@@ -425,7 +431,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
     </div>
 </div>
 
-  <p class="date">Oct 23, 2024</p>
+  <p class="date">Oct 31, 2024</p>
 </section>
 <section>
 <section id="introdução" class="title-slide slide level1 center">
@@ -931,12 +937,12 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>  TreeHarvestableVolume TrunkHeight TreeHeight CrownHeight CrownDiameter
-1             0.1027084    8.272213   14.65595    6.383735      2.187255
-2             1.1181093   10.811462   27.40065   16.589191      8.084784
-3             0.1687473    9.203739   16.78716    7.583417      3.244364
-4             1.3075022   10.860306   28.35561   17.495301      9.075886
-5             0.2230879    9.613873   18.14034    8.526472      3.496389
-6             0.6517747   10.576502   24.12416   13.547658      6.482453
+1             0.1027084    8.272213   14.65595    6.383735      2.207900
+2             1.1181093   10.811462   27.40065   16.589191      8.260220
+3             0.1687473    9.203739   16.78716    7.583417      3.234360
+4             1.3075022   10.860306   28.35561   17.495301      8.566460
+5             0.2230879    9.613873   18.14034    8.526472      3.389036
+6             0.6517747   10.576502   24.12416   13.547658      7.042431
   WoodDensity       AGB
 1   0.7700000 0.1003184
 2   0.7040000 1.3401159
@@ -1166,8 +1172,8 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stderr">
-<pre><code>As the harvestable volume (= 169.5m^3)
-                was higher (by 94.5m^3)
+<pre><code>As the harvestable volume (= 149.7m^3)
+                was higher (by 74.8m^3)
                 than the objective volume, the Minimum Falling Diameter (MinFD) of the 1st and 2nd economic ranks species
                   were increased to UpMinFD. The objective volume has now been reached.</code></pre>
 </div>
@@ -1372,7 +1378,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 74.84268</code></pre>
+<pre><code>[1] 74.76017</code></pre>
 </div>
 </div>
 <aside class="notes">
@@ -1404,15 +1410,14 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
+<pre><code># A tibble: 5 × 4
   CommercialName trees_n volume CommercialLevel
   &lt;chr&gt;            &lt;int&gt;  &lt;dbl&gt;           &lt;dbl&gt;
-1 angélique            1   8.89               1
-2 chawari              1   4.11               2
-3 grignon franc        3  16.9                1
-4 maho noir            2   8.76               2
-5 wapa                 5  27.1                2
-6 wapa courbaril       2   9.10               2</code></pre>
+1 chawari              1   4.11               2
+2 grignon franc        2  11.4                1
+3 maho noir            3  12.3                2
+4 wapa                 8  34.5                2
+5 wapa courbaril       3  12.4                2</code></pre>
 </div>
 </div>
 <aside class="notes">
@@ -1446,9 +1451,9 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <pre><code># A tibble: 3 × 2
   DeathCause    AGB
   &lt;chr&gt;       &lt;dbl&gt;
-1 2ndtrail     23.1
-2 cut          28.3
-3 treefall2nd  10.1</code></pre>
+1 2ndtrail    19.6 
+2 cut         29.0 
+3 treefall2nd  7.83</code></pre>
 </div>
 </div>
 <aside class="notes">
@@ -1542,13 +1547,13 @@ specieslax : FALSE
 objectivelax : FALSE 
 Harvestable area : 3.75 ha
 Objective volume : 74.9 m3
-Initial harvestable volume : 171.4 m3,  45.7 m3/harvestable ha
-Timber logged volume : 74.6 m3,  19.9 m3/harvestable ha
-No hollow timber logged volume : 74.6 m3,  19.9 m3/harvestable ha
-Timber extracted volume (timber volume after purge : 64.1 m3,  17.1 m3/harvestable ha
-Logging residual biomass : 162 ton,  43.2 ton/harvestable ha
-Total forest biomass lost : 213.7 ton
-Trails density : 87.1 m/ha
+Initial harvestable volume : 169.5 m3,  45.2 m3/harvestable ha
+Timber logged volume : 74.9 m3,  20 m3/harvestable ha
+No hollow timber logged volume : 74.9 m3,  20 m3/harvestable ha
+Timber extracted volume (timber volume after purge : 64.4 m3,  17.2 m3/harvestable ha
+Logging residual biomass : 152.6 ton,  40.7 ton/harvestable ha
+Total forest biomass lost : 202.7 ton
+Trails density : 95.9 m/ha
 
 Please note that all volumes in m3/ha are per exploitable hectare, not per plot hectare.</code></pre>
 </div>
@@ -1834,37 +1839,37 @@ $CostMatrix[[2]][[7]]$CostValue
 $TreeHarvestableVolumeAllometry
 function (DBH, aCoef, bCoef) 
 aCoef + bCoef * (DBH/100)^2
-&lt;environment: 0x58d47b8c18b8&gt;
+&lt;environment: 0x5ad944ee5c50&gt;
 
 $TrunkHeightAllometry
 function (DBH, TreeHarvestableVolume) 
 TreeHarvestableVolume/(pi * (((DBH/100)/2)^2))
-&lt;environment: 0x58d47b8c18b8&gt;
+&lt;environment: 0x5ad944ee5c50&gt;
 
 $TreeHeightAllometry
 function (DBH) 
 exp(0.07359191 + 1.34241216 * log(DBH) + -0.12282344 * log(DBH)^2)
-&lt;environment: 0x58d47b8c18b8&gt;
+&lt;environment: 0x5ad944ee5c50&gt;
 
 $CrownDiameterAllometry
 function (DBH, TreeHeight, alpha, beta) 
 exp(((log(DBH) - alpha - rnorm(length(DBH), 0, 0.0295966977))/beta))/TreeHeight
-&lt;environment: 0x58d47b8c18b8&gt;
+&lt;environment: 0x5ad944ee5c50&gt;
 
 $RottenModel
 function (DBH) 
 1/(1 + exp(-(-5.151 + 0.042 * DBH)))
-&lt;environment: 0x58d47b8c18b8&gt;
+&lt;environment: 0x5ad944ee5c50&gt;
 
 $VisiblyDefectModel
 function (LogDBH) 
 1/(1 + exp(-(-3.392 + 0.357 * LogDBH)))
-&lt;environment: 0x58d47b8c18b8&gt;
+&lt;environment: 0x5ad944ee5c50&gt;
 
 $Treefall2ndDeathModel
 function (DBH) 
 1/(1 + exp(-(-0.47323 + -0.02564 * DBH)))
-&lt;environment: 0x58d47b8c18b8&gt;</code></pre>
+&lt;environment: 0x5ad944ee5c50&gt;</code></pre>
 </div>
 </div>
 </section></section>

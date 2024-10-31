@@ -15,6 +15,14 @@ format:
     preview-links: true
     chalkboard: true
 bibliography: references.bib
+include-in-header:
+  - text: |
+      <style>
+      .reveal .slide-logo {
+        max-height: unset;
+        height: 75px;
+      }
+      </style>
 ---
 
 # Introdução
@@ -22,7 +30,7 @@ bibliography: references.bib
 O pacote LoggingLab do R, desenvolvido no contexto da extração seletiva de madeira na Guiana Francesa, permite que cada estágio da extração seletiva de madeira seja simulado de forma espacialmente explícita. Isso permite que os efeitos de diferentes práticas de exploração madeireira no ecossistema sejam avaliados e comparados com precisão. O objetivo desse workshop prático será apresentar e usar em conjunto as funções gerais desse pacote.
 
 ```{r}
-set.seed(42)
+set.seed(43)
 ```
 
 ::: notes
