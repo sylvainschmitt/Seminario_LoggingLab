@@ -1,3 +1,4 @@
+-   Seminario_LoggingLab 0.1.0.9015: Notas
 -   Seminario_LoggingLab 0.1.0.9014: Lucas corrections #5
 -   Seminario_LoggingLab 0.1.0.9013: slide 39, it's not volume but biomass #5
 -   Seminario_LoggingLab 0.1.0.9012: corrected damages and new 20m3 scenario #5
