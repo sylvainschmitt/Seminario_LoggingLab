@@ -119,7 +119,7 @@ As almoetrias são relações de camadas de um organismo.
 
 ## Inventário
 
-O inventário deve conter o diâmetro, a identificação botânica e as coordenadas de todos as árvores com menos de um determinado diâmetro (normalmente DAP \>= 10cm).
+O inventário deve conter o diâmetro, a identificação botânica e as coordenadas de todos as árvores com major de um determinado diâmetro (normalmente DAP \>= 10cm).
 
 No momento, o simulador está trabalhando em pequenos lotes (alguns hectares) e não representa toda a operação de uma concessão, pois seu foco é a quantificação detalhada dos danos pós-operacionais de acordo com as práticas.
 
