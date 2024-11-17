@@ -431,7 +431,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
     </div>
 </div>
 
-  <p class="date">Nov 7, 2024</p>
+  <p class="date">Nov 17, 2024</p>
 </section>
 <section>
 <section id="introdução" class="title-slide slide level1 center">
@@ -508,7 +508,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <h2>Instalação do pacote</h2>
 <p>Usaremos o pacote LoggingLab para R <span class="citation" data-cites="Badouard2024">(<a href="#/referências" role="doc-biblioref" onclick="">Badouard et al. 2024</a>)</span> para simular a extração de madeira de impacto reduzido em uma floresta tropical. O pacote deve ser instalado a partir de seu repositório no Github, pois ainda não está no CRAN.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"devtools"</span>, <span class="st">"tidyverse"</span>, <span class="st">"sf"</span>, <span class="st">"terra"</span>, <span class="st">"tidyterra"</span>))</span>
 <span id="cb1-2"><a href="#cb1-2"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"VincyaneBadouard/LoggingLab"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
@@ -582,7 +582,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="inventário" class="slide level2">
 <h2>Inventário</h2>
-<p>O inventário deve conter o diâmetro, a identificação botânica e as coordenadas de todos as árvores com menos de um determinado diâmetro (normalmente DAP &gt;= 10cm).</p>
+<p>O inventário deve conter o diâmetro, a identificação botânica e as coordenadas de todos as árvores com major de um determinado diâmetro (normalmente DAP &gt;= 10cm).</p>
 <p>No momento, o simulador está trabalhando em pequenos lotes (alguns hectares) e não representa toda a operação de uma concessão, pois seu foco é a quantificação detalhada dos danos pós-operacionais de acordo com as práticas.</p>
 <aside class="notes">
 <p>DBH: diâmetro na altura do peito. Mas é possível que o simulador funcione com uma área de superfície maior no futuro.</p>
@@ -1839,37 +1839,37 @@ $CostMatrix[[2]][[7]]$CostValue
 $TreeHarvestableVolumeAllometry
 function (DBH, aCoef, bCoef) 
 aCoef + bCoef * (DBH/100)^2
-&lt;environment: 0x597f6a526400&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $TrunkHeightAllometry
 function (DBH, TreeHarvestableVolume) 
 TreeHarvestableVolume/(pi * (((DBH/100)/2)^2))
-&lt;environment: 0x597f6a526400&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $TreeHeightAllometry
 function (DBH) 
 exp(0.07359191 + 1.34241216 * log(DBH) + -0.12282344 * log(DBH)^2)
-&lt;environment: 0x597f6a526400&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $CrownDiameterAllometry
 function (DBH, TreeHeight, alpha, beta) 
 exp(((log(DBH) - alpha - rnorm(length(DBH), 0, 0.0295966977))/beta))/TreeHeight
-&lt;environment: 0x597f6a526400&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $RottenModel
 function (DBH) 
 1/(1 + exp(-(-5.151 + 0.042 * DBH)))
-&lt;environment: 0x597f6a526400&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $VisiblyDefectModel
 function (LogDBH) 
 1/(1 + exp(-(-3.392 + 0.357 * LogDBH)))
-&lt;environment: 0x597f6a526400&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $Treefall2ndDeathModel
 function (DBH) 
 1/(1 + exp(-(-0.47323 + -0.02564 * DBH)))
-&lt;environment: 0x597f6a526400&gt;</code></pre>
+&lt;environment: 0x63e356b3c008&gt;</code></pre>
 </div>
 </div>
 <aside class="notes">

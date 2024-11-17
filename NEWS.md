@@ -1,3 +1,4 @@
+-   Seminario_LoggingLab 0.1.0.9016: drop renv after UNB
 -   Seminario_LoggingLab 0.1.0.9015: Notas
 -   Seminario_LoggingLab 0.1.0.9014: Lucas corrections #5
 -   Seminario_LoggingLab 0.1.0.9013: slide 39, it's not volume but biomass #5

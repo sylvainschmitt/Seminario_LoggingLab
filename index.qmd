@@ -78,7 +78,7 @@ Usaremos o pacote LoggingLab para R [@Badouard2024] para simular a extração de
 ```{r install}
 #| eval: false
 #| echo: true
-install.packages("devtools")
+install.packages(c("devtools", "tidyverse", "sf", "terra", "tidyterra"))
 devtools::install_github("VincyaneBadouard/LoggingLab")
 ```
 
