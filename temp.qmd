@@ -1,0 +1,20 @@
+---
+title: "Data aggregation"
+format:
+  pdf:
+    toc: false
+---
+
+
+$\alpha$
+
+
+
+$\omega$
+
+
+$Atributo = \alpha + (\omega - \alpha) \times (LTP + STP)$
+
+$Atributo = 1 - e^{- \lambda \times t}$ 
+
+$Atributo = \Delta \times \Big(\frac{t}{\tau} \times e^{1-\frac{t}{\tau}} \Big) ^ \kappa$

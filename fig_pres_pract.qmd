@@ -41,16 +41,15 @@ g
 
 ## Others figures first part
 
-They are taken from the presentation for students, and are all for the following parameters: 
+They are taken from the presentation for students, and are all for the following parameters:
 
--   objective = 20 
--   fuel = "0" 
--   winching = "2" 
--   directionalfelling = "2" 
--   diversification = TRUE 
--   specieslax = FALSE 
+-   objective = 20
+-   fuel = "0"
+-   winching = "2"
+-   directionalfelling = "2"
+-   diversification = TRUE
+-   specieslax = FALSE
 -   objectivelax = FALSE
-
 
 ## Figure output
 
@@ -75,6 +74,7 @@ Res4Map <- loggingsimulation1(
         crowndiameterparameters = ParamCrownDiameterAllometry,
         advancedloggingparameters = loggingparameters())
 ```
+
 ```{r MapRes}
 # harvastable area
 MapRes <- ggplot() + geom_spatraster(data = rast(DTMParacou), alpha = .5) +
@@ -98,8 +98,6 @@ MapRes <- MapRes + geom_sf(data = FelledTrees, fill = "lightpink")
 ggsave("figs/MapRes.png", MapRes, dpi = 300)
 ```
 
-
-
 # For comparision
 
 ## Set the scenarios
@@ -122,12 +120,12 @@ my_scenar
 
 ## Run the scenarios
 
-I create a function to run these scenarios and calculate the following outputs of interest.
-I always set the seed to the same seed before each simulation.
+I create a function to run these scenarios and calculate the following outputs of interest. I always set the seed to the same seed before each simulation.
 
 ```{r compareFunc}
 scenar_compare <- function (scenario,  # the name of the scenario to test
                             my_scenar) # the table with all the scenario
+                           
   {
     set.seed(42)
     # Run the scenario
@@ -199,7 +197,7 @@ scenar_compare <- function (scenario,  # the name of the scenario to test
     }
 ```
 
-I run it for every scenario 
+I run it for every scenario
 
 ```{r runPivot}
 res_pivot <- scenar_compare(scenario = "pivot", my_scenar = my_scenar)
@@ -238,7 +236,7 @@ rbind(res_pivot[[1]], res_vol_10[[1]], res_vol_30[[1]], #res_no_div[[1]],
                    res_trail2foot[[1]], res_only_cable[[1]], res_no_dir_fell[[1]])
 ```
 
-And I get the results for all scenarios: 
+And I get the results for all scenarios:
 
 ```{r getAllRes}
 res_all <- rbind(res_pivot[[2]], res_vol_10[[2]], res_vol_30[[2]], # res_no_div[[2]],
@@ -246,9 +244,7 @@ res_all <- rbind(res_pivot[[2]], res_vol_10[[2]], res_vol_30[[2]], # res_no_div[
 res_all
 ```
 
-The similarity of the scenario without directionnal felling with the pivot is surprising. 
-But I have checked changing the seed for both (to 33) => the damages are higher for both and they are still very similar.
-So I keep these results.
+The similarity of the scenario without directionnal felling with the pivot is surprising. But I have checked changing the seed for both (to 33) =\> the damages are higher for both and they are still very similar. So I keep these results.
 
 ## Format the output tables for the slides
 
@@ -257,14 +253,13 @@ colnames(res_all) <- c("Scenario", "Superfície da área explorável (ha)",
                        "Volume de madeira colhida (m3/ha)",
                        "Danos de exploração (t/ha)",
                        "Porcentagem de danos na biomassa total perdida",
-                       "Densidade de trilhas secundárias (m/ha)")
+                       "Densidade de trilhas de arraste (m/ha)")
 ```
-
-
 
 ### Compare logging intensity
 
 ```{r comVol}
+
 res_Vol <- res_all[Scenario %in% c("pivot", "vol_10", "vol_30")]
 res_Vol <- transpose(res_Vol, make.names = "Scenario", keep.names = "")
 res_Vol <- res_Vol[, .(V1, vol_10, pivot, vol_30)]
@@ -277,10 +272,10 @@ tabVol
 save_as_image(x = tabVol, path = "figs/tab_vol.png")
 ```
 
-
 ### Winching methods
 
 ```{r comWinch}
+
 res_Winch <- res_all[Scenario %in% c("pivot", "trail2foot", "only_cable")]
 res_Winch <- transpose(res_Winch, make.names = "Scenario", keep.names = "")
 res_Winch <- res_Winch[, .(V1, trail2foot, pivot, only_cable)]
@@ -293,10 +288,10 @@ tabWinch
 save_as_image(x = tabWinch, path = "figs/tab_Winch.png")
 ```
 
-
 ### Abbatage dirigé
 
 ```{r comdirFell}
+
 res_dirFell <- res_all[Scenario %in% c("pivot", "no_dir_fell")]
 res_dirFell <- transpose(res_dirFell, make.names = "Scenario", keep.names = "")
 res_dirFell <- res_dirFell[, .(V1, no_dir_fell, pivot)]
@@ -307,3 +302,82 @@ tabdirFell <- autofit(tabdirFell)
 tabdirFell
 save_as_image(x = tabdirFell, path = "figs/tab_dirFell.png")
 ```
+
+I run these two scenarios again to check the volume of secondary tree falls in commercial species.
+
+```{r rerunPivot}
+scenario <- "pivot"
+ResPiv <- loggingsimulation1(
+        Paracou6_2016,
+        plotmask = PlotMask, 
+        topography = DTMParacou,
+        creekverticaldistance = CreekDistances$distvert,
+        creekhorizontaldistance = CreekDistances$disthorz,
+        speciescriteria = SpeciesCriteria,
+        volumeparameters = ForestZoneVolumeParametersTable,
+        scenario = "manual",
+        objective = my_scenar[scenar==scenario, objective],
+        fuel = my_scenar[scenar==scenario, fuel], 
+        winching = my_scenar[scenar==scenario, winching], 
+        directionalfelling = my_scenar[scenar==scenario, directionalfelling], 
+        diversification = my_scenar[scenar==scenario, diversification], 
+        specieslax = my_scenar[scenar==scenario, specieslax], 
+        objectivelax = my_scenar[scenar==scenario, objectivelax],
+        crowndiameterparameters = ParamCrownDiameterAllometry,
+        advancedloggingparameters = loggingparameters())
+```
+
+
+```{r rerunNoDir}
+scenario <- "no_dir_fell"
+ResNoDir <- loggingsimulation1(
+        Paracou6_2016,
+        plotmask = PlotMask, 
+        topography = DTMParacou,
+        creekverticaldistance = CreekDistances$distvert,
+        creekhorizontaldistance = CreekDistances$disthorz,
+        speciescriteria = SpeciesCriteria,
+        volumeparameters = ForestZoneVolumeParametersTable,
+        scenario = "manual",
+        objective = my_scenar[scenar==scenario, objective],
+        fuel = my_scenar[scenar==scenario, fuel], 
+        winching = my_scenar[scenar==scenario, winching], 
+        directionalfelling = my_scenar[scenar==scenario, directionalfelling], 
+        diversification = my_scenar[scenar==scenario, diversification], 
+        specieslax = my_scenar[scenar==scenario, specieslax], 
+        objectivelax = my_scenar[scenar==scenario, objectivelax],
+        crowndiameterparameters = ParamCrownDiameterAllometry,
+        advancedloggingparameters = loggingparameters())
+```
+
+
+Biomass of damage from tree fall in commercial level 1, with directionnal felling
+
+```{r}
+InvPiv <- as.data.table(ResPiv$inventory)
+DamComPiv <- InvPiv[DeathCause=="treefall2nd" & CommercialLevel=="1", sum(AGB)]
+DamComPiv
+```
+
+Biomass of damage from tree fall in commercial level 1, without directionnal felling
+
+```{r}
+InvNoDir <- as.data.table(ResNoDir$inventory)
+DamComNoDir <- InvNoDir[DeathCause=="treefall2nd" & CommercialLevel=="1", sum(AGB)]
+DamComNoDir
+```
+
+
+
+# Last table for intro
+
+```{r}
+res_Vol_intro <- res_Vol[, .(V1, pivot)]
+tabVol_intro <- flextable(res_Vol_intro)
+tabVol_intro <- set_header_labels(tabVol_intro, V1 = "",
+                                  pivot = "Volume objetivo\n 20 m3/ha")
+tabVol_intro <- autofit(tabVol_intro)
+tabVol_intro
+save_as_image(x = tabVol_intro, path = "figs/tab_vol_intro.png")
+```
+
