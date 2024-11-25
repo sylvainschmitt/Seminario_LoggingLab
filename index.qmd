@@ -319,17 +319,17 @@ inventory %>% st_as_sf(coords = c("Xutm", "Yutm")) %>%
 Notas.
 :::
 
-## Trilhas principais
+## Estradas secundarias
 
-Como estamos simulando apenas a exploração em alguns hectares, não estamos simulando as trilhas principais. Mas precisamos de sua localização para simular as trilhas de arraste.
+Como estamos simulando apenas a exploração em alguns hectares, não estamos simulando as estradas secundarias. Mas precisamos de sua localização para simular as trilhas de arraste.
 
-O `maintrailextract` gera as trilhas principais da área que está sendo explorado usando os bordas de máscara do lote.
+O `maintrailextract` gera as estradas secundarais da área que está sendo explorado usando os bordas de máscara do lote.
 
 ::: notes
 Notas.
 :::
 
-## Trilhas principais
+## Estradas secundarias
 
 ```{r maintrail}
 #| echo: true
@@ -609,7 +609,7 @@ TimberV$inventory %>%
                            AGB - TimberLoggedVolume * WoodDensity, 
                            AGB)) %>% 
   summarise(AGB = sum(AGB) / HarvestableArea$HarvestableArea) %>% 
-  na.omit()
+  na.omit() 
 ```
 
 ::: notes

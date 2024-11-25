@@ -431,7 +431,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
     </div>
 </div>
 
-  <p class="date">Nov 17, 2024</p>
+  <p class="date">Nov 25, 2024</p>
 </section>
 <section>
 <section id="introdução" class="title-slide slide level1 center">
@@ -994,10 +994,10 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="trilhas-principais" class="slide level2">
-<h2>Trilhas principais</h2>
-<p>Como estamos simulando apenas a exploração em alguns hectares, não estamos simulando as trilhas principais. Mas precisamos de sua localização para simular as trilhas de arraste.</p>
-<p>O <code>maintrailextract</code> gera as trilhas principais da área que está sendo explorado usando os bordas de máscara do lote.</p>
+<section id="estradas-secundarias" class="slide level2">
+<h2>Estradas secundarias</h2>
+<p>Como estamos simulando apenas a exploração em alguns hectares, não estamos simulando as estradas secundarias. Mas precisamos de sua localização para simular as trilhas de arraste.</p>
+<p>O <code>maintrailextract</code> gera as estradas secundarais da área que está sendo explorado usando os bordas de máscara do lote.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1012,8 +1012,8 @@ Sylvain Schmitt &amp; Géraldine Derroire
           display:block!important;
       }</style></aside>
 </section>
-<section id="trilhas-principais-1" class="slide level2">
-<h2>Trilhas principais</h2>
+<section id="estradas-secundarias-1" class="slide level2">
+<h2>Estradas secundarias</h2>
 <div class="cell" data-hash="index_cache/revealjs/maintrail_bbe4f80cfb7222400c10ff503794345a">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>MainTrails <span class="ot">&lt;-</span> <span class="fu">maintrailextract</span>(DTMParacou)</span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="fu">ggplot</span>(MainTrails) <span class="sc">+</span></span>
@@ -1444,7 +1444,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <span id="cb31-4"><a href="#cb31-4"></a>                           AGB <span class="sc">-</span> TimberLoggedVolume <span class="sc">*</span> WoodDensity, </span>
 <span id="cb31-5"><a href="#cb31-5"></a>                           AGB)) <span class="sc">%&gt;%</span> </span>
 <span id="cb31-6"><a href="#cb31-6"></a>  <span class="fu">summarise</span>(<span class="at">AGB =</span> <span class="fu">sum</span>(AGB) <span class="sc">/</span> HarvestableArea<span class="sc">$</span>HarvestableArea) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-7"><a href="#cb31-7"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-7"><a href="#cb31-7"></a>  <span class="fu">na.omit</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1839,37 +1839,37 @@ $CostMatrix[[2]][[7]]$CostValue
 $TreeHarvestableVolumeAllometry
 function (DBH, aCoef, bCoef) 
 aCoef + bCoef * (DBH/100)^2
-&lt;environment: 0x63e356b3c008&gt;
+&lt;environment: 0x5fe1a870b888&gt;
 
 $TrunkHeightAllometry
 function (DBH, TreeHarvestableVolume) 
 TreeHarvestableVolume/(pi * (((DBH/100)/2)^2))
-&lt;environment: 0x63e356b3c008&gt;
+&lt;environment: 0x5fe1a870b888&gt;
 
 $TreeHeightAllometry
 function (DBH) 
 exp(0.07359191 + 1.34241216 * log(DBH) + -0.12282344 * log(DBH)^2)
-&lt;environment: 0x63e356b3c008&gt;
+&lt;environment: 0x5fe1a870b888&gt;
 
 $CrownDiameterAllometry
 function (DBH, TreeHeight, alpha, beta) 
 exp(((log(DBH) - alpha - rnorm(length(DBH), 0, 0.0295966977))/beta))/TreeHeight
-&lt;environment: 0x63e356b3c008&gt;
+&lt;environment: 0x5fe1a870b888&gt;
 
 $RottenModel
 function (DBH) 
 1/(1 + exp(-(-5.151 + 0.042 * DBH)))
-&lt;environment: 0x63e356b3c008&gt;
+&lt;environment: 0x5fe1a870b888&gt;
 
 $VisiblyDefectModel
 function (LogDBH) 
 1/(1 + exp(-(-3.392 + 0.357 * LogDBH)))
-&lt;environment: 0x63e356b3c008&gt;
+&lt;environment: 0x5fe1a870b888&gt;
 
 $Treefall2ndDeathModel
 function (DBH) 
 1/(1 + exp(-(-0.47323 + -0.02564 * DBH)))
-&lt;environment: 0x63e356b3c008&gt;</code></pre>
+&lt;environment: 0x5fe1a870b888&gt;</code></pre>
 </div>
 </div>
 <aside class="notes">
