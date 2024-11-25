@@ -15,6 +15,14 @@ format:
     preview-links: true
     chalkboard: true
 bibliography: references.bib
+include-in-header:
+  - text: |
+      <style>
+      .reveal .slide-logo {
+        max-height: unset;
+        height: 75px;
+      }
+      </style>
 ---
 
 # Introdução
@@ -22,11 +30,11 @@ bibliography: references.bib
 O pacote LoggingLab do R, desenvolvido no contexto da extração seletiva de madeira na Guiana Francesa, permite que cada estágio da extração seletiva de madeira seja simulado de forma espacialmente explícita. Isso permite que os efeitos de diferentes práticas de exploração madeireira no ecossistema sejam avaliados e comparados com precisão. O objetivo desse workshop prático será apresentar e usar em conjunto as funções gerais desse pacote.
 
 ```{r}
-set.seed(42)
+set.seed(43)
 ```
 
 ::: notes
-Notas.
+O pacote pode não ser realista hoje na Amazônia brasileira.
 :::
 
 ## O que o pacote faz?
@@ -36,7 +44,7 @@ Simulação de corte seletivo usando dados de inventário florestal.
 ![](https://ars.els-cdn.com/content/image/1-s2.0-S0304380023002697-ga1_lrg.jpg)
 
 ::: notes
-Notas.
+Por exemplo, aqui está um mapa pós-exploração de uma floresta na Guiana Francesa. Vamos dar uma olhada em todas as etapas envolvidas na obtenção dele.
 :::
 
 ## O que o pacote faz?
@@ -47,7 +55,7 @@ Notas.
 :::
 
 ::: {.column width="70%"}
-Os estágios são:
+Os etapas são:
 
 -   preparação de dados
 -   trilhas principais
@@ -60,7 +68,7 @@ Os estágios são:
 :::::
 
 ::: notes
-Notas.
+Quantificação de volumes de madeira comercial e de danos
 :::
 
 ## Instalação do pacote
@@ -70,12 +78,12 @@ Usaremos o pacote LoggingLab para R [@Badouard2024] para simular a extração de
 ```{r install}
 #| eval: false
 #| echo: true
-install.packages("devtools")
+install.packages(c("devtools", "tidyverse", "sf", "terra", "tidyterra"))
 devtools::install_github("VincyaneBadouard/LoggingLab")
 ```
 
 ::: notes
-Notas.
+Mas, normalmente, você já o tem instalado para o workshop com o ambiente R.
 :::
 
 ## Outros pacotes R
@@ -106,17 +114,17 @@ Os dados e parâmetros necessários para usar `LoggingLab` são as seguintes:
 -   **Alometria volumétrica**: os parâmetros de alometria a serem calculados
 
 ::: notes
-Notas.
+As almoetrias são relações de camadas de um organismo.
 :::
 
 ## Inventário
 
-O inventário deve conter o diâmetro, a a identificação botânica e as coordenadas de todos os arvores com menos de um determinado diâmetro (normalmente DAP \>= 10cm).
+O inventário deve conter o diâmetro, a identificação botânica e as coordenadas de todos as árvores com major de um determinado diâmetro (normalmente DAP \>= 10cm).
 
 No momento, o simulador está trabalhando em pequenos lotes (alguns hectares) e não representa toda a operação de uma concessão, pois seu foco é a quantificação detalhada dos danos pós-operacionais de acordo com as práticas.
 
 ::: notes
-DAP: diametro a altura do peito
+DBH: diâmetro na altura do peito. Mas é possível que o simulador funcione com uma área de superfície maior no futuro.
 :::
 
 ## Inventário
@@ -133,7 +141,7 @@ As colunas exigidas pelo `LoggingLab` são:
 :::
 
 ::: notes
-Notas.
+Uma coda que informa se as arvore e viva
 :::
 
 ## Inventário
@@ -146,7 +154,7 @@ head(Paracou6_2016)
 ```
 
 ::: notes
-Notas.
+Podem ver com isso code.
 :::
 
 ## Inventário {.smaller}
@@ -161,7 +169,7 @@ Paracou6_2016 %>%   st_as_sf(coords = c("Xutm", "Yutm")) %>%
 ```
 
 ::: notes
-Notas.
+Função. Dimensão.
 :::
 
 ## Máscara do lote
@@ -210,7 +218,7 @@ head(SpeciesCriteria)
 ```
 
 ::: notes
-Notas.
+Bagasse: tatajuba
 :::
 
 ## Alometrias volumétricas
@@ -222,7 +230,7 @@ $$Volume = aCoef + bCoef \times DBH^2$$
 Com $Volume$ o volume das árvores e $DBH$ o diametro das árvores.
 
 ::: notes
-Notas.
+Coeficiente a mais coeficiente b do que multiplicar o diâmetro quadrado
 :::
 
 ## Alometrias volumétrica
@@ -234,7 +242,7 @@ Alometrias volumétricas para diferentes regiões da Guiana Francesa são dispon
 head(ForestZoneVolumeParametersTable)
 ```
 
-Outras alometrias podem ser modificadas, como as alometrias de coroa.
+Outras alometrias podem ser modificadas, como as alometrias de copa.
 
 ::: notes
 Notas.
@@ -245,7 +253,7 @@ Notas.
 Agora, vamos executar uma simulação de exploração passo a passo usando `LoggingLab`.
 
 ::: notes
-Notas.
+Você entendeu todos as entradas do LoggingLab? Aqui estão as principais funções.
 :::
 
 ## Validar o inventário
@@ -337,11 +345,11 @@ Notas.
 
 ## Zonas exploráveis
 
-Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de prospecção é:
+Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de trabalho é:
 
 ::: incremental
 -   com uma inclinação inferior a 27%
--   evitando planícies e o sistema de água (buffer de 30 m).
+-   evitando nascentes e cursos d´água (buffer de 30 m).
 :::
 
 ::: notes
@@ -394,7 +402,7 @@ Em seguida, selecionamos as árvores a serem colhidas e as árvores futuras e de
 ::: incremental
 -   Pertencem a espécies de primeira categoria econômica ou mais, se houver diversificação.
 
--   O DBH estiver entre o MinFD e o MaxFD.
+-   O DAP estiver entre o MinFD e o MaxFD.
 
 -   Estão localizadas em declives \< 22%.
 
@@ -437,7 +445,7 @@ crs <- st_crs(HarvestableArea$HarvestablePolygons)
 ```
 
 ::: notes
-Notas.
+Argumentos.
 :::
 
 ## Seleção de árvores {.smaller}
@@ -490,7 +498,7 @@ inventory <- ScndTrailOutputs$inventory
 ⚠️ Essa etapa pode levar algum tempo.
 
 ::: notes
-Notas.
+Atenção.
 :::
 
 ## Trilhas de arraste {.smaller}
@@ -511,7 +519,7 @@ Notas
 
 Em seguida, simulamos o corte da árvore. O corte da árvore cria uma árvore no solo, cujas dimensões são calculadas usando alometrias específicas.
 
-O corte direcional visa direcionar a queda da árvore, com o pé um ângulo em relação ao caminho, e evitando as árvores a serem protegidas. Mas o corte direcional pode falhar (em 40% dos casos)!
+O corte direcional visa direcionar a queda da árvore, com o pé em um ângulo em relação ao caminho, e evitando as árvores a serem protegidas. Mas o corte direcional pode falhar (em 40% dos casos)!
 
 ## Corte de árvores
 
@@ -547,7 +555,7 @@ base + geom_sf(data = st_as_sf(SecondaryTrails$SmoothedTrails)) + geom_sf(data =
 ```
 
 ::: notes
-Notas.
+Aqui em rosa.
 :::
 
 ## Quantificar de volumes
@@ -566,7 +574,7 @@ TimberV$TimberLoggedVolume
 ```
 
 ::: notes
-Notas.
+Setenta e quatro metros cúbicos de madeira.
 :::
 
 ## Quantificar de volumes
@@ -591,7 +599,7 @@ Notas.
 
 ## Quantificar de volumes
 
-Mas, acima de tudo, podemos quantificar o volume de danos por causa de morte.
+Mas, acima de tudo, podemos quantificar o biomassa de danos por causa de morte.
 
 ```{r degagb}
 #| echo: true
@@ -605,7 +613,7 @@ TimberV$inventory %>%
 ```
 
 ::: notes
-Notas.
+Temos mais danos causados por trihllas e quedas de árvores do que por derrubadas.
 :::
 
 # Para saber mais
@@ -613,7 +621,7 @@ Notas.
 Algumas informações adicionais para aqueles que desejam ir além com o `LoggingLab`.
 
 ::: notes
-Notas.
+Ok, tudo bem para voces?
 :::
 
 ## Uma única simulação {.smaller}
@@ -642,7 +650,7 @@ Rslt <- loggingsimulation1(
 )
 ```
 
-Várias simulações podem ser executadas pela função `loggingsimulation()` para levar em conta a estocasticidade com o argumento `iter` (número de simulações) e `cores` (número de núcleos de computador usados para paralelizar o cálculo).
+Várias simulações podem ser executadas pela função `loggingsimulation()` para levar em conta a estocasticidade com o argumento `iter` (número de simulações) e `cores` (número de núcleos de computador usados para realizar cálculos em paralelo).
 
 ::: notes
 Notas.
@@ -654,7 +662,7 @@ Notas.
 
 ```{r res}
 #| echo: true
-try(loggingsummary1(Rslt))
+loggingsummary1(Rslt)
 ```
 
 ::: notes
@@ -685,7 +693,7 @@ As colunas do cenário são:
 Todas as funções permitem `scenario = “manual”`: nesse caso, todos os argumentos devem ser adicionados manualmente. Seu nome é o mesmo das colunas.
 
 ::: notes
-Notas.
+Lidar que e mutio preciso.
 :::
 
 ## Cenários
@@ -706,9 +714,13 @@ ScenariosTable
 loggingparameters()
 ```
 
+::: notes
+Ponto de interrogação.
+:::
+
 # Conclusão
 
-Parabéns 👏 , agora vocês são profissionais do `LoggingLab`\`!
+Parabéns 👏 , agora vocês são profissionais do `LoggingLab`!
 
 Falando mais seriamente, ficaremos felizes em responder a quaisquer perguntas que você possa ter, portanto, não hesite em dar uma olhada no [GitHub](https://github.com/VincyaneBadouard/LoggingLab/issues) para quaisquer dúvidas futuras.
 
@@ -717,7 +729,7 @@ Falando mais seriamente, ficaremos felizes em responder a quaisquer perguntas qu
 :::
 
 ::: notes
-Notas.
+Muito obrigado por sua antenção!​ Agora responderemos suas perguntas.
 :::
 
 ## Referências

@@ -405,6 +405,12 @@
       margin-right: 0; 
     }
   </style>
+  <style>
+  .reveal .slide-logo {
+    max-height: unset;
+    height: 75px;
+  }
+  </style>
 </head>
 <body class="quarto-dark">
   <div class="reveal">
@@ -425,7 +431,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
     </div>
 </div>
 
-  <p class="date">Oct 22, 2024</p>
+  <p class="date">Nov 17, 2024</p>
 </section>
 <section>
 <section id="introdução" class="title-slide slide level1 center">
@@ -435,7 +441,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>O pacote pode não ser realista hoje na Amazônia brasileira.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -453,7 +459,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <p>Simulação de corte seletivo usando dados de inventário florestal.</p>
 
 <img data-src="https://ars.els-cdn.com/content/image/1-s2.0-S0304380023002697-ga1_lrg.jpg" class="r-stretch"><aside class="notes">
-<p>Notas.</p>
+<p>Por exemplo, aqui está um mapa pós-exploração de uma floresta na Guiana Francesa. Vamos dar uma olhada em todas as etapas envolvidas na obtenção dele.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -472,7 +478,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="column" style="width:30%;">
 <p><img data-src="figs/Fig_Flowchart.jpg"></p>
 </div><div class="column" style="width:70%;">
-<p>Os estágios são:</p>
+<p>Os etapas são:</p>
 <ul>
 <li>preparação de dados</li>
 <li>trilhas principais</li>
@@ -485,7 +491,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>Quantificação de volumes de madeira comercial e de danos</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -502,14 +508,14 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <h2>Instalação do pacote</h2>
 <p>Usaremos o pacote LoggingLab para R <span class="citation" data-cites="Badouard2024">(<a href="#/referências" role="doc-biblioref" onclick="">Badouard et al. 2024</a>)</span> para simular a extração de madeira de impacto reduzido em uma floresta tropical. O pacote deve ser instalado a partir de seu repositório no Github, pois ainda não está no CRAN.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"devtools"</span>, <span class="st">"tidyverse"</span>, <span class="st">"sf"</span>, <span class="st">"terra"</span>, <span class="st">"tidyterra"</span>))</span>
 <span id="cb1-2"><a href="#cb1-2"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"VincyaneBadouard/LoggingLab"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>Mas, normalmente, você já o tem instalado para o workshop com o ambiente R.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -561,7 +567,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <li><strong>Alometria volumétrica</strong>: os parâmetros de alometria a serem calculados</li>
 </ul>
 <aside class="notes">
-<p>Notas.</p>
+<p>As almoetrias são relações de camadas de um organismo.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -576,10 +582,10 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="inventário" class="slide level2">
 <h2>Inventário</h2>
-<p>O inventário deve conter o diâmetro, a a identificação botânica e as coordenadas de todos os arvores com menos de um determinado diâmetro (normalmente DAP &gt;= 10cm).</p>
+<p>O inventário deve conter o diâmetro, a identificação botânica e as coordenadas de todos as árvores com major de um determinado diâmetro (normalmente DAP &gt;= 10cm).</p>
 <p>No momento, o simulador está trabalhando em pequenos lotes (alguns hectares) e não representa toda a operação de uma concessão, pois seu foco é a quantificação detalhada dos danos pós-operacionais de acordo com as práticas.</p>
 <aside class="notes">
-<p>DAP: diametro a altura do peito</p>
+<p>DBH: diâmetro na altura do peito. Mas é possível que o simulador funcione com uma área de superfície maior no futuro.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -606,7 +612,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </ul>
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>Uma coda que informa se as arvore e viva</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -658,7 +664,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>Podem ver com isso code.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -685,7 +691,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>Função. Dimensão.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -785,7 +791,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>Bagasse: tatajuba</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -804,7 +810,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <p><span class="math display">\[Volume = aCoef + bCoef \times DBH^2\]</span></p>
 <p>Com <span class="math inline">\(Volume\)</span> o volume das árvores e <span class="math inline">\(DBH\)</span> o diametro das árvores.</p>
 <aside class="notes">
-<p>Notas.</p>
+<p>Coeficiente a mais coeficiente b do que multiplicar o diâmetro quadrado</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -834,7 +840,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 6 Montagne_Tortue    East -0.084516 10.46132</code></pre>
 </div>
 </div>
-<p>Outras alometrias podem ser modificadas, como as alometrias de coroa.</p>
+<p>Outras alometrias podem ser modificadas, como as alometrias de copa.</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -854,7 +860,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <h1>Simulação de exploração</h1>
 <p>Agora, vamos executar uma simulação de exploração passo a passo usando <code>LoggingLab</code>.</p>
 <aside class="notes">
-<p>Notas.</p>
+<p>Você entendeu todos as entradas do LoggingLab? Aqui estão as principais funções.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -931,12 +937,12 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>  TreeHarvestableVolume TrunkHeight TreeHeight CrownHeight CrownDiameter
-1             0.1027084    8.272213   14.65595    6.383735      2.187255
-2             1.1181093   10.811462   27.40065   16.589191      8.084784
-3             0.1687473    9.203739   16.78716    7.583417      3.244364
-4             1.3075022   10.860306   28.35561   17.495301      9.075886
-5             0.2230879    9.613873   18.14034    8.526472      3.496389
-6             0.6517747   10.576502   24.12416   13.547658      6.482453
+1             0.1027084    8.272213   14.65595    6.383735      2.207900
+2             1.1181093   10.811462   27.40065   16.589191      8.260220
+3             0.1687473    9.203739   16.78716    7.583417      3.234360
+4             1.3075022   10.860306   28.35561   17.495301      8.566460
+5             0.2230879    9.613873   18.14034    8.526472      3.389036
+6             0.6517747   10.576502   24.12416   13.547658      7.042431
   WoodDensity       AGB
 1   0.7700000 0.1003184
 2   0.7040000 1.3401159
@@ -1034,11 +1040,11 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="zonas-exploráveis" class="slide level2">
 <h2>Zonas exploráveis</h2>
-<p>Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de prospecção é:</p>
+<p>Em seguida, precisamos definir as áreas de colheita e as áreas acessíveis às máquinas dentro do talhão. Por padrão, uma unidade de trabalho é:</p>
 <div>
 <ul>
 <li class="fragment">com uma inclinação inferior a 27%</li>
-<li class="fragment">evitando planícies e o sistema de água (buffer de 30 m).</li>
+<li class="fragment">evitando nascentes e cursos d´água (buffer de 30 m).</li>
 </ul>
 </div>
 <aside class="notes">
@@ -1121,7 +1127,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div>
 <ul>
 <li class="fragment"><p>Pertencem a espécies de primeira categoria econômica ou mais, se houver diversificação.</p></li>
-<li class="fragment"><p>O DBH estiver entre o MinFD e o MaxFD.</p></li>
+<li class="fragment"><p>O DAP estiver entre o MinFD e o MaxFD.</p></li>
 <li class="fragment"><p>Estão localizadas em declives &lt; 22%.</p></li>
 <li class="fragment"><p>Estão fora das trilhas principais.</p></li>
 </ul>
@@ -1166,15 +1172,15 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stderr">
-<pre><code>As the harvestable volume (= 169.5m^3)
-                was higher (by 94.5m^3)
+<pre><code>As the harvestable volume (= 149.7m^3)
+                was higher (by 74.8m^3)
                 than the objective volume, the Minimum Falling Diameter (MinFD) of the 1st and 2nd economic ranks species
                   were increased to UpMinFD. The objective volume has now been reached.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>crs <span class="ot">&lt;-</span> <span class="fu">st_crs</span>(HarvestableArea<span class="sc">$</span>HarvestablePolygons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>Argumentos.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1256,7 +1262,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 <p>⚠️ Essa etapa pode levar algum tempo.</p>
 <aside class="notes">
-<p>Notas.</p>
+<p>Atenção.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1298,7 +1304,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <section id="corte-de-árvores" class="slide level2">
 <h2>Corte de árvores</h2>
 <p>Em seguida, simulamos o corte da árvore. O corte da árvore cria uma árvore no solo, cujas dimensões são calculadas usando alometrias específicas.</p>
-<p>O corte direcional visa direcionar a queda da árvore, com o pé um ângulo em relação ao caminho, e evitando as árvores a serem protegidas. Mas o corte direcional pode falhar (em 40% dos casos)!</p>
+<p>O corte direcional visa direcionar a queda da árvore, com o pé em um ângulo em relação ao caminho, e evitando as árvores a serem protegidas. Mas o corte direcional pode falhar (em 40% dos casos)!</p>
 </section>
 <section id="corte-de-árvores-1" class="slide level2">
 <h2>Corte de árvores</h2>
@@ -1345,7 +1351,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>Aqui em rosa.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1372,11 +1378,11 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 74.84268</code></pre>
+<pre><code>[1] 74.76017</code></pre>
 </div>
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>Setenta e quatro metros cúbicos de madeira.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1404,15 +1410,14 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
+<pre><code># A tibble: 5 × 4
   CommercialName trees_n volume CommercialLevel
   &lt;chr&gt;            &lt;int&gt;  &lt;dbl&gt;           &lt;dbl&gt;
-1 angélique            1   8.89               1
-2 chawari              1   4.11               2
-3 grignon franc        3  16.9                1
-4 maho noir            2   8.76               2
-5 wapa                 5  27.1                2
-6 wapa courbaril       2   9.10               2</code></pre>
+1 chawari              1   4.11               2
+2 grignon franc        2  11.4                1
+3 maho noir            3  12.3                2
+4 wapa                 8  34.5                2
+5 wapa courbaril       3  12.4                2</code></pre>
 </div>
 </div>
 <aside class="notes">
@@ -1431,7 +1436,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 </section>
 <section id="quantificar-de-volumes-2" class="slide level2">
 <h2>Quantificar de volumes</h2>
-<p>Mas, acima de tudo, podemos quantificar o volume de danos por causa de morte.</p>
+<p>Mas, acima de tudo, podemos quantificar o biomassa de danos por causa de morte.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>TimberV<span class="sc">$</span>inventory <span class="sc">%&gt;%</span> </span>
 <span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">group_by</span>(DeathCause) <span class="sc">%&gt;%</span> </span>
@@ -1446,13 +1451,13 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <pre><code># A tibble: 3 × 2
   DeathCause    AGB
   &lt;chr&gt;       &lt;dbl&gt;
-1 2ndtrail     23.1
-2 cut          28.3
-3 treefall2nd  10.1</code></pre>
+1 2ndtrail    19.6 
+2 cut         29.0 
+3 treefall2nd  7.83</code></pre>
 </div>
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>Temos mais danos causados por trihllas e quedas de árvores do que por derrubadas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1470,7 +1475,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <h1>Para saber mais</h1>
 <p>Algumas informações adicionais para aqueles que desejam ir além com o <code>LoggingLab</code>.</p>
 <aside class="notes">
-<p>Notas.</p>
+<p>Ok, tudo bem para voces?</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1508,7 +1513,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <div class="cell fragment" data-hash="index_cache/revealjs/single_09fca213eae4f4c694c5d47627643290">
 
 </div>
-<p>Várias simulações podem ser executadas pela função <code>loggingsimulation()</code> para levar em conta a estocasticidade com o argumento <code>iter</code> (número de simulações) e <code>cores</code> (número de núcleos de computador usados para paralelizar o cálculo).</p>
+<p>Várias simulações podem ser executadas pela função <code>loggingsimulation()</code> para levar em conta a estocasticidade com o argumento <code>iter</code> (número de simulações) e <code>cores</code> (número de núcleos de computador usados para realizar cálculos em paralelo).</p>
 <aside class="notes">
 <p>Notas.</p>
 <style type="text/css">
@@ -1527,7 +1532,7 @@ Sylvain Schmitt &amp; Géraldine Derroire
 <h2>Resultados</h2>
 <p><code>loggingsummary1</code> retorna um resumo das saídas da função de simulação.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">try</span>(<span class="fu">loggingsummary1</span>(Rslt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">loggingsummary1</span>(Rslt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1542,12 +1547,15 @@ specieslax : FALSE
 objectivelax : FALSE 
 Harvestable area : 3.75 ha
 Objective volume : 74.9 m3
-Initial harvestable volume : 171.4 m3,  45.7 m3/harvestable ha
-Timber logged volume : 74.6 m3,  19.9 m3/harvestable ha
-No hollow timber logged volume : 74.6 m3,  19.9 m3/harvestable ha
-Timber extracted volume (timber volume after purge : 64.1 m3,  17.1 m3/harvestable ha
-Error in round(x$FuelWoodBiomass, digits = 1) : 
-  argument non numérique pour une fonction mathématique</code></pre>
+Initial harvestable volume : 169.5 m3,  45.2 m3/harvestable ha
+Timber logged volume : 74.9 m3,  20 m3/harvestable ha
+No hollow timber logged volume : 74.9 m3,  20 m3/harvestable ha
+Timber extracted volume (timber volume after purge : 64.4 m3,  17.2 m3/harvestable ha
+Logging residual biomass : 152.6 ton,  40.7 ton/harvestable ha
+Total forest biomass lost : 202.7 ton
+Trails density : 95.9 m/ha
+
+Please note that all volumes in m3/ha are per exploitable hectare, not per plot hectare.</code></pre>
 </div>
 </div>
 <aside class="notes">
@@ -1596,7 +1604,7 @@ Error in round(x$FuelWoodBiomass, digits = 1) :
 </div>
 <p>Todas as funções permitem <code>scenario = “manual”</code>: nesse caso, todos os argumentos devem ser adicionados manualmente. Seu nome é o mesmo das colunas.</p>
 <aside class="notes">
-<p>Notas.</p>
+<p>Lidar que e mutio preciso.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1831,50 +1839,63 @@ $CostMatrix[[2]][[7]]$CostValue
 $TreeHarvestableVolumeAllometry
 function (DBH, aCoef, bCoef) 
 aCoef + bCoef * (DBH/100)^2
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $TrunkHeightAllometry
 function (DBH, TreeHarvestableVolume) 
 TreeHarvestableVolume/(pi * (((DBH/100)/2)^2))
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $TreeHeightAllometry
 function (DBH) 
 exp(0.07359191 + 1.34241216 * log(DBH) + -0.12282344 * log(DBH)^2)
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $CrownDiameterAllometry
 function (DBH, TreeHeight, alpha, beta) 
 exp(((log(DBH) - alpha - rnorm(length(DBH), 0, 0.0295966977))/beta))/TreeHeight
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $RottenModel
 function (DBH) 
 1/(1 + exp(-(-5.151 + 0.042 * DBH)))
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $VisiblyDefectModel
 function (LogDBH) 
 1/(1 + exp(-(-3.392 + 0.357 * LogDBH)))
-&lt;environment: 0x62161cf40d98&gt;
+&lt;environment: 0x63e356b3c008&gt;
 
 $Treefall2ndDeathModel
 function (DBH) 
 1/(1 + exp(-(-0.47323 + -0.02564 * DBH)))
-&lt;environment: 0x62161cf40d98&gt;</code></pre>
+&lt;environment: 0x63e356b3c008&gt;</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>Ponto de interrogação.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="conclusão" class="title-slide slide level1 center">
 <h1>Conclusão</h1>
-<p>Parabéns 👏 , agora vocês são profissionais do <code>LoggingLab</code>`!</p>
+<p>Parabéns 👏 , agora vocês são profissionais do <code>LoggingLab</code>!</p>
 <p>Falando mais seriamente, ficaremos felizes em responder a quaisquer perguntas que você possa ter, portanto, não hesite em dar uma olhada no <a href="https://github.com/VincyaneBadouard/LoggingLab/issues">GitHub</a> para quaisquer dúvidas futuras.</p>
 <div class="footer">
 <p><em>Sylvain Schmitt (sylvain.schmitt@cirad.fr) &amp; Géraldine Derroire (geraldine.derroire@cirad.fr)</em></p>
 </div>
 <aside class="notes">
-<p>Notas.</p>
+<p>Muito obrigado por sua antenção!​ Agora responderemos suas perguntas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

@@ -1,3 +1,7 @@
+-   Seminario_LoggingLab 0.1.0.9016: drop renv after UNB
+-   Seminario_LoggingLab 0.1.0.9015: Notas
+-   Seminario_LoggingLab 0.1.0.9014: Lucas corrections #5
+-   Seminario_LoggingLab 0.1.0.9013: slide 39, it's not volume but biomass #5
 -   Seminario_LoggingLab 0.1.0.9012: corrected damages and new 20m3 scenario #5
 -   Seminario_LoggingLab 0.1.0.9011: checked all figures fit
 -   Seminario_LoggingLab 0.1.0.9010: [\@sylvainschmitt](https://github.com/sylvainschmitt) see what you keep from G's 2nd review #5
