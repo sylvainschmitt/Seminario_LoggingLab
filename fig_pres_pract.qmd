@@ -253,12 +253,13 @@ colnames(res_all) <- c("Scenario", "Superfície da área explorável (ha)",
                        "Volume de madeira colhida (m3/ha)",
                        "Danos de exploração (t/ha)",
                        "Porcentagem de danos na biomassa total perdida",
-                       "Densidade de trilhas secundárias (m/ha)")
+                       "Densidade de trilhas de arraste (m/ha)")
 ```
 
 ### Compare logging intensity
 
 ```{r comVol}
+
 res_Vol <- res_all[Scenario %in% c("pivot", "vol_10", "vol_30")]
 res_Vol <- transpose(res_Vol, make.names = "Scenario", keep.names = "")
 res_Vol <- res_Vol[, .(V1, vol_10, pivot, vol_30)]
@@ -274,6 +275,7 @@ save_as_image(x = tabVol, path = "figs/tab_vol.png")
 ### Winching methods
 
 ```{r comWinch}
+
 res_Winch <- res_all[Scenario %in% c("pivot", "trail2foot", "only_cable")]
 res_Winch <- transpose(res_Winch, make.names = "Scenario", keep.names = "")
 res_Winch <- res_Winch[, .(V1, trail2foot, pivot, only_cable)]
@@ -289,6 +291,7 @@ save_as_image(x = tabWinch, path = "figs/tab_Winch.png")
 ### Abbatage dirigé
 
 ```{r comdirFell}
+
 res_dirFell <- res_all[Scenario %in% c("pivot", "no_dir_fell")]
 res_dirFell <- transpose(res_dirFell, make.names = "Scenario", keep.names = "")
 res_dirFell <- res_dirFell[, .(V1, no_dir_fell, pivot)]
@@ -365,3 +368,17 @@ DamComNoDir
 ```
 
 argh...
+
+
+# Last table for intro
+
+```{r}
+res_Vol_intro <- res_Vol[, .(V1, pivot)]
+tabVol_intro <- flextable(res_Vol_intro)
+tabVol_intro <- set_header_labels(tabVol_intro, V1 = "",
+                                  pivot = "Volume objetivo\n 20 m3/ha")
+tabVol_intro <- autofit(tabVol_intro)
+tabVol_intro
+save_as_image(x = tabVol_intro, path = "figs/tab_vol_intro.png")
+```
+
