@@ -367,7 +367,6 @@ DamComNoDir <- InvNoDir[DeathCause=="treefall2nd" & CommercialLevel=="1", sum(AG
 DamComNoDir
 ```
 
-argh...
 
 
 # Last table for intro
